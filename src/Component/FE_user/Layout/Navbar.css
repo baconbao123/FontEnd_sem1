@@ -1,0 +1,160 @@
+/* page navbar */
+@import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700");
+:root {
+  --blue: #007bff;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --gray: #6c757d;
+  --gray-dark: #343a40;
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --font-family-sans-serif: "Quicksand", sans-serif;
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+.page-navbar {
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 110px;
+  -webkit-transition: all, 0.5s;
+  transition: all, 0.5s;
+}
+.page-navbar.scrolled {
+  background: #212529; /* Set the background color when scrolled */
+  height: 75px;
+  border-bottom: 1px solid rgba(173, 181, 189, 0.1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-navbar {
+    -webkit-transition: none;
+    transition: none;
+  }
+}
+
+.page-navbar .nav-navbar {
+  height: 100%;
+  list-style-type: none;
+  padding-left: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.page-navbar .nav-navbar .nav-item {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: center;
+  -webkit-flex-basis: 0;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+}
+
+.page-navbar .nav-navbar .nav-link {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: center;
+  -webkit-flex-basis: 0;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  flex-grow: 1;
+  color: #f8f9fa;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: calc(12px + (15 - 12) * ((100vw - 300px) / (1300 - 300)));
+}
+
+.page-navbar .nav-navbar .nav-link i {
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 3px;
+  position: relative;
+  top: 1px;
+  font-size: 14px;
+}
+
+.page-navbar .nav-navbar .nav-link img {
+  width: calc(50px + (45 - 25) * ((100vw - 300px) / (1300 - 300)));
+}
+/* Search */
+.nav-item .search{
+  position: relative;
+
+}
+.search-wrapper{
+  position: absolute;
+  top:80px;
+}
+.search-wrapper .form-control{
+  background: rgba(65, 67, 68, 0.9) !important;
+  color: #ece7e7 !important;
+}
+input::placeholder {
+  color: #aaa8a8 !important;
+  font-size: 14px;
+}
+
+.page-navbar.affix .nav-link {
+  color: #ffffff;
+}
+
+.page-navbar {
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: transparent; /* Set initial background to transparent */
+  display: flex;
+  height: 110px;
+  transition: all 0.5s;
+}
+
+.page-navbar.scrolled {
+  background: #212529; /* Set the background color when scrolled */
+  height: 75px;
+  border-bottom: 1px solid rgba(173, 181, 189, 0.1);
+}
+
+.page-navbar .nav-navbar {
+  /* Rest of the CSS code */
+}
+
+/* Remaining CSS code */
+.par {
+  margin-top: 500px;
+}
+
+
