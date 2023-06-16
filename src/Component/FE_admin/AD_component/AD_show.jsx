@@ -11,7 +11,7 @@ import {RiFilterOffFill  } from "react-icons/ri";
 import { Button } from 'primereact/button';
 
 import AD_nav from '../Layout/AD_nav';
-// import AD_modal from './AD_modal';
+import AD_modal from './AD_modal';
 
 export default function AD_show() {
 // Khởi tạo các biến
@@ -177,25 +177,25 @@ export default function AD_show() {
               header={header}
               showGridlines
               paginator rows={show}
-            
+              removableSort
               tableStyle={{ minWidth: '100%' }}
               globalFilterFields={['id', 'name', 'birthdate', 'deathdate', 'gender', 'national', 'status']}
               filters={filters} 
             > 
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-              <Column field='id' header='id'filter  style={{ minWidth: '7rem' }} emptyMessage="No customers found."  />
-              <Column field='name' header='name' filterPlaceholder="Search"  filter style={{ minWidth:'12rem', maxWidth: '24rem' }} />
-              <Column field='birthdate' header='birthdate' filter  dataType='date'  style={{ minWidth: '12rem' }}   />
-              <Column field='deathdate' header='deathdate' filter  dataType='date' style={{ minWidth: '12rem' }} />
-              <Column field='national' header='national'filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
-              <Column field='gender' header='gender' filter filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }}/>
-              <Column field='status' header='status' filter filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
+              <Column field='id' header='id'filter sortable  style={{ minWidth: '7rem' }} emptyMessage="No customers found."  />
+              <Column field='name' header='name' sortable filterPlaceholder="Search"  filter style={{ minWidth:'12rem', maxWidth: '24rem' }} />
+              <Column field='birthdate' header='birthdate' sortable filter  dataType='date'  style={{ minWidth: '12rem' }}   />
+              <Column field='deathdate' header='deathdate' sortable filter  dataType='date' style={{ minWidth: '12rem' }} />
+              <Column field='national' header='national' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
+              <Column field='gender' header='gender' filter  sortable filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }}/>
+              <Column field='status' header='status' filter sortable filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
             </DataTable>
           </section>
 
         </Col>
 
-        {/* <AD_modal show={showModalButoon} /> */}
+        <AD_modal show={showModalButoon} />
 
         
       </Row>
