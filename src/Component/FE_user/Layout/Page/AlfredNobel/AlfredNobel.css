@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto:wght@100;300;400&display=swap');
+
+.container.alfred-nobel-page{
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff !important;
+}   
+.overlay-nobel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+.header-alfred-nobel{
+    position: relative;
+    height: 100%;
+    min-height: 600px;
+    text-align: center;
+    color: #fff;
+    background-image: url(../../../../img/nobel-slide.jpg);
+    background-size: cover;
+    background-position: center;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+  }
+
+/* Bio */
+.title-bio {
+    font-size: 60px;
+    font-weight: 600;
+}
+
+.title-bio-nobel{
+    font-size: 24px !important;
+    font-weight: 800;
+    color: #cea152;
+}
+.sub-title-bio-nobel{
+    font-size: 18px;
+    line-height: 2.5rem;
+    font-weight: 400;
+}
+    .strong-text{
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+/* testament-nobel */
+.testament-nobel{
+     background-color: #ffffff;
+    min-width: 100%;
+    min-height: 100px;
+} 
+    .content-testament-nobel{
+        margin-top:60px;
+        margin-bottom: 60px !important;
+    }
+    .content-testament-nobel h3{
+        color:#cea152 ;
+        font-size: 36px !important;
+        font-weight: 800;
+    }
+    .content-testament-nobel p {
+        font-size: 18px;
+        line-height: 2.5rem;
+    }
+    .content-testament-nobel img{
+        border-radius: 10px;
+        width: 90%;
+    }
