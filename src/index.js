@@ -3,7 +3,11 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+//theme
+import "primereact/resources/themes/lara-light-indigo/theme.css";     
+    
+//core
+import "primereact/resources/primereact.min.css";   
 import './index.scss';
 import App from './App';
 
