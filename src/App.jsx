@@ -14,6 +14,7 @@ import WillAlfedNobel from "./Component/FE_user/Layout/Page/WillAlfedNobel/WillA
 import Navbar from "./Component/FE_user/Layout/Navbar";
 import Footer from "./Component/FE_user/Layout/Footer";
 import ScollToTop from "./Component/FE_user/Layout/ScrollToTop";
+import BiographyContent from "./Component/FE_user/Layout/Page/Biography/BiographyContent";
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/nobel-prizes" element={<NobelPrizes />} />
         <Route path="/alfred-nobel" element={<AlfredNobel />} />
         <Route path="/alfred-nobel/nobel-will" element={<WillAlfedNobel />} />
+        <Route path="/chemistry/biography-mariecurie" element={<BiographyContent />} />
       </Routes>
       <ScollToTop />
     </>

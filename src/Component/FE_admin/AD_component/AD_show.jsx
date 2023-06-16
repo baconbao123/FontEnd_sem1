@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DataTable } from 'primereact/datatable';
+import { DataTable} from 'primereact'
 import { Column } from 'primereact/column';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { InputText } from 'primereact/inputtext';

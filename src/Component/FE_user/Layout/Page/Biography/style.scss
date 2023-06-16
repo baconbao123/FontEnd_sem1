@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto:wght@100;300&display=swap');  
+// Biography
+.block-content-white-1 {
+    background-color: white;
+    margin-bottom: 45px!important;
+
+    .block-content-white-top{
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .block-content-white-gallery  {
+      margin-top: -55px;
+      padding-bottom: 50px;
+
+      .gallery{
+        font-family: 'Merriweather', serif;
+        margin-top: 60px;
+        text-align: center;
+        font-size: 60px;
+        font-weight: 500;
+      }
+  
+      .block-per-img {
+        width: 1200px;
+        margin-top: 50px;
+        margin-left: 50px;
+        // background-color: #af9d9d;
+        display: flex;
+        flex-wrap: nowrap;
+        padding: 10;
+        gap: 5px;
+        border: none;
+        
+        img {
+          height: 400px;
+          width: 400px;
+        }
+      }
+
+    }
+}
+
+
+.outside-block-black {
+    max-width: 100%!important;
+    background-color: #000000;
+    color: white;
+    height: 100%;
+    padding-bottom: 120px;
+
+    // .block-content-black-1 {
+    // }
+
+    .block-content-black-2 {
+      margin-top: -50px;
+      .rhombus-bg {
+        position: relative;
+        margin-top: 120px;
+        margin-left: 90px;
+        max-width: 300px!important;
+        height: 300px!important;
+        background-color: rgb(11, 218, 255);
+        transform: rotate(45deg);
+
+          .img-nobel{
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            top: -30px;
+            left: -30px;
+             img {
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+              transform: rotate(-45deg);
+             }
+          }
+
+          .nobel {
+            position: absolute;
+            font-size: 80px;
+            font-weight: 600;
+            transform: rotate(-45deg);
+            left: 100px;
+            top: 75px;
+          }
+        }
+
+        .nbprize-des {
+          margin-top: 100px;
+          margin-left: 50px;
+          font-size: 21px;
+          padding-right: 155px;
+          font-family: 'Roboto', sans-serif;
+        }
+    }
+}
+
+
+
+.content-des-sum {
+    margin-top: 40px;
+    margin-left: 20px;
+    font-size: 19px;
+    font-family: 'Roboto', sans-serif;
+
+    .name-des{
+      font-weight: 700;
+      font-size: 30px;
+      color: rgb(241, 181, 70);
+    }
+}
+
+.heading-page {
+  font-size: 100px;
+  font-family: 'Merriweather', serif;
+}
+
+.btn-down {
+    margin-left: 100px;
+    position: relative;
+    width: 260px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #f1f7f6;
+    color: #000000;
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: uppercase;
+    overflow: hidden;
+
+  &:hover {
+    background-color: #f1f7f6;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .item-icon-down{
+    position: absolute;
+    transform: translateX(109px);
+    font-size: 30px;
+    height: 100%;
+    width: 39px;
+    background-color: #f1f7f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &:hover .item-icon-down {
+    width: 148px;
+    transform: translateX(0);
+  } 
+
+  &:active .item-icon-down {
+    background-color: #f1f7f6;
+  }
+}
+
+$img-max-width: 362px;
+
+.img-per-site {
+  max-width: $img-max-width;
+  margin-top: 30px;
+  margin-left: 30px;
+
+  img {
+    width: 100%;
+    border-radius: 50%;
+  }
+}
+
+.block-content-bg-1 {
+  color: white;
+  margin-top: -45px;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  
+
+
+  .label-bio{
+    margin-top: 200px;
+    font-size: 60px;
+    margin-left: 50px;
+    font-family: 'Merriweather', serif;
+  }
+  
+  .content-bio {
+    font-family: 'Roboto', sans-serif;
+    .content-bio-life {
+      margin-top: 30px;
+    }
+    
+    .title-bio {
+      font-size: 25px;
+    }
+    
+    .content-bio-des {
+      font-size: 19px;
+      margin-bottom: 30px;
+
+    }
+  }
+}
+
+
+.achive-topic-site {
+  margin-top: 100px;
+
+  .achive-label{
+    font-size: 50px;
+    margin-left: 30px;
+    color: #9f9f9f;
+    font-family: 'Merriweather', serif;
+  }
+
+
+  .img-achive-site {
+    max-width: 390px;
+    margin-top: 20px;
+  
+    img {
+      width: 100%;
+      height: 460px;
+      border-radius: 5%;
+    }
+  }     
+}
+
+.achive-des-site {
+  margin-top: 200px;
+
+  .achive-des-content {
+    font-size: 19px;
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+.tl-site {
+  margin-top: 40px;
+  padding-bottom: 30px;
+
+  .tl-topic {
+    font-size: 50px;
+    font-weight: 600;
+    font-family: 'Merriweather', serif;
+  }
+
+  .tl-list{
+    font-size: 19px;
+    max-height: 500px;
+    overflow-y: scroll;
+    font-family: 'Roboto', sans-serif;
+
+
+    li {
+      list-style-type: none;
+    }
+
+    .year {
+      font-weight: 800;
+    }
+  }
+}
+
+.quote-site {
+  margin-top: 130px;
+  margin-left: 40px;
+
+  .img-quote {
+    max-width: 180px;
+    height: 180px;
+  
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .block-quote-black {
+    margin-top: 20px;
+    margin-left: 90px;
+    max-width: 400px!important;
+    height: 200px!important;
+    background-color: black;
+
+    .quote-content {
+      color: white;
+      font-size: 25px;
+      font-weight: 600;
+      padding: 40px  10px 10px 40px;
+    }
+  }
+}
+
+
