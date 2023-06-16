@@ -1,0 +1,105 @@
+.AD-nav-content {
+  background-color: #f7faff;
+  width: 100%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  .AD-nav-logo {
+   
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  .AD-nav-img {
+    display: flex;
+    margin: auto;
+    height: 105px;
+    width: 205px;
+
+
+  }
+
+  .AD-nav-items {
+
+    width: 80%;
+    margin: 50px 20px 10px;
+
+  }
+
+  .AD-nav-item {
+    width: 100%;
+    color: #a5adc6;
+    font-size: larger;
+    position: relative;
+    margin-top: 20px;
+
+    min-height: fit-content;
+
+    .AD-item-icon {
+      font-size: x-large;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+    }
+
+    .AD-item-down_up {
+      position: absolute;
+      right: 0;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .AD-nav-title {
+      position: absolute;
+      left: 20%;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .AD-nav-children {
+    
+     
+      
+      .AD-nav-child {
+        animation:slideDown 0.3s linear ;
+        margin-left: 20%;
+        margin-top: 20px;
+        height: fit-content;
+
+      
+
+        .link-default {
+          text-decoration: none;
+          color: #a5adc6;
+        }
+      }
+    }
+  }
+
+}
+@keyframes slideDown {
+ 0% {
+    height: 0;
+    opacity: 0.1;
+  }
+  .25% {
+    height: 25%;
+    opacity: 0.5;
+  }
+  50% {
+    height: 50%;
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+    height: auto;
+  }
+}
+
