@@ -1,14 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Navbar.css";
 import logo from "../../../Component/img/logo.png";
-import { Link } from "react-router-dom";
+import { Link ,useLocation } from "react-router-dom";
 import { GoSearch } from 'react-icons/go'
 
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [clickSearch, setClickSearch] = useState(false);
   const searchRef = useRef(null);
-  
+
+  // path active
+  const [activeLink, setActiveLink] = useState('');
+
+   const location = useLocation();
+   useEffect(() => {
+      setActiveLink(location.pathname);
+   }, [location.pathname]);
+  //  scroll
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -48,31 +56,31 @@ function Navbar() {
       <nav className={`page-navbar ${scrolled ? "scrolled" : ""}`}>
         <ul className="nav-navbar container">
           <li className="nav-item">
-            <Link to='/' className="nav-link nav-active-hover">
+            <Link to='/' className={`nav-link nav-active-hover ${activeLink === '/' ? 'active-top-nav' : ''}`}>
               Home
             </Link>
           </li>
           <li className="nav-item">
-            <Link to='/nobel-prizes' className="nav-link nav-active-hover">
+            <Link to='/nobel-prizes' className={`nav-link nav-active-hover ${activeLink === '/nobel-prizes' ? 'active-top-nav' : ''}`}>
               Nobel Prizes
             </Link>
           </li>
           <li className="nav-item">
-            <Link to='/' className="nav-link">
+            <Link to='/' className="nav-link nav-active-hover">
               <img src={logo} alt="Logo" width="100px" />
             </Link>
           </li>
           <li className="nav-item">
-            <Link to='/alfred-nobel' className="nav-link nav-active-hover">
+            <Link to='/alfred-nobel' className={`nav-link nav-active-hover ${activeLink === '/alfred-nobel' ? 'active-top-nav' : ''}`}>
               Alfred Nobel
             </Link>
           </li>
           <li className="nav-item search">
-            <a className="nav-link search-toggle" onClick={onClickSearch}>
+            <a className="nav-link search-toggle" onClick={onClickSearch} style={{cursor:'pointer'}}> 
               <GoSearch /> Search
             </a>
             {clickSearch && (
-              <div className="search-wrapper" ref={searchRef}>
+              <div className="search-wrapper" ref={searchRef} >
                 <form>
                   <input
                     type="search"

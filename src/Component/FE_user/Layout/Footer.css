@@ -21,7 +21,7 @@
 .footer {
     position: relative;
     width: 100%;
-    z-index: 999;
+    z-index: 990;
     display: flex;
     padding: 20px 0;
     margin-top: 50px;
