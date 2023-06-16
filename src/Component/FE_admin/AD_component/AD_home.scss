@@ -1,10 +1,25 @@
 .wrapper {
-    .bg-gray {
-        background-color: #edecfe;
-         height: 100vh;
+    padding-top: 50px;
+    background-color: #f7faff;
+    width: inherit;
+    .padding-0 {
+        padding:0;
+    }
+    .bg-content {
+    
+    //   padding: 0px 30px;
 
+    .title-content {
+       text-align: center;
+        
     }
-    .bg-blue {
-        background-color: blue;
     }
+    .AD-show-dropdown {
+        margin-left: 50px;
+        margin-right: 10px;
+    }
+    .AD-clear-filter {
+        margin-left: 20px;
+    }
+    
 }

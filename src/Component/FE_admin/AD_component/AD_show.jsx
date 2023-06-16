@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
@@ -6,29 +6,37 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Tag } from 'primereact/tag';
-import AD_nav from '../Layout/AD_nav';
-import { BsSearch } from "react-icons/bs";
-export default function AD_show() {
+import { BsSearch,BsPersonAdd} from "react-icons/bs";
+import {RiFilterOffFill  } from "react-icons/ri";
+import { Button } from 'primereact/button';
 
+import AD_nav from '../Layout/AD_nav';
+// import AD_modal from './AD_modal';
+
+export default function AD_show() {
+// Khởi tạo các biến
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    id: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
-    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    birthdate: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    deathdate: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    gender: { value: null, matchMode: FilterMatchMode.EQUALS },
-    national: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    status: { value: null, matchMode: FilterMatchMode.EQUALS },
+      id: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
+    name: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+    birthdate: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}] },
+    deathdate: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}]},
+    gender: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}] },
+    national: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
+    status: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}]},
   })
-  const [selectAll,setSelectAll]=useState(false);
+  
   const [global, SetGlobal] = useState('');
   const [status]=useState(['success','sucess','danger']);
   const [gender]=useState(['male','female']);
   const [selection,setSelection]=useState(false);
   const [show,setShow]=useState(10);
   const [showRow]=useState([5,10,15,20,30]);
+
+
+  const showModalButoon=useRef(null)
   useEffect(() => {
     setPerson([
       { id: '1', name: 'nguyen', birthdate: '15/6/2004', deathdate: 'Null', gender: 'male', national: 'VietName', status: 'success' },
@@ -49,7 +57,7 @@ export default function AD_show() {
     ])
     setLoading(false);
   }, [])
-
+// Hàm search Golbal
   const hanldeGlobalSearch = (e) => {
     const value = e.target.value;
     let _filters = { ...filters };
@@ -57,27 +65,54 @@ export default function AD_show() {
     setFilters(_filters);
     SetGlobal(value);
   }
+// hàm set Init FIlter
+  const initFilters=()=> {
+    setFilters({
+      global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+      id: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
+    name: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+    birthdate: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}] },
+    deathdate: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}]},
+    gender: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}] },
+    national: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
+    status: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.EQUALS}]},
+    })
+    SetGlobal('');
+  }
   
+  const clearFilter = () => {
+    initFilters();
+  };
 
+
+// render header
   const renderHeader = () => {
     return (
       <div className="">
         <span className="p-input-icon-left">
           <BsSearch className="pi pi-search" />
           <InputText value={global} onChange={hanldeGlobalSearch} placeholder="Keyword Search" />
+       
+          <Button  type="button"  label="Clear" outlined onClick={clearFilter} className='AD-clear-filter' >
+            <RiFilterOffFill  />
+             </Button>
+         
         </span>
         <span className='AD-show-dropdown'>
 
         show
         <Dropdown  value={show} options={showRow} onChange={e=>setShow(e.value)} />
         </span>
-     
+
+        <Button ref={showModalButoon} type='button' label="ADD"  severity='info'>
+          <BsPersonAdd/> </Button>
+        
       </div>
     );
 
   };
   const header = renderHeader;
-
+// hàm tạo ra tag status
   const  itemStatus=(e)=> {
     return <Tag value={e.status} severity={e.status}/>
   }
@@ -95,6 +130,7 @@ export default function AD_show() {
   const statusDropdown=(e)=> {
     return <Tag value={e} severity={e} />
   }
+  // Hàm tạo ra tag status trong filter
   const genderDropdown=(e)=> {
      let status='';
      if(e==='female') {
@@ -107,6 +143,7 @@ export default function AD_show() {
    
     return <Tag value={e} severity={status}/>
   }
+  // Hàm tạo ra dropdown filter
   const statusFilter=(event)=>{
     return (
 
@@ -134,21 +171,22 @@ export default function AD_show() {
           <section className='card'>
 
             <DataTable value={person} data-key='id' loading={loading}
+            
             selectionMode={'checkbox'}
             selection={selection} onSelectionChange={(e)=>setSelection(e.value)}
               header={header}
               showGridlines
               paginator rows={show}
-              filterDisplay="row"
+            
               tableStyle={{ minWidth: '100%' }}
               globalFilterFields={['id', 'name', 'birthdate', 'deathdate', 'gender', 'national', 'status']}
               filters={filters} 
             > 
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-              <Column field='id' header='id'  style={{ minWidth: '7rem' }} emptyMessage="No customers found."  />
+              <Column field='id' header='id'filter  style={{ minWidth: '7rem' }} emptyMessage="No customers found."  />
               <Column field='name' header='name' filterPlaceholder="Search"  filter style={{ minWidth:'12rem', maxWidth: '24rem' }} />
-              <Column field='birthdate' header='birthdate' style={{ minWidth: '12rem' }}   />
-              <Column field='deathdate' header='deathdate' style={{ minWidth: '12rem' }} />
+              <Column field='birthdate' header='birthdate' filter  dataType='date'  style={{ minWidth: '12rem' }}   />
+              <Column field='deathdate' header='deathdate' filter  dataType='date' style={{ minWidth: '12rem' }} />
               <Column field='national' header='national'filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
               <Column field='gender' header='gender' filter filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }}/>
               <Column field='status' header='status' filter filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
@@ -156,6 +194,10 @@ export default function AD_show() {
           </section>
 
         </Col>
+
+        {/* <AD_modal show={showModalButoon} /> */}
+
+        
       </Row>
     </Container>
   )
