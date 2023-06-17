@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Row, Col } from 'react-bootstrap'
 import { AutoComplete } from 'primereact/autocomplete';
-import { Dropdown } from 'primereact/dropdown';
-        
-
+import { Dropdown } from 'primereact/dropdown';  
+import { FileUpload } from 'primereact/fileupload';
+import { Toast } from 'primereact/toast';
 export default function AD_modal({ show }) {
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
@@ -17,7 +17,7 @@ export default function AD_modal({ show }) {
     const status=[{status:'Acitve'},{status:'Disable'}]
     const [genderName,setGenderName]=useState('')
     const [statusrName,setStatusName]=useState('')
-
+    const toast =useRef(null);
     useEffect(() => {
         setCountry(
             [
@@ -302,7 +302,9 @@ export default function AD_modal({ show }) {
         }, 250);
     }
 
-
+    const onUpload = () => {
+        toast.current.show({ severity: 'success', summary: 'Success', detail: 'File Uploaded',life:3000});
+    };
 
     return (
         <>
@@ -362,6 +364,14 @@ export default function AD_modal({ show }) {
                                         <Form.Control type='date' name='deathdate' />
                                     </Form.Group>
                             </Col>
+                        </Row>
+                        <Row className='mt-4'>
+                            <Form.Group >
+                                <Form.Label>Images</Form.Label>
+                                <Toast ref={toast}></Toast>
+                              
+                                    <FileUpload accept="image/*" name='pic[]' maxFileSize={1000000}  multiple />
+                            </Form.Group>
                         </Row>
 
                     </Form>

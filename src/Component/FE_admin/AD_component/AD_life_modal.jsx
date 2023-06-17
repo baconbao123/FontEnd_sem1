@@ -7,7 +7,7 @@ import { Row, Col,Card } from 'react-bootstrap'
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputText } from 'primereact/inputtext';
-         
+  
 export default function AD_life_modal({ show }) {
     const [showModal, setShowModal] = useState(false);
     const [person,setPerson]=useState([])
@@ -21,7 +21,7 @@ export default function AD_life_modal({ show }) {
     const [achivements,setAchivements]=useState('')
     const [qoute,setQoute]=useState('')
     const [book,setBook]=useState('')
-
+    const [life,setLife]=useState('')
 
 
     useEffect(() => {
@@ -88,6 +88,12 @@ console.log(personSelected);
 
                                 )}
                             </Col>
+                        </Row>
+                        <Row className='mt-4'>
+                            <Form.Group>
+                                <Form.Label>Life</Form.Label>
+                                <InputTextarea placeholder=' enter life' style={{minWidth:'100%'}} value={life} onChange={e=>setLife(e.value)} />
+                            </Form.Group>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group>

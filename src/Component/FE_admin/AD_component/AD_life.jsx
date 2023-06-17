@@ -22,6 +22,7 @@ export default function () {
             global: {value:null,matchMode:FilterMatchMode.STARTS_WITH},
             id:{operator:FilterOperator.AND,constraints:[{value:null,matchMode:FilterMatchMode.STARTS_WITH}]},
             person_id:{operator:FilterOperator.AND,constraints:[{value:null,matchMode:FilterMatchMode.STARTS_WITH}]},
+            life:{operator:FilterOperator.AND,constraints:[{value:null,matchMode:FilterMatchMode.CONTAINS}]},
             childhood:{operator:FilterOperator.AND,constraints:[{value:null,matchMode:FilterMatchMode.STARTS_WITH}]},
             education:{operator:FilterOperator.AND,constraints:[{value:null,matchMode:FilterMatchMode.CONTAINS}]},
             experiment:{operator:FilterOperator.AND,constraints:[{value:null,matchMode:FilterMatchMode.CONTAINS}]},
@@ -37,6 +38,7 @@ export default function () {
         setData([
             {
                 id: '1', person_id: '1',
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -49,6 +51,8 @@ export default function () {
             },
             {
                 id: '2', person_id: '2',
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
+
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -62,6 +66,8 @@ export default function () {
             ,
             {
                 id: '3', person_id: '3',
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
+
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -75,6 +81,8 @@ export default function () {
             
             {
                 id: '4', person_id: '4',
+ 
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -88,6 +96,8 @@ export default function () {
             
             {
                 id: '5', person_id: '5',
+ 
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -101,6 +111,8 @@ export default function () {
             
             {
                 id: '6', person_id: '6',
+ 
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -114,6 +126,8 @@ export default function () {
             
             {
                 id: '7', person_id: '7',
+ 
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -127,6 +141,8 @@ export default function () {
             
             {
                 id: '8', person_id: '8',
+ 
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -139,6 +155,8 @@ export default function () {
             },
             {
                 id: '9', person_id: '9',
+ 
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -151,6 +169,8 @@ export default function () {
             },
             {
                 id: '10', person_id: '10',
+                life:'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
+
                 childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
                 experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
@@ -219,6 +239,7 @@ export default function () {
                    <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>   
                 <Column field='id' filter sortable header='id' style={{minWidth:'12rem',maxWidth:'24rem'}}/>
                 <Column field='person_id' filter sortable header='person_id'  style={{minWidth:'12rem',maxWidth:'24rem'}}/>
+                <Column field='life' filter  header='life' style={{minWidth:'12rem',maxWidth:'24rem'}}/>
                 <Column field='childhood' filter header='childhood' style={{minWidth:'12rem',maxWidth:'24rem'}}/>
                 <Column field='education' filter header='education' style={{minWidth:'12rem',maxWidth:'24rem'}}/>
                 <Column field='experiment' filter header='experiment' style={{minWidth:'12rem',maxWidth:'24rem'}}/>
