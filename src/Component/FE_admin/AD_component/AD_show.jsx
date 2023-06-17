@@ -88,7 +88,7 @@ export default function AD_show() {
 // render header
   const renderHeader = () => {
     return (
-      <div className="">
+      <div className="d-flex justify-content-around">
         <span className="p-input-icon-left">
           <BsSearch className="pi pi-search" />
           <InputText value={global} onChange={hanldeGlobalSearch} placeholder="Keyword Search" />
@@ -98,6 +98,7 @@ export default function AD_show() {
              </Button>
          
         </span>
+        <h1 className='d-flex'>PERSON</h1>
         <span className='AD-show-dropdown'>
 
         show
@@ -105,7 +106,7 @@ export default function AD_show() {
         </span>
 
         <Button ref={showModalButoon} type='button' label="ADD"  severity='info'>
-          <BsPersonAdd/> </Button>
+          <BsPersonAdd className='p-input-icon-left'/> </Button>
         
       </div>
     );
@@ -165,9 +166,7 @@ export default function AD_show() {
           <AD_nav />
         </Col>
         <Col lg={10} md={10} className='bg-content'>
-          <div className='title-content '>
-            <h1> Person</h1>
-          </div>
+        
           <section className='card'>
 
             <DataTable value={person} data-key='id' loading={loading}
@@ -180,10 +179,11 @@ export default function AD_show() {
               removableSort
               tableStyle={{ minWidth: '100%' }}
               globalFilterFields={['id', 'name', 'birthdate', 'deathdate', 'gender', 'national', 'status']}
+              emptyMessage="No customers found."
               filters={filters} 
             > 
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-              <Column field='id' header='id'filter sortable  style={{ minWidth: '7rem' }} emptyMessage="No customers found."  />
+              <Column field='id' header='id'filter sortable  style={{ minWidth: '7rem' }}   />
               <Column field='name' header='name' sortable filterPlaceholder="Search"  filter style={{ minWidth:'12rem', maxWidth: '24rem' }} />
               <Column field='birthdate' header='birthdate' sortable filter  dataType='date'  style={{ minWidth: '12rem' }}   />
               <Column field='deathdate' header='deathdate' sortable filter  dataType='date' style={{ minWidth: '12rem' }} />

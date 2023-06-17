@@ -6,6 +6,7 @@ import "./App.scss";
 
 import AD_home from "./Component/FE_admin/AD_component/AD_home";
 import AD_show from "./Component/FE_admin/AD_component/AD_show";
+import AD_life from "./Component/FE_admin/AD_component/AD_life";
 // FE-User
 import Homepage from "./Component/FE_user/Layout/Page/Home/Homepage";
 import NobelPrizes from "./Component/FE_user/Layout/Page/NobelPrizes/NobelPrizes";
@@ -25,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/admin" element={<AD_home />} />
         <Route path="/admin/show" element={<AD_show />} />
-
+        <Route path="/admin/life" element={<AD_life/>} />
       </Routes>
 
       {/* User */}
