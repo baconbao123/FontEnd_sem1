@@ -8,7 +8,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputText } from 'primereact/inputtext';
   
-export default function AD_life_modal({ show }) {
+export default function AD_life_modal({value,title, show }) {
     const [showModal, setShowModal] = useState(false);
     const [person,setPerson]=useState([])
     const [personSelected,setPersonSelected]=useState('');
@@ -22,6 +22,8 @@ export default function AD_life_modal({ show }) {
     const [qoute,setQoute]=useState('')
     const [book,setBook]=useState('')
     const [life,setLife]=useState('')
+// set EDIT 
+
 
 
     useEffect(() => {
@@ -53,11 +55,40 @@ export default function AD_life_modal({ show }) {
           { id: '14', name: 'Ngoc', birthdate: '15/6/2003', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'sucess' },
           { id: '15', name: 'Thuyfdsafsadffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'sucess' }
         ])
-   
+        
+        if(value) {
+        
+          
+          
+            setChildhood(value.childhood);
+            setAchivements(value.achievements_detail);
+            setQoute(value.quote);
+            setLife(value.life);
+            setPersonalities(value.personalities);
+            setTime_line(value.time_line);
+            setEducation(value.education);
+            setExperiment(value.experiment);
+            setStruggles(value.struggles);
+            setBook(value.book)
+            
+        }
       }, [])
+   
+    const handleEditPerson =()=> {
+        console.log(person);
+        person.flter(person=> {
+            person.id.startsWith(value.id);
+            
+        })
+    }
+    useEffect(()=> {
+        if(value) {
+            const id=person.filter((item)=>item.id===value.person_id);
+            setPersonSelected(id[0]);
+  
+        }
+    },[person])
 
-
-console.log(personSelected);
     return (
         <>
             <Modal show={showModal} centered={true} size='lg' onHide={() => setShowModal(false)}>
@@ -92,31 +123,31 @@ console.log(personSelected);
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>Life</Form.Label>
-                                <InputTextarea placeholder=' enter life' style={{minWidth:'100%'}} value={life} onChange={e=>setLife(e.value)} />
+                                <InputTextarea placeholder=' enter life' style={{minWidth:'100%',minHeight:'12rem'}} value={life} onChange={e=>setLife(e.value)} />
                             </Form.Group>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>Childhood</Form.Label>
-                                <InputTextarea placeholder=' enter childhood' style={{minWidth:'100%'}} value={childhood} onChange={e=>setChildhood(e.value)} />
+                                <InputTextarea placeholder=' enter childhood' style={{minWidth:'100%',minHeight:'12rem'}} value={childhood} onChange={e=>setChildhood(e.value)} />
                             </Form.Group>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>Education</Form.Label>
-                                <InputTextarea placeholder='enter education' style={{minWidth:'100%'}} value={education} onChange={e=>setEducation(e.value)} />
+                                <InputTextarea placeholder='enter education' style={{minWidth:'100%',minHeight:'12rem'}} value={education} onChange={e=>setEducation(e.value)} />
                             </Form.Group>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>experiment</Form.Label>
-                                <InputTextarea placeholder='enter experiment' style={{minWidth:'100%'}} value={experiment} onChange={e=>setExperiment(e.value)} />
+                                <InputTextarea placeholder='enter experiment' style={{minWidth:'100%',minHeight:'12rem'}} value={experiment} onChange={e=>setExperiment(e.value)} />
                             </Form.Group>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>struggles</Form.Label>
-                                <InputTextarea placeholder='enter struggles' style={{minWidth:'100%'}} value={struggles} onChange={e=>setStruggles(e.value)} />
+                                <InputTextarea placeholder='enter struggles' style={{minWidth:'100%',minHeight:'12rem'}} value={struggles} onChange={e=>setStruggles(e.value)} />
                             </Form.Group>
                         </Row>
                         
@@ -125,32 +156,22 @@ console.log(personSelected);
                                 <Form.Label>
                                 Time line
                                 </Form.Label>
-                                <Editor  style={{minWidth:'100%'}} value={time_line} onChange={e=>setTime_line(e.value)}/>
+                                <Editor  style={{minWidth:'100%',minHeight:'12rem'}} value={time_line} onChange={e=>setTime_line(e.value)}/>
                             </Form.Group>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>personalities</Form.Label>
-                                <InputTextarea placeholder='enter personalities' style={{minWidth:'100%'}} value={personalities} onChange={e=>setPersonalities(e.value)} />
+                                <InputTextarea placeholder='enter personalities' style={{minWidth:'100%',minHeight:'12rem'}} value={personalities} onChange={e=>setPersonalities(e.value)} />
                             </Form.Group>
                         </Row>    
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>achievements detail</Form.Label>
-                                <InputTextarea placeholder='enter achivements' style={{minWidth:'100%'}} value={achivements} onChange={e=>setAchivements(e.value)} />
+                                <InputTextarea  placeholder='enter achivements' style={{minWidth:'100%',minHeight:'12rem'}} value={achivements} onChange={e=>setAchivements(e.value)} />
                             </Form.Group>
                         </Row>  
-                        <Row className='mt-4'>
-                            <Col lg={6}>
-
-                            <Form.Group>
-                                <Form.Label>
-                                    Quote
-                                </Form.Label>
-                                    <InputText   value={qoute} onChange={e=>setQoute(e.value)} placeholder='enter quote' style={{minWidth:'100%'}}/>
-                            </Form.Group>
-                            </Col>
-                        </Row>
+                     
                         <Row className='mt-4'>
                             <Col lg={6}>
 

@@ -7,6 +7,11 @@ import "./App.scss";
 import AD_home from "./Component/FE_admin/AD_component/AD_home";
 import AD_show from "./Component/FE_admin/AD_component/AD_show";
 import AD_life from "./Component/FE_admin/AD_component/AD_life";
+import AD_disable_show from "./Component/FE_admin/AD_component/AD_disable_show";
+import AD_disable_life from "./Component/FE_admin/AD_component/AD_disable_life";
+import AD_prizes from "./Component/FE_admin/AD_component/AD_prizes";
+import AD_disable_prize from "./Component/FE_admin/AD_component/AD_disable_prize";
+import AD_setprize from "./Component/FE_admin/AD_component/AD_setprize";
 // FE-User
 import Homepage from "./Component/FE_user/Layout/Page/Home/Homepage";
 import NobelPrizes from "./Component/FE_user/Layout/Page/NobelPrizes/NobelPrizes";
@@ -16,6 +21,9 @@ import Navbar from "./Component/FE_user/Layout/Navbar";
 import Footer from "./Component/FE_user/Layout/Footer";
 import ScollToTop from "./Component/FE_user/Layout/ScrollToTop";
 import BiographyContent from "./Component/FE_user/Layout/Page/Biography/BiographyContent";
+
+
+
 
 function App() {
   const location = useLocation();
@@ -27,6 +35,11 @@ function App() {
         <Route path="/admin" element={<AD_home />} />
         <Route path="/admin/show" element={<AD_show />} />
         <Route path="/admin/life" element={<AD_life/>} />
+        <Route path="/admin/prize" element={<AD_prizes/>} />
+        <Route path="/admin/disable/show" element={<AD_disable_show/>} />
+        <Route path="/admin/disable/life" element={<AD_disable_life/>} />
+        <Route path="/admin/disable/prize" element={<AD_disable_prize/>} />
+        <Route path="/admin/setprize" element={<AD_setprize/>} />
       </Routes>
 
       {/* User */}

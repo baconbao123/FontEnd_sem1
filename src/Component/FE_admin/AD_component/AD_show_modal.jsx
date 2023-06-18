@@ -7,16 +7,24 @@ import { AutoComplete } from 'primereact/autocomplete';
 import { Dropdown } from 'primereact/dropdown';  
 import { FileUpload } from 'primereact/fileupload';
 import { Toast } from 'primereact/toast';
-export default function AD_modal({ show }) {
+export default function AD_modal({title, show ,value}) {
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [country, setCountry] = useState([]);
     const [filterCountry, setFilterCountry] = useState(null);
     const [countryName, setCountryName] = useState('');
-    const gender=[{gender:'Male'},{gender:'Female'}]
-    const status=[{status:'Acitve'},{status:'Disable'}]
+    const gender=[{gender:'male'},{gender:'female'}]
+    const status=[{status:'active'},{status:'disable'}]
     const [genderName,setGenderName]=useState('')
-    const [statusrName,setStatusName]=useState('')
+    const [statusName,setStatusName]=useState('')
+    const [name,setName]=useState('');
+    const [birthdate,setBirthdate]=useState('');
+    const [deathdate,setDeathdate]=useState('');
+  
+    const [img,setImg]=useState('');
+    
+
+
     const toast =useRef(null);
     useEffect(() => {
         setCountry(
@@ -270,6 +278,7 @@ export default function AD_modal({ show }) {
 
 
     useEffect(() => {
+       if(show) {
         const handleClick = () => {
             setShowModal(!showModal);
 
@@ -278,8 +287,9 @@ export default function AD_modal({ show }) {
         return () => {
             show.current.removeEventListener('click', handleClick);
         }
+       }
     }, [show]);
-
+// ham tim country
     const search = (event) => {
         setTimeout(() => {
 
@@ -302,9 +312,23 @@ export default function AD_modal({ show }) {
         }, 250);
     }
 
-    const onUpload = () => {
-        toast.current.show({ severity: 'success', summary: 'Success', detail: 'File Uploaded',life:3000});
-    };
+//    ham set edit
+   useEffect(()=> {
+    if(value) {
+        setName(value.name);
+        setCountryName(value.national);
+        setBirthdate(value.birthdate)
+        if(value.deathdate!=='null') {
+            setDeathdate(value.deathdate)
+        }
+        
+        setGenderName({gender: value.gender})
+        setStatusName({status : value.status})
+        setImg(value.img)
+       
+    }
+   },[])
+    //   la co 
 
     return (
         <>
@@ -313,7 +337,7 @@ export default function AD_modal({ show }) {
             <Modal show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <h1>ADD NEW PERSON</h1>
+                        <h1>{title} PERSON</h1>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -321,7 +345,7 @@ export default function AD_modal({ show }) {
                     <Form>
                         <Form.Group className="mb-3" >
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Name" name='name' />
+                            <Form.Control value={name} onChange={e=>setName(e.value)} type="text" placeholder="Enter Name" name='name' />
                         </Form.Group>
 
 
@@ -337,7 +361,7 @@ export default function AD_modal({ show }) {
                             <Col lg={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Gender</Form.Label>
-                                <Dropdown options={gender} value={genderName} onChange={e=>setGenderName(e.value)} optionLabel='gender' placeholder='Gender' style={{minWidth:'100%'}} />
+                                <Dropdown options={gender} value={genderName} onChange={e=>setGenderName(e.target.value)} optionLabel='gender' placeholder='Gender' style={{minWidth:'100%'}} />
 
                                 </Form.Group>
                             </Col>
@@ -346,7 +370,7 @@ export default function AD_modal({ show }) {
                             <Col lg={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Status</Form.Label>
-                                <Dropdown options={status} value={statusrName} onChange={e=>setStatusName(e.value)} optionLabel='status' placeholder='Status'  style={{minWidth:'100%'}} />
+                                <Dropdown options={status} value={statusName} onChange={e=>setStatusName(e.target.value)} optionLabel='status' placeholder='Status'  style={{minWidth:'100%'}} />
 
                                 </Form.Group>
                             </Col>
@@ -355,13 +379,13 @@ export default function AD_modal({ show }) {
                             <Col lg={6}>
                                     <Form.Group>
                                         <Form.Label>Birthdate</Form.Label>
-                                        <Form.Control type='date' name='birthdate' />
+                                        <Form.Control value={birthdate} onChange={e=>setBirthdate(e.target.value)} type='date' name='birthdate' />
                                     </Form.Group>
                             </Col>
                             <Col lg={6}>
                                     <Form.Group>
                                         <Form.Label>Deathdate (allow null)</Form.Label>
-                                        <Form.Control type='date' name='deathdate' />
+                                        <Form.Control  value={deathdate} onChange={e=>setDeathdate(e.value)}type='date' name='deathdate' />
                                     </Form.Group>
                             </Col>
                         </Row>
@@ -370,7 +394,7 @@ export default function AD_modal({ show }) {
                                 <Form.Label>Images</Form.Label>
                                 <Toast ref={toast}></Toast>
                               
-                                    <FileUpload accept="image/*" name='pic[]' maxFileSize={1000000}  multiple />
+                                    <FileUpload value={img} onChange={e=>setImg(e.value)} accept="image/*" name='pic[]' maxFileSize={1000000}  multiple />
                             </Form.Group>
                         </Row>
 

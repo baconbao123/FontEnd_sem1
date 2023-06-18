@@ -6,14 +6,14 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Tag } from 'primereact/tag';
-import { BsSearch,BsPersonAdd,BsGear,BsTrashFill} from "react-icons/bs";
+import { BsSearch,BsTrashFill,BsPlusLg} from "react-icons/bs";
 import {RiFilterOffFill  } from "react-icons/ri";
 import { Button } from 'primereact/button';
 
 import AD_nav from '../Layout/AD_nav';
-import AD_modal from './AD_show_modal';
 
-export default function AD_show() {
+
+export default function AD_disbale_show() {
 // Khởi tạo các biến
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true)
@@ -29,12 +29,13 @@ export default function AD_show() {
   })
   
   const [global, SetGlobal] = useState('');
-  const [statusName]=useState(['success','sucess','danger']);
-  const [genderName]=useState(['male','female']);
+  const [status]=useState(['success','sucess','danger']);
+  const [gender]=useState(['male','female']);
   const [selection,setSelection]=useState([]);
   const [show,setShow]=useState(10);
   const [showRow]=useState([5,10,15,20,30]);
-  
+
+
   const showModalButoon=useRef(null)
   const showModalEdit=useRef('')
   useEffect(() => {
@@ -98,28 +99,24 @@ export default function AD_show() {
              </Button>
          
         </span>
-        <h1 className='d-flex'>PERSON</h1>
+        <h1 className='d-flex'>PERSON DISABLE</h1>
         <span className='AD-show-dropdown'>
 
         show
         <Dropdown  value={show} options={showRow} onChange={e=>setShow(e.value)} />
         </span>
         <section style={{minWidth:'24rem'}}>
-        <Button ref={showModalButoon} className='d-inline-flex justify-content-end' type='button' label="ADD"  severity='info'>
-          <BsPersonAdd className='p-input-icon-left'/> </Button>
+      
 
-          {selection.length===1&&(
-         <>
-          <Button ref={showModalEdit} className='ms-3' type='button' label="edit" severity='warning' >
-            <BsGear   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-            <AD_modal title="EDIT" show={showModalEdit} value={selection[0]}/>
-
-         </>
-          )}
+       
 
           {selection.length>=1&&(
-          <Button className='ms-3' type='button' label="disable" severity='danger' >
+            <>
+          <Button ref={showModalEdit} className='ms-3' type='button' label="active" severity='success' >
+            <BsPlusLg  className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
+          <Button className='ms-3' type='button' label="Delete" severity='danger' >
             <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
+            </>
 
           )}
  
@@ -175,12 +172,12 @@ export default function AD_show() {
   const statusFilter=(event)=>{
     return (
 
-      <Dropdown value={event.value} options={statusName} onChange={(e)=>event.filterApplyCallback(e.value)} itemTemplate={statusDropdown}  placeholder='select one' showClear />
+      <Dropdown value={event.value} options={status} onChange={(e)=>event.filterApplyCallback(e.value)} itemTemplate={statusDropdown}  placeholder='select one' showClear />
     )
   }
   const genderFilter=(event)=> {
      return (
-      <Dropdown value={event.value} options={genderName} onChange={(e)=>event.filterApplyCallback(e.value)} itemTemplate={genderDropdown } showClear placeholder='select one'/>
+      <Dropdown value={event.value} options={gender} onChange={(e)=>event.filterApplyCallback(e.value)} itemTemplate={genderDropdown } showClear placeholder='select one'/>
      )
 
   }
@@ -226,7 +223,7 @@ export default function AD_show() {
 
         </Col>
 
-        <AD_modal title={"ADD NEW"} show={showModalButoon} />
+       
         
       </Row>
     </Container>

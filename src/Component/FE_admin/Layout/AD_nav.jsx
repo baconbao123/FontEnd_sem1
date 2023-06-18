@@ -3,7 +3,7 @@ import logo from '../AD_img/logo-admin.png';
 import './AD_nav.scss'
 import AD_nav_item from './AD_nav_item';
 import {AiFillHome} from "react-icons/ai";
-import  {BsFillPersonFill,BsFillTrophyFill} from   'react-icons/bs';
+import  {BsFillPersonFill,BsFillTrophyFill,BsTrashFill} from   'react-icons/bs';
 
 export default function AD_nav() {
   const [nav,setNav]=useState([]);
@@ -36,13 +36,25 @@ export default function AD_nav() {
           link:''
         },
         {
-          id:'2',
+          id:'3',
           content:'Prizes',
           item_icon:BsFillTrophyFill,
           child:[
             {child_id:'1',child_content:'Prize',child_link:'/admin/prize'},
-            {child_id:'2',child_content:'Set-Prize',child_link:'/admin/show'},
+            {child_id:'2',child_content:'Set-Prize',child_link:'/admin/setprize'},
 
+
+          ],
+          link:''
+        },
+        {
+          id:'3',
+          content:'Disable',
+          item_icon:BsTrashFill,
+          child:[
+            {child_id:'1',child_content:'Disable show',child_link:'/admin/disable/show'},
+            {child_id:'2',child_content:'Disable life',child_link:'/admin/disable/life'},
+            {child_id:'3',child_content:'Disable prizes',child_link:'/admin/disable/prize'}
 
           ],
           link:''
