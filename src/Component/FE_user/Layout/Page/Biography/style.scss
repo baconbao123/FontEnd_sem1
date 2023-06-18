@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Roboto:wght@100;300&display=swap');  
 // Biography
+
 .block-content-white-1 {
     background-color: white;
     margin-bottom: 45px!important;
@@ -38,6 +39,10 @@
         }
       }
 
+    }
+
+    .block-content-white-bottom {
+      padding-bottom: 50px;
     }
 }
 

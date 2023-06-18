@@ -37,7 +37,7 @@ function App() {
         <Route path="/nobel-prizes" element={<NobelPrizes />} />
         <Route path="/alfred-nobel" element={<AlfredNobel />} />
         <Route path="/alfred-nobel/nobel-will" element={<WillAlfedNobel />} />
-        <Route path="/chemistry/biography-mariecurie" element={<BiographyContent />} />
+        <Route path="/chemistry/biography/:id" element={<BiographyContent />} />
       </Routes>
       <ScollToTop />
     </>

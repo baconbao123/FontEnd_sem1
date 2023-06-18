@@ -6,15 +6,13 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import './style.scss'
-import mc3 from './pictures/mc3.jpg'
 import tn from './pictures/tn.jpg'
-import mc2 from './pictures/mc2.jpg'
 import bgbio from './pictures/bg-bio.jpg'
 import nobel from './pictures/nobel.jpg'
 
 
-const Biography = ({data}) => {
-    const {title, nobelprize, birthplace, name, born, died, prizemotivation, prizeshare, life, work, achievement, timeline, quote, nbprizedes, imgper} = data;
+const Biography = ({personData}) => {
+    const {nobel_name,nobel_year, national, name, birthdate, deathdate, motivation, nobel_share, life, experiment, achievements_detail, time_line, quote, imgper} = personData;
 
     
     useEffect(() => {
@@ -29,6 +27,10 @@ const Biography = ({data}) => {
     const handleSelect = (selectedIndex, e) => {
       setIndex(selectedIndex);
     };
+
+    if (!imgper || imgper.length < 3) {
+        return <div>No images to display</div>;
+      }
   
     const groupImgPer = (imgper) => {
       const result = [...imgper];
@@ -56,28 +58,30 @@ const Biography = ({data}) => {
         saveAs(pdfURL, pdfName)
     }
 
+    
+
 
     return (
         <Container fluid ref={pdfRef}  id="pdfRef">
             <section className='block-content-white-1 '>
             <section className='block-content-white-top container'>
-                <h1 className='heading-page text-center'>{data.title}</h1>
+                <h1 className='heading-page text-center'>Biography</h1>
                     <section>
                         <Row>
                             <Col lg={4}>
                                 <div className='img-per-site'>
-                                    <img src={mc3} alt='mc3'/>
+                                    <img src={personData.imgper[0]} alt='mc3'/>
                                 </div>
                             </Col>
                             
                             <Col lg={8}>
                                 <div className='content-des-sum'>
-                                    <div style={{ marginBottom: 10 }} className='name-des'>{name}</div>
-                                    <div style={{ marginBottom: 10 }}>{name}, {birthplace} <br/> {nobelprize}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Born: </strong>{born}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Died: </strong>{died}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Prize motivation: </strong>{prizemotivation}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Prize share: </strong>{prizeshare}</div>
+                                    <div style={{ marginBottom: 10 }} className='name-des'>{personData.name}</div>
+                                    <div style={{ marginBottom: 10 }}>{personData.name}, {personData.national} <br/> The Nobel Prize in {nobel_name} {nobel_year}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Born: </strong>{birthdate}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Died: </strong>{deathdate}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Prize motivation: </strong>{motivation}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Prize share: </strong>{nobel_share}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Books</strong></div>
                                 </div>
                                 <div className='btn-down-site'>
@@ -93,7 +97,7 @@ const Biography = ({data}) => {
                 <section className='container'>
                     <Row>
                         <Col lg={4}>
-                            <h1 className='label-bio' data-aos="flip-left" data-aos-duration="1000">{title}</h1>
+                            <h1 className='label-bio' data-aos="flip-left" data-aos-duration="1000">Biography</h1>
                         </Col>
                         <Col lg={8}>
                             <section className='content-bio' data-aos="fade-left" data-aos-duration="1000">
@@ -105,9 +109,9 @@ const Biography = ({data}) => {
                                 </section>
                                 <section>
                                     <div className='title-bio'>
-                                        <strong>Work</strong>
+                                        <strong>Experiment</strong>
                                     </div>
-                                    <div className="content-bio-des">{work}</div>
+                                    <div className="content-bio-des">{experiment}</div>
                                 </section>
                             </section>
                         </Col>
@@ -131,7 +135,7 @@ const Biography = ({data}) => {
                         <Col lg={8}>
                             <section className='achive-des-site' data-aos="fade-left" data-aos-duration="1000">
                                 <div className='achive-des-content'>
-                                    <div>{achievement}</div>
+                                    <div>{achievements_detail}</div>
                                 </div>
                             </section>
                         </Col>
@@ -148,12 +152,17 @@ const Biography = ({data}) => {
                                 </div>
                                 <ul className='tl-list' data-aos="fade-right"
                                 data-aos-duration="1000">
-                                    {timeline.map((item, index)=>(
-                                        <li key={index}>
-                                            <span className='year'>{item.year}</span> <br/>
-                                            <span className='event'>{item.event}</span>
-                                        </li>
-                                    ))}
+                                    {personData.time_line && personData.time_line.split(/[,:]/g).map((item, index, arr) => {
+                                        if (index % 2 === 0) {
+                                            return (
+                                            <li key={index}>
+                                                <span className='year'>{item.trim()}</span> <span className='event'>{arr[index + 1].trim()}</span>
+                                            </li>
+                                            );
+                                        } else {
+                                            return null;
+                                        }
+                                    })}
                                 </ul>
                             </section>
                         </Col>
@@ -162,7 +171,7 @@ const Biography = ({data}) => {
                             data-aos="fade-left"
                             data-aos-duration="1000">
                                 <div className='img-quote'>
-                                    <img src={mc2} alt='mc2'/>
+                                    <img src={personData.imgper[2]} alt='mc2'/>
                                 </div>
                                 <div className='block-quote-black'>
                                     <div className='quote-content'>{quote}</div>
@@ -187,7 +196,7 @@ const Biography = ({data}) => {
                             <div className='nbprize-des'
                              data-aos="zoom-in-up"
                              data-aos-duration="1000">
-                                {nbprizedes}
+                                {nobel_year} &nbsp; {motivation}
                             </div>
                         </Col>
                     </Row>
@@ -203,7 +212,7 @@ const Biography = ({data}) => {
                             <Row>
                             {group.map((img, index2) => (
                                 <Col key={index2} md={4}>
-                                <Image src={img.src} fluid />
+                                <Image src={img} fluid />
                                 </Col>
                             ))}
                             </Row>
