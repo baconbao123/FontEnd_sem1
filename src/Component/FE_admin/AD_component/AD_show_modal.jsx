@@ -7,14 +7,16 @@ import { AutoComplete } from 'primereact/autocomplete';
 import { Dropdown } from 'primereact/dropdown';  
 import { FileUpload } from 'primereact/fileupload';
 import { Toast } from 'primereact/toast';
-export default function AD_modal({title, show ,value}) {
+import axios from 'axios';
+import { InputText } from 'primereact/inputtext';
+export default function AD_modal({title, show ,value,Load}) {
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [country, setCountry] = useState([]);
     const [filterCountry, setFilterCountry] = useState(null);
     const [countryName, setCountryName] = useState('');
     const gender=[{gender:'male'},{gender:'female'}]
-    const status=[{status:'active'},{status:'disable'}]
+    const status=[{status:"active"},{status:"disable"}]
     const [genderName,setGenderName]=useState('')
     const [statusName,setStatusName]=useState('')
     const [name,setName]=useState('');
@@ -22,8 +24,8 @@ export default function AD_modal({title, show ,value}) {
     const [deathdate,setDeathdate]=useState('');
   
     const [img,setImg]=useState('');
-    
-
+    const [imgName,setImgName]=useState([]);
+    const [imgcontain,setImgcontain]=useState([]);
 
     const toast =useRef(null);
     useEffect(() => {
@@ -275,8 +277,41 @@ export default function AD_modal({title, show ,value}) {
 
             ])
     }, []);
+// ham add new person
+const showToast = () => {
+    return toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+};
 
-
+    async function addperson(e){
+        e.preventDefault();
+        try {
+          await axios.post('http://127.0.0.1:8000/api/addperson',{
+            name:name,
+            birthdate:birthdate,
+            deathdate:deathdate,
+            status:statusName.status,
+            gender:genderName.gender,
+            img:imgName.toString(),
+            national:countryName.name,
+          });
+          alert('success')
+         
+         setShowModal(!showModal)
+         setName('');
+         setBirthdate('');
+         setDeathdate('');
+         setCountryName('');
+         setGenderName('');
+        setStatusName('')
+        setImgName('')
+          Load()
+       
+        }
+        catch(err) {
+            alert(err)
+            alert('ADD FAILED')
+        }
+      }
     useEffect(() => {
        if(show) {
         const handleClick = () => {
@@ -324,11 +359,28 @@ export default function AD_modal({title, show ,value}) {
         
         setGenderName({gender: value.gender})
         setStatusName({status : value.status})
-        setImg(value.img)
+   
+        setImgName(value.img.split(','));
        
     }
    },[])
-    //   la co 
+// ham  get img name
+const handleImg=(e)=> {
+    let filter=[];
+    for(let i=0;i<e.target.files.length;i++) {
+        filter.push(e.target.files[i].name)
+    }
+    setImgName(filter)
+  
+
+}
+const handleShowImg=(e)=> {
+  return      <img className='d-inline-flex ms-2 mt-1' alt={e} src={require(`../../img/${e}`)}  width='100'/>
+
+
+    
+}
+
 
     return (
         <>
@@ -337,6 +389,7 @@ export default function AD_modal({title, show ,value}) {
             <Modal show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
                 <Modal.Header closeButton>
                     <Modal.Title>
+                    <Toast ref={toast} />
                         <h1>{title} PERSON</h1>
                     </Modal.Title>
                 </Modal.Header>
@@ -345,7 +398,8 @@ export default function AD_modal({title, show ,value}) {
                     <Form>
                         <Form.Group className="mb-3" >
                             <Form.Label>Name</Form.Label>
-                            <Form.Control value={name} onChange={e=>setName(e.value)} type="text" placeholder="Enter Name" name='name' />
+                            <InputText value={name} onChange={e=>setName(e.target.value)}  placeholder="Enter Name" name='name' style={{minWidth:'100%'}}  />
+                            
                         </Form.Group>
 
 
@@ -354,14 +408,14 @@ export default function AD_modal({title, show ,value}) {
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Nation</Form.Label>
 
-                                    <AutoComplete field='name' dropdown value={countryName} onChange={e => setCountryName(e.value)} completeMethod={search} suggestions={filterCountry} />
+                                    <AutoComplete field='name' dropdown value={countryName} onChange={e => setCountryName(e.value)} completeMethod={search} suggestions={filterCountry}  />
                                 </Form.Group>
                             </Col>
 
                             <Col lg={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Gender</Form.Label>
-                                <Dropdown options={gender} value={genderName} onChange={e=>setGenderName(e.target.value)} optionLabel='gender' placeholder='Gender' style={{minWidth:'100%'}} />
+                                <Dropdown options={gender} value={genderName} onChange={e=>setGenderName(e.target.value)} optionLabel='gender' placeholder='Gender' style={{minWidth:'100%'}}  />
 
                                 </Form.Group>
                             </Col>
@@ -370,7 +424,7 @@ export default function AD_modal({title, show ,value}) {
                             <Col lg={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Status</Form.Label>
-                                <Dropdown options={status} value={statusName} onChange={e=>setStatusName(e.target.value)} optionLabel='status' placeholder='Status'  style={{minWidth:'100%'}} />
+                                <Dropdown options={status} value={statusName} onChange={e=>setStatusName(e.value)} optionLabel='status' placeholder='Status'  style={{minWidth:'100%'}}  />
 
                                 </Form.Group>
                             </Col>
@@ -385,27 +439,25 @@ export default function AD_modal({title, show ,value}) {
                             <Col lg={6}>
                                     <Form.Group>
                                         <Form.Label>Deathdate (allow null)</Form.Label>
-                                        <Form.Control  value={deathdate} onChange={e=>setDeathdate(e.value)}type='date' name='deathdate' />
+                                        <Form.Control  value={deathdate} onChange={e=>setDeathdate(e.target.value)}type='date' name='deathdate' />
                                     </Form.Group>
                             </Col>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group >
                                 <Form.Label>Images</Form.Label>
-                                <Toast ref={toast}></Toast>
-                              
-                                    <FileUpload value={img} onChange={e=>setImg(e.value)} accept="image/*" name='pic[]' maxFileSize={1000000}  multiple />
+                               <InputText  type='file' multiple  onChange={handleImg}/>
+                            {imgName.map(item=>handleShowImg(item))}
                             </Form.Group>
                         </Row>
 
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" >
-                        Close
-                    </Button>
-                    <Button variant="primary">
-                        Save Changes
+                  
+             
+                    <Button variant="primary" onClick={addperson} >
+                      SUBMIT
                     </Button>
                 </Modal.Footer>
             </Modal>

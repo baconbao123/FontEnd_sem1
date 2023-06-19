@@ -9,7 +9,7 @@ import { Tag } from 'primereact/tag';
 import { BsSearch,BsPersonAdd,BsGear,BsTrashFill} from "react-icons/bs";
 import {RiFilterOffFill  } from "react-icons/ri";
 import { Button } from 'primereact/button';
-
+import axios from 'axios';
 import AD_nav from '../Layout/AD_nav';
 import AD_modal from './AD_show_modal';
 
@@ -34,29 +34,25 @@ export default function AD_show() {
   const [selection,setSelection]=useState([]);
   const [show,setShow]=useState(10);
   const [showRow]=useState([5,10,15,20,30]);
-  
+  const [storeImg,setStoreImg]=useState([])
+
   const showModalButoon=useRef(null)
   const showModalEdit=useRef('')
+  // fectch data
+
   useEffect(() => {
-    setPerson([
-      { id: '1', name: 'nguyen', birthdate: '2004-06-16', deathdate: 'null', gender: 'male', national: 'VietName', status: 'active',img:'hello' },
-      { id: '2', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active',img:'hello' },
-      { id: '3', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active',img:'hello' },
-      { id: '4', name: 'Ngoc', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '5', name: 'Thuy', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '6', name: 'nguyen', birthdate: '15/6/2004', deathdate: 'Null', gender: 'male', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '7', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '8', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '9', name: 'Ngoc', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '10', name: 'Thuy', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '11', name: 'nguyen', birthdate: '15/6/2004', deathdate: 'Null', gender: 'male', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '12', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'US', status: 'active',img:'hello' },
-      { id: '13', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '14', name: 'Ngoc', birthdate: '15/6/2003', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '15', name: 'Thuyfdsafsadffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'}
-    ])
+    (async()=>await Load())();
     setLoading(false);
+
   }, [])
+
+  async function  Load() {
+    const result=await axios.get('http://127.0.0.1:8000/api/person');
+    setPerson(result.data);
+  }
+  // ham add person
+
+
 // Hàm search Golbal
   const hanldeGlobalSearch = (e) => {
     const value = e.target.value;
@@ -169,7 +165,7 @@ export default function AD_show() {
       status='success'
      }
    
-    return <Tag value={e} severity={status}/>
+    return <Tag value={e} severity={status} />
   }
   // Hàm tạo ra dropdown filter
   const statusFilter=(event)=>{
@@ -184,7 +180,31 @@ export default function AD_show() {
      )
 
   }
-  
+  const itemImage=(e)=> {
+   
+    let store=e.img.split(',')
+    
+   return (
+    <>
+    
+    <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={require(`../../img/${store[0]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={require(`../../img/${store[1]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={require(`../../img/${store[2]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={require(`../../img/${store[3]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={require(`../../img/${store[4]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={require(`../../img/${store[5]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={require(`../../img/${store[6]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={require(`../../img/${store[7]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={require(`../../img/${store[8]}`)}  width='100'/>
+    <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={require(`../../img/${store[9]}`)}  width='100'/>
+    </>
+
+   )
+     
+     
+    
+  }
+ 
 
  
   return (
@@ -219,14 +239,14 @@ export default function AD_show() {
               <Column field='national' header='national' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
               <Column field='gender' header='gender' filter  sortable filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }}/>
               <Column field='status' header='status' filter sortable filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
-              <Column field='img' header='img'    style={{ minWidth: '12rem' }}   />
+              <Column field='img' header='img' body={itemImage}   style={{ minWidth: '40rem' }}   />
               
             </DataTable>
           </section>
 
         </Col>
 
-        <AD_modal title={"ADD NEW"} show={showModalButoon} />
+        <AD_modal title={"ADD NEW"} show={showModalButoon} Load={Load} />
         
       </Row>
     </Container>
