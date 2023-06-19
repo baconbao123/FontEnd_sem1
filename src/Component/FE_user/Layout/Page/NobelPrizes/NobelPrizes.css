@@ -1,8 +1,57 @@
-.container-nobel {
-    z-index: 990;
-    position: relative;
-    height: 100%;
-    min-height: 600px;
-    text-align: center;
-    color: #fff;
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Montserrat:wght@700&family=Open+Sans:wght@600;700&family=Raleway:wght@300&family=Roboto:wght@300&display=swap');
+.nobel-prizes {
+  margin-top: 95px;
+}
+  .title-nobel-prizes {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    
   }
+  .title-nobel-prizes h1{
+    font-size: 48px !important;
+    margin-top: 20px;
+  }
+  .title-nobel-prizes::after{
+    content: '';
+    display: block;
+    width: 20%;
+    height: 15px;
+    margin-left: 10px;
+    background-color: #F1A40E;
+    justify-content: end;
+  }
+  /* form search */
+  .form-nobel-prizes{
+    margin-right: 0 !important;
+  }
+
+  /* item-nobel-prize */
+.item-nobel-prizes a{
+  text-decoration: none;
+}
+.year h3{
+  font-family:" Roboto",sans-serif ;
+  font-weight: 700;
+  font-size: 30px;
+}
+.item-nobel-prize{
+  padding: 20px 100px 30px 30px;
+  border-radius: 0px 5px 5px 0px;
+  border-left: 16px solid #F1A40E  ;
+}
+.item-nobel-prize h3{
+  font-family: 'Open Sans', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 20px;
+  color: #2650F2;
+}
+.sub-nobel-prize span{
+  font-family: "Roboto" ,sans-serif;
+  font-weight:400 ;
+}
+/* Pagination */
+.p-paginator{
+  background-color: transparent !important;
+  margin-bottom: 25px;
+  
+}

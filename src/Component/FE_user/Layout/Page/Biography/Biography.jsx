@@ -22,6 +22,7 @@ const Biography = ({personData}) => {
     
     const pdfRef = useRef();
 
+    //this is of the gallery used to group groups of images at once, only 3 images are rendered when looking at
     const [index, setIndex] = useState(0);
 
     const handleSelect = (selectedIndex, e) => {
@@ -43,15 +44,10 @@ const Biography = ({personData}) => {
       }
       return groups;
     }
-// effect srcoll
 
     const groupedImgPer = groupImgPer(imgper);
-  
-    // Kiểm tra số lượng ảnh
-    if (imgper.length < 3) {
-      return null; // Ẩn component nếu không đủ ảnh
-    }
 
+//  Download PDF file  
     const downFlie = () => {
         const pdfURL = 'http://www.istitutolipani.com/wp-content/uploads/2019/09/Marie-Curie.pdf'
         const pdfName = "Marie Curie"
@@ -62,7 +58,7 @@ const Biography = ({personData}) => {
 
 
     return (
-        <Container fluid ref={pdfRef}  id="pdfRef">
+        <div>
             <section className='block-content-white-1 '>
             <section className='block-content-white-top container'>
                 <h1 className='heading-page text-center'>Biography</h1>
@@ -77,11 +73,11 @@ const Biography = ({personData}) => {
                             <Col lg={8}>
                                 <div className='content-des-sum'>
                                     <div style={{ marginBottom: 10 }} className='name-des'>{personData.name}</div>
-                                    <div style={{ marginBottom: 10 }}>{personData.name}, {personData.national} <br/> The Nobel Prize in {nobel_name} {nobel_year}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Born: </strong>{birthdate}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Died: </strong>{deathdate}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Prize motivation: </strong>{motivation}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Prize share: </strong>{nobel_share}</div>
+                                    <div style={{ marginBottom: 10 }}>{personData.name}, {personData.national} <br/> The Nobel Prize in {personData.nobel_name} {nobel_year}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Born: </strong>{personData.birthdate}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Died: </strong>{personData.deathdate}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Prize motivation: </strong>{personData.motivation}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Prize share: </strong>{personData.nobel_share}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Books</strong></div>
                                 </div>
                                 <div className='btn-down-site'>
@@ -96,7 +92,7 @@ const Biography = ({personData}) => {
             <section className='block-content-bg-1' style={{backgroundImage: `url(${bgbio})`}}>
                 <section className='container'>
                     <Row>
-                        <Col lg={4}>
+                        <Col lg={4} className='label-content'>
                             <h1 className='label-bio' data-aos="flip-left" data-aos-duration="1000">Biography</h1>
                         </Col>
                         <Col lg={8}>
@@ -105,13 +101,13 @@ const Biography = ({personData}) => {
                                     <div className='title-bio'>
                                         <strong>Life</strong>
                                     </div>
-                                    <div className="content-bio-des">{life}</div>
+                                    <div className="content-bio-des">{personData.life}</div>
                                 </section>
                                 <section>
                                     <div className='title-bio'>
                                         <strong>Experiment</strong>
                                     </div>
-                                    <div className="content-bio-des">{experiment}</div>
+                                    <div className="content-bio-des">{personData.experiment}</div>
                                 </section>
                             </section>
                         </Col>
@@ -174,7 +170,7 @@ const Biography = ({personData}) => {
                                     <img src={personData.imgper[2]} alt='mc2'/>
                                 </div>
                                 <div className='block-quote-black'>
-                                    <div className='quote-content'>{quote}</div>
+                                    <div className='quote-content'>{personData.quote}</div>
                                 </div>
                             </section>
                         </Col>
@@ -196,7 +192,7 @@ const Biography = ({personData}) => {
                             <div className='nbprize-des'
                              data-aos="zoom-in-up"
                              data-aos-duration="1000">
-                                {nobel_year} &nbsp; {motivation}
+                                {personData.nobel_year} &nbsp; {personData.motivation}
                             </div>
                         </Col>
                     </Row>
@@ -222,7 +218,7 @@ const Biography = ({personData}) => {
                     </div>
                 </section>
             </section>
-        </Container>
+        </div>
 
     )
 }

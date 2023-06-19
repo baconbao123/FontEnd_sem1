@@ -3,16 +3,16 @@
 
 .block-content-white-1 {
     background-color: white;
-    margin-bottom: 45px!important;
+    padding-bottom: 45px;
 
     .block-content-white-top{
       padding-top: 40px;
       padding-bottom: 40px;
+      margin-top: 50px;
     }
 
     .block-content-white-gallery  {
       margin-top: -55px;
-      padding-bottom: 50px;
 
       .gallery{
         font-family: 'Merriweather', serif;
@@ -187,8 +187,14 @@ $img-max-width: 362px;
   
 
 
+  .label-content {
+    align-items: center;
+    display: flex;
+  }
+
   .label-bio{
-    margin-top: 200px;
+    display: flex;
+    align-content: center;
     font-size: 60px;
     margin-left: 50px;
     font-family: 'Merriweather', serif;
