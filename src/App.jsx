@@ -43,7 +43,7 @@ function App() {
       </Routes>
 
       {/* User */}
-      {location.pathname ==="/nobel-prizes" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' ? <Navbar /> : null}
+      {location.pathname ==="/nobel-prizes" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname.startsWith('/chemistry/biography/')  ? <Navbar /> : null}
       
       <Routes>
         <Route path="/" element={<Homepage />} />

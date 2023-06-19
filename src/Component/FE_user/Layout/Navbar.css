@@ -49,6 +49,12 @@
   height: 75px;
   border-bottom: 1px solid rgba(173, 181, 189, 0.1);
 }
+.black-bg{
+  background: #212529 !important; /* Set the background color when /chemistry/biography-mariecurie */
+  height: 75px !important;
+  border-bottom: 1px solid rgba(173, 181, 189, 0.1);
+  
+}
 @media (prefers-reduced-motion: reduce) {
   .page-navbar {
     -webkit-transition: none;
