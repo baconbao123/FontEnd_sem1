@@ -94,7 +94,7 @@ export default function AD_show() {
           <InputText value={global} onChange={hanldeGlobalSearch} placeholder="Keyword Search" />
        
           <Button  type="button"  label="Clear" outlined onClick={clearFilter} className='AD-clear-filter' >
-            <RiFilterOffFill  />
+            <RiFilterOffFill  className='ms-2' />
              </Button>
          
         </span>
@@ -102,11 +102,11 @@ export default function AD_show() {
         <span className='AD-show-dropdown'>
 
         show
-        <Dropdown  value={show} options={showRow} onChange={e=>setShow(e.value)} />
+        <Dropdown  className='ms-2' value={show} options={showRow} onChange={e=>setShow(e.value)} />
         </span>
         <section style={{minWidth:'24rem'}}>
-        <Button ref={showModalButoon} className='d-inline-flex justify-content-end' type='button' label="ADD"  severity='info'>
-          <BsPersonAdd className='p-input-icon-left'/> </Button>
+        <Button ref={showModalButoon} className='d-inline-flex justify-content-end ' type='button' label="ADD"  severity='info'>
+          <BsPersonAdd className='ms-2  p-input-icon-left'/> </Button>
 
           {selection.length===1&&(
          <>

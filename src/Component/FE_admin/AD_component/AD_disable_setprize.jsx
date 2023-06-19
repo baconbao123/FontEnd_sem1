@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
 import { DataTable, Column, Tag, Button, FilterMatchMode, FilterOperator, InputText, Dropdown } from 'primereact'
-import { BsSearch, BsPersonAdd, BsGear, BsTrashFill, BsTrophyFill } from "react-icons/bs";
+import { BsSearch, BsPersonAdd, BsGear, BsTrashFill, BsTrophyFill,BsPlusLg   } from "react-icons/bs";
 import { RiFilterOffFill } from "react-icons/ri";
 
 import AD_nav from '../Layout/AD_nav'
-import AD_setprize_modal from "../AD_component/AD_setprize_modal"
-export default function AD_setprize() {
+
+export default function AD_disable_setprize() {
   const [prizes, setPrizes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [global, setGlobal] = useState('');
@@ -97,28 +97,20 @@ export default function AD_setprize() {
 
         </span>
         <section style={{ minWidth: '24rem' }}>
-          <Button
-            ref={showModalButoon}
-            className='d-inline-flex justify-content-end' type='button' label="ADD" severity='info'>
-            <BsTrophyFill className='ms-2' /> </Button>
-          {selection.length === 1 && (
-            <>
-              <Button
-                ref={showModalEdit}
-                className='ms-3' type='button' label="edit" severity='warning' >
-                <BsGear className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-              <AD_setprize_modal title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
-
-
-            </>
-          )}
-
-          {selection.length >= 1 && (
-            <Button className='ms-3' type='button' label="disable" severity='danger' >
-              <BsTrashFill className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-
-          )}
-
+        
+        
+            {selection.length>=1&&(
+             <>
+              <Button 
+            
+              className='ms-3' type='button' label="Active" severity='success' >
+                <BsPlusLg   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
+           
+                <Button className='ms-3' type='button' label="Delete" severity='danger' >
+                <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
+    
+             </>
+            )}
         </section>
 
       </div>
@@ -173,7 +165,7 @@ export default function AD_setprize() {
           </DataTable>
         </Col>
       </Row>
-      <AD_setprize_modal title={"ADD NEW NOBEL PERSON"} show={showModalButoon} />
+   
     </Container>
   )
 }

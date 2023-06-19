@@ -12,6 +12,7 @@ import AD_disable_life from "./Component/FE_admin/AD_component/AD_disable_life";
 import AD_prizes from "./Component/FE_admin/AD_component/AD_prizes";
 import AD_disable_prize from "./Component/FE_admin/AD_component/AD_disable_prize";
 import AD_setprize from "./Component/FE_admin/AD_component/AD_setprize";
+import AD_disable_setprize from "./Component/FE_admin/AD_component/AD_disable_setprize";
 // FE-User
 import Homepage from "./Component/FE_user/Layout/Page/Home/Homepage";
 import NobelPrizes from "./Component/FE_user/Layout/Page/NobelPrizes/NobelPrizes";
@@ -40,6 +41,8 @@ function App() {
         <Route path="/admin/disable/life" element={<AD_disable_life/>} />
         <Route path="/admin/disable/prize" element={<AD_disable_prize/>} />
         <Route path="/admin/setprize" element={<AD_setprize/>} />
+        <Route path="/admin/disable/setprize" element={< AD_disable_setprize/>} />
+
       </Routes>
 
       {/* User */}

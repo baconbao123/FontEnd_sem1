@@ -54,7 +54,8 @@ export default function AD_nav() {
           child:[
             {child_id:'1',child_content:'Disable show',child_link:'/admin/disable/show'},
             {child_id:'2',child_content:'Disable life',child_link:'/admin/disable/life'},
-            {child_id:'3',child_content:'Disable prizes',child_link:'/admin/disable/prize'}
+            {child_id:'3',child_content:'Disable prizes',child_link:'/admin/disable/prize'},
+            {child_id:'4',child_content:'Disable setprizes',child_link:'/admin/disable/setprize'}
 
           ],
           link:''

@@ -74,13 +74,7 @@ export default function AD_life_modal({value,title, show }) {
         }
       }, [])
    
-    const handleEditPerson =()=> {
-        console.log(person);
-        person.flter(person=> {
-            person.id.startsWith(value.id);
-            
-        })
-    }
+ 
     useEffect(()=> {
         if(value) {
             const id=person.filter((item)=>item.id===value.person_id);
