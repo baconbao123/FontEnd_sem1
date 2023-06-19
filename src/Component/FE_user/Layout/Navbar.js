@@ -53,7 +53,7 @@ function Navbar() {
 
   return (
     <div>
-      <nav className={`page-navbar ${scrolled ? "scrolled" : ""}`}>
+      <nav className={`page-navbar ${scrolled ? "scrolled" : ""} ${location.pathname.startsWith('/chemistry/biography/') ? 'black-bg' : ''} `}>
         <ul className="nav-navbar container">
           <li className="nav-item">
             <Link to='/' className={`nav-link nav-active-hover ${activeLink === '/' ? 'active-top-nav' : ''}`}>
