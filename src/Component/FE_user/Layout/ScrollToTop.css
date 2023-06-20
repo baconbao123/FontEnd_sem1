@@ -1,7 +1,7 @@
 .btn-srcoll-on-top{
     position: fixed;
     bottom: 30px;
-    right: 2%;
+    right: 1%;
     color:#478ac9e6 ;
     z-index: 999;
     font-size: 4rem;
