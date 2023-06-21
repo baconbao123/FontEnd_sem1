@@ -5,6 +5,7 @@ import AD_prizes_modal from "../AD_component/AD_prizes_modal"
 import { DataTable,Column,Tag, Button,FilterMatchMode, FilterOperator, InputText,Dropdown } from 'primereact'
 import { BsSearch,BsPersonAdd,BsGear,BsTrashFill,BsTrophyFill} from "react-icons/bs";
 import {RiFilterOffFill  } from "react-icons/ri";
+import axios from 'axios'
 export default function AD_prizes() {
     const [prizes,setPrizes]=useState([]);
     const [loading, setLoading] = useState(true);
@@ -22,32 +23,35 @@ export default function AD_prizes() {
         }
     )
     useEffect(()=>{
-        setPrizes([
-            {id:'1',nobel_year:'2022',nobel_name:'Chemistry Prize',status:'active'},
-            {id:'2',nobel_year:'2002',nobel_name:'Chemistry Prize',status:'active'},
-            {id:'3',nobel_year:'2002',nobel_name:'Medicine Prize',status:'active'},
-            {id:'4',nobel_year:'2002',nobel_name:'Medicine Prize',status:'active'},
-            {id:'5',nobel_year:'2002',nobel_name:'Medicine Prize',status:'active'},
-            {id:'6',nobel_year:'2002',nobel_name:'Medicine Prize',status:'active'},
-            {id:'7',nobel_year:'2002',nobel_name:'Chemistry Prize',status:'active'},
-            {id:'8',nobel_year:'2002',nobel_name:'Chemistry Prize',status:'active'},
-            {id:'9',nobel_year:'2002',nobel_name:'Literature Prize',status:'active'},
-            {id:'10',nobel_year:'2016',nobel_name:'Literature Prize',status:'disable'},
-            {id:'11',nobel_year:'2016',nobel_name:'Literature Prize',status:'disable'},
-            {id:'12',nobel_year:'2016',nobel_name:'Literature Prize',status:'disable'},
-            {id:'13',nobel_year:'2016',nobel_name:'Chemistry Prize',status:'disable'},
-            {id:'14',nobel_year:'2016',nobel_name:'Chemistry Prize',status:'disable'},
-            {id:'15',nobel_year:'2016',nobel_name:'Chemistry Prize',status:'disable'},
-            {id:'16',nobel_year:'2016',nobel_name:'Chemistry Prize',status:'disable'},
-            {id:'17',nobel_year:'2016',nobel_name:'Chemistry Prize',status:'disable'},
-            {id:'18',nobel_year:'2022',nobel_name:'Chemistry Prize',status:'disable'},
-            {id:'19',nobel_year:'2022',nobel_name:'Chemistry Prize',status:'disable'},
-            {id:'20',nobel_year:'2022',nobel_name:'Chemistry Prize',status:'disable'},
-
-        ])
+       (async()=>await Load())()
         setLoading(false)
     },[])
-
+  // get data
+   async function Load() {
+     const result= await axios.get('http://127.0.0.1:8000/api/prize');
+     setPrizes(result.data)
+   }
+  //  ham disable
+  const handleDisable=()=>{
+    selection.map(item=> {
+      disableprize(item)
+      setSelection(selection.filter(item=>item !== item))
+    })
+  }
+  async function disableprize(item) {
+    try {
+      await  axios.put('http://127.0.0.1:8000/api/updateprize/'+item.id,{
+        
+          status: 'disable'
+      })
+      alert(item.id+' success disable')
+      Load()
+  }
+  catch(err) {
+      alert(err)
+  }
+  
+  }
     // hàm set Init FIlter
   const initFilters=()=> {
     setFilters({
@@ -103,14 +107,14 @@ export default function AD_prizes() {
               ref={showModalEdit} 
               className='ms-3' type='button' label="edit" severity='warning' >
                 <BsGear   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-                <AD_prizes_modal title={"EDIT PRIZE"} show={showModalEdit}  value={selection[0]}/>
+                <AD_prizes_modal  Load={Load} title={"EDIT PRIZE"} show={showModalEdit}  value={selection[0]}/>
 
     
              </>
               )}
     
               {selection.length>=1&&(
-              <Button className='ms-3' type='button' label="disable" severity='danger' >
+              <Button onClick={handleDisable} className='ms-3' type='button' label="disable" severity='danger' >
                 <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
     
               )}
@@ -167,7 +171,7 @@ export default function AD_prizes() {
                 </DataTable>
             </Col>
         </Row>
-        <AD_prizes_modal title={"ADD NEW"} show={showModalButoon}/>
+        <AD_prizes_modal Load={Load} title={"ADD NEW"} show={showModalButoon}/>
     </Container>
   )
 }

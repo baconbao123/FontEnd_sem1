@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import logo from '../AD_img/logo-admin.png';
 import './AD_nav.scss'
 import AD_nav_item from './AD_nav_item';
@@ -72,10 +72,11 @@ export default function AD_nav() {
       <img src={logo} alt=""  className='AD-nav-img'/>
 
     </div>
-    <section className='AD-nav-items'>
+    <section className='AD-nav-items' >
         {
           nav.map((nav,index)=>(
-            <AD_nav_item key={index} content={nav.content} Item_icon={nav.item_icon} child={nav.child}/>
+         
+            <AD_nav_item  key={index}  content={nav.content} Item_icon={nav.item_icon} child={nav.child}/>
           ))
         }  
 
