@@ -3,12 +3,16 @@ import { useParams } from "react-router-dom";
 import {Row,Col} from "react-bootstrap"
 import axios from "axios";
 import './style.scss'
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 const BlogDetail = () => {
     const [blogData, setBlogData] = useState(null)
     const {id} = useParams();
 
-
+     // effect srcoll
+     useEffect(() => {
+        AOS.init();
+      }, []);
     useEffect(() => {
         async function fetchData() {
             const res = await axios.get(`https://648e8bc475a96b6644440fa9.mockapi.io/api/person/blog/${id}`)
@@ -25,9 +29,9 @@ const BlogDetail = () => {
                 {blogData && (
                     <>
                         <section className="bd-title pt-5">
-                                <span className="bd-title-content ">{blogData.title}</span>
+                                <span className="bd-title-content " data-aos='fade-right'>{blogData.title}</span>
                         </section>
-                        <section className="bd-auth">{blogData.author}</section>
+                        <section className="bd-auth" data-aos='fade-left'>{blogData.author}</section>
                         <section className="bd-pov-1">
                             <Row>
                                 <Col lg={3}>

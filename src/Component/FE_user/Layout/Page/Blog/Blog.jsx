@@ -3,6 +3,8 @@ import { Form, Card, Col, Row } from "react-bootstrap";
 import axios from "axios";
 import './style.scss'
 import { useParams, Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import BlogDetail from "./BlogDetail";
 
 const TruncatedContent = ({content}) => {
@@ -18,7 +20,10 @@ function Blog() {
     const [blogData, setBlogData] = useState(null)
     const [ selectedYear, setSelectedYear] = useState(null)
     const {id} = useParams()
-
+     // effect srcoll
+     useEffect(() => {
+        AOS.init();
+      }, []);
     useEffect(() => {
         async function fetchData() {
             const res = await axios.get(`https://648e8bc475a96b6644440fa9.mockapi.io/api/person/blog/`)
@@ -40,7 +45,7 @@ function Blog() {
                 {/* title */}
                 <Row>
                     <section className="c-header">
-                            <div>All Blogs</div>
+                            <div data-aos='fade-up'>All Blogs</div>
                     </section>
                 </Row>
                 {/* select */}
@@ -66,7 +71,7 @@ function Blog() {
                                         <Card.Subtitle style={{ color: 'gray', marginTop: '10px'}}>Topic: {item.year}</Card.Subtitle>
                                         <Link className="card-link c-title" to={`${item.id}`}>{item.title}</Link>
                                         <TruncatedContent content={item.content} />
-                                        <Link className="card-link" to={`${item.id}`}>See more</Link>
+                                        <Link className="card-link c-see-more" to={`${item.id}`}>See more</Link>
                                     </Card.Body>
                                 </Card>
                             </Col>

@@ -7,19 +7,19 @@ import {Link} from 'react-router-dom';
 function DetailNobelPrize() {
   return (
     <div className="text-light card-nobel-prizes container">
-      {/*=============== Select for Year=========== */}
+      {/*---------- Select for Year---------- */}
       <section className="row mt-1 form-year-nobel-detail">
         <Form.Select className="form-select-nobel col-lg-12">
           <option className="active">All Years</option>
           <option value="2022">2022</option>
         </Form.Select>
       </section>
-      {/* ============ Year==================== */}
+      {/* ----------------- Year----------------- */}
       <section className="year" style={{ color: "#B28836", fontSize: "36px" }}>
         <h3>2022</h3>
       </section>
       <hr />
-      {/*======================= card item====================== */}
+      {/*---------- card item---------- */}
       <section>
         <div className="row d-flex justify-content-center">
           <Card className="col-lg-3">
