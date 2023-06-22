@@ -9,7 +9,7 @@ import { Tag } from 'primereact/tag';
 import { BsSearch,BsTrashFill,BsPlusLg} from "react-icons/bs";
 import {RiFilterOffFill  } from "react-icons/ri";
 import { Button } from 'primereact/button';
-
+import axios from 'axios';
 import AD_nav from '../Layout/AD_nav';
 
 
@@ -39,25 +39,67 @@ export default function AD_disbale_show() {
   const showModalButoon=useRef(null)
   const showModalEdit=useRef('')
   useEffect(() => {
-    setPerson([
-      { id: '1', name: 'nguyen', birthdate: '2004-06-16', deathdate: 'null', gender: 'male', national: 'VietName', status: 'active',img:'hello' },
-      { id: '2', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active',img:'hello' },
-      { id: '3', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active',img:'hello' },
-      { id: '4', name: 'Ngoc', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '5', name: 'Thuy', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '6', name: 'nguyen', birthdate: '15/6/2004', deathdate: 'Null', gender: 'male', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '7', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '8', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable' ,img:'hello'},
-      { id: '9', name: 'Ngoc', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '10', name: 'Thuy', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '11', name: 'nguyen', birthdate: '15/6/2004', deathdate: 'Null', gender: 'male', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '12', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'US', status: 'active',img:'hello' },
-      { id: '13', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '14', name: 'Ngoc', birthdate: '15/6/2003', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'},
-      { id: '15', name: 'Thuyfdsafsadffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active' ,img:'hello'}
-    ])
+    (async()=>await Load())();
     setLoading(false);
   }, [])
+
+  async function  Load() {
+    const result=await axios.get('http://127.0.0.1:8000/api/persondisable');
+    setPerson(result.data);
+  }
+
+
+   // Ham active
+   const handleActive=()=> {
+    if (selection.length>=1) {
+     
+        selection.map((item=> {
+        
+          
+             activeperson(item);
+             setSelection(selection.filter(item=>item !== item))
+        }))
+
+    }
+}
+async function activeperson(item) {
+
+    
+    try {
+        
+      await axios.put('http://127.0.0.1:8000/api/updateperson/' +item.id,{
+      
+        status: 'active',
+      
+      }) 
+      alert(item.id + ' Active success')
+      Load();
+    }
+    catch (err) {
+      alert(err)
+      alert('Active failed')
+    }
+}
+// ham delete
+  const handelDelete =( )=> {
+    console.log(selection);
+    selection.map(item=>{
+      deleteperson(item);
+      setSelection(selection.filter(item=>item !== item))
+    })
+  }
+
+  async function deleteperson(item) {
+    try {
+      await axios.delete('http://127.0.0.1:8000/api/deleteperson/' +item.id)
+      alert("Deleted !")
+      Load()
+    }
+    catch (err) {
+      alert(err)
+      alert('Delete failed')
+    }
+  }
 // Hàm search Golbal
   const hanldeGlobalSearch = (e) => {
     const value = e.target.value;
@@ -112,9 +154,9 @@ export default function AD_disbale_show() {
 
           {selection.length>=1&&(
             <>
-          <Button ref={showModalEdit} className='ms-3' type='button' label="active" severity='success' >
-            <BsPlusLg  className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-          <Button className='ms-3' type='button' label="Delete" severity='danger' >
+          <Button  onClick={handleActive} ref={showModalEdit} className='ms-3' type='button' label="active" severity='success' >
+            <BsPlusLg   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
+          <Button  onClick={handelDelete} className='ms-3' type='button' label="Delete" severity='danger' >
             <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
             </>
 
@@ -183,6 +225,29 @@ export default function AD_disbale_show() {
   }
   
 
+  const itemImage=(e)=> {
+    if(e.img) {
+ 
+      let store=e.img.split(',')
+      
+     return (
+      <>
+      
+      <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={require(`../../img/${store[0]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={require(`../../img/${store[1]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={require(`../../img/${store[2]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={require(`../../img/${store[3]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={require(`../../img/${store[4]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={require(`../../img/${store[5]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={require(`../../img/${store[6]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={require(`../../img/${store[7]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={require(`../../img/${store[8]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={require(`../../img/${store[9]}`)}  width='100'/>
+      </>
+  
+     )
+    }
+  } 
  
   return (
     <Container fluid className='wrapper'>
@@ -216,7 +281,7 @@ export default function AD_disbale_show() {
               <Column field='national' header='national' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
               <Column field='gender' header='gender' filter  sortable filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }}/>
               <Column field='status' header='status' filter sortable filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
-              <Column field='img' header='img'    style={{ minWidth: '12rem' }}   />
+              <Column field='img' header='img' body={itemImage}    style={{ minWidth: '40rem' }}   />
               
             </DataTable>
           </section>

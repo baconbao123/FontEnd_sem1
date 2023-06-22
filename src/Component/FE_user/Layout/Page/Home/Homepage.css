@@ -37,8 +37,8 @@
   background-image: url(../../../../img/bg1.jpg);
   background-size: cover;
   background-position: center;
-  -webkit-transition: 0.2s;
-  transition: 0.2s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
   -webkit-transition-timing-function: linear;
   transition-timing-function: linear;
 }

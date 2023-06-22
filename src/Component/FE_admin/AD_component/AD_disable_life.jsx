@@ -10,6 +10,7 @@ import { BsSearch, BsTrashFill,BsPlusLg } from "react-icons/bs";
 import { InputText } from 'primereact/inputtext';
 
 import AD_life_modal from './AD_life_modal';
+import axios from 'axios';
 
 export default function AD_disable_life() {
   const [data, setData] = useState([]);
@@ -36,157 +37,57 @@ export default function AD_disable_life() {
     }
   )
   useEffect(() => {
-    setData([
-      {
-        id: '1', person_id: '1',
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-      {
-        id: '2', person_id: '2',
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
+    (async()=>await Load())()
 
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      }
-      ,
-      {
-        id: '3', person_id: '3',
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-
-      {
-        id: '4', person_id: '4',
-
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-
-      {
-        id: '5', person_id: '5',
-
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-
-      {
-        id: '6', person_id: '6',
-
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-
-      {
-        id: '7', person_id: '7',
-
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-
-      {
-        id: '8', person_id: '8',
-
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-      {
-        id: '9', person_id: '9',
-
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-      {
-        id: '10', person_id: '10',
-        life: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp',
-
-        childhood: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        education: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        experiment: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        struggles: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        time_line: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        personalities: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        achievements_detail: 'Lưu ý rằng tắt header sẽ xóa hoàn toàn các thông tin trong header của tài liệu. Nếu bạn muốn giữ lại thông tin trong header nhưng không muốn hiển thị nó trên trang hiện tại, bạn có thể ẩn header bằng cách chỉnh kích thước margin cho phù hợp.',
-        quote: 'The href attribute requires a valid va',
-        book: 'The href attribute requires a valid va'
-      },
-
-    ])
+    
     setLoading(false)
 
   }, [])
+// ham get data
+    async function Load() {
+      const result= await axios.get('http://127.0.0.1:8000/api/lifedisable')
+      setData(result.data)
+    }
+// Ham active
+    const handleActive=()=> {
+      selection.map(item=> {
+        activelife(item);
+        setSelection(selection.filter(item=>item !== item));
+      })
+    }
+    async function activelife (item) {
+      try {
+        await axios.put('http://127.0.0.1:8000/api/updatelife/'+item.id,{
+            status: 'active'
+        })
+        alert(item.id+' active success')
+        Load()
+    }
+    catch(err) {
+        alert(err)
+    }}
+
+    // Ham active
+    const handleDelete=()=> {
+      selection.map(item=> {
+        deletelife(item);
+        setSelection(selection.filter(item=>item !== item));
+      })
+    }
+    async function deletelife (item) {
+      try {
+        await axios.put('http://127.0.0.1:8000/api/deletelife/'+item.id,{
+            status: 'active'
+        })
+        alert(item.id+' delete success')
+        Load()
+    }
+    catch(err) {
+        alert(err)
+    }}
+    
+    
+  // global search
   const handleGlobalSearch = (e) => {
     const value = e.target.value;
     let _filter = { ...filters };
@@ -211,9 +112,9 @@ export default function AD_disable_life() {
           {selection.length >= 1 && (
             <>
 
-          <Button ref={showModalEdit} className='ms-3' type='button' label="active" severity='success' >
+          <Button onClick={handleActive} ref={showModalEdit} className='ms-3' type='button' label="active" severity='success' >
             <BsPlusLg className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-            <Button className='ms-3' type='button' label="Delete" severity='danger' >
+            <Button  onClick={handleDelete} className='ms-3' type='button' label="Delete" severity='danger' >
               <BsTrashFill className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
             </>
 

@@ -13,23 +13,22 @@ ${props=>props.show===false&&`{
   display:none!important;
 }`}
 `
-export default function AD_nav_item({content,Item_icon,child}) {
+export default function AD_nav_item({content,Item_icon,child, navContaint}) {
     const [showChild,setShowChild]=useState(false);
 
-    
   return (
      
-      <div className='AD-nav-item'>
+      <div className=' cursor-pointer AD-nav-item' onClick={()=>setShowChild(!showChild)} >
         <Item_icon className='AD-item-icon'/> 
         <span className='AD-nav-title'>
           {content}
         </span>
         <SpanDown show={showChild}>
-        <BsChevronCompactDown className='AD-item-down_up ' onClick={()=>setShowChild(!showChild)}/>
+        <BsChevronCompactDown className='AD-item-down_up ' />
         </SpanDown>
         <SpanUp show={showChild}>
 
-        <BsChevronCompactUp className='AD-item-down_up' onClick={()=>setShowChild(!showChild)}/>
+        <BsChevronCompactUp className='AD-item-down_up'/>
         </SpanUp>
         {child&&showChild&&(
         <section className='AD-nav-children'>

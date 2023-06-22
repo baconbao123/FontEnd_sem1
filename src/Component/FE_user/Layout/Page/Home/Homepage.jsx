@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Homepage.css";
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
@@ -179,14 +180,14 @@ function Homepage() {
               </a>
             </div>
           ))}
-          <a href="#" className="text-center">
+          <Link to="/blog" className="text-center">
             <button className="learn-more">
               <span className="circle" aria-hidden="true">
                 <span className="icon arrow"></span>
               </span>
               <span className="button-text">All Posts</span>
             </button>
-          </a>
+          </Link>
         </div>
         <Footer />
       </div>

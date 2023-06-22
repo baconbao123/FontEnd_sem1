@@ -1,33 +1,33 @@
-import React, { useEffect, useState,useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Row, Col } from 'react-bootstrap'
 import { AutoComplete } from 'primereact/autocomplete';
-import { Dropdown } from 'primereact/dropdown';  
-import { FileUpload } from 'primereact/fileupload';
+import { Dropdown } from 'primereact/dropdown';
+
 import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { InputText } from 'primereact/inputtext';
-export default function AD_modal({title, show ,value,Load}) {
+export default function AD_modal({ title, show, value, Load }) {
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [country, setCountry] = useState([]);
     const [filterCountry, setFilterCountry] = useState(null);
     const [countryName, setCountryName] = useState('');
-    const gender=[{gender:'male'},{gender:'female'}]
-    const status=[{status:"active"},{status:"disable"}]
-    const [genderName,setGenderName]=useState('')
-    const [statusName,setStatusName]=useState('')
-    const [name,setName]=useState('');
-    const [birthdate,setBirthdate]=useState('');
-    const [deathdate,setDeathdate]=useState('');
-  
-    const [img,setImg]=useState('');
-    const [imgName,setImgName]=useState([]);
-    const [imgcontain,setImgcontain]=useState([]);
+    const gender = [{ gender: 'male' }, { gender: 'female' }]
+    const status = [{ status: "active" }, { status: "disable" }]
+    const [genderName, setGenderName] = useState('')
+    const [statusName, setStatusName] = useState('')
+    const [name, setName] = useState('');
+    const [birthdate, setBirthdate] = useState('');
+    const [deathdate, setDeathdate] = useState('');
 
-    const toast =useRef(null);
+    const [img, setImg] = useState('');
+    const [imgName, setImgName] = useState([]);
+    const [imgcontain, setImgcontain] = useState([]);
+
+    const toast = useRef(null);
     useEffect(() => {
         setCountry(
             [
@@ -277,54 +277,95 @@ export default function AD_modal({title, show ,value,Load}) {
 
             ])
     }, []);
-// ham add new person
-const showToast = () => {
-    return toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
-};
-
-    async function addperson(e){
+    // ham add new person
+    const showToast = () => {
+        return toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+    };
+  
+    async function addperson(e) {
+       
         e.preventDefault();
         try {
-          await axios.post('http://127.0.0.1:8000/api/addperson',{
-            name:name,
-            birthdate:birthdate,
-            deathdate:deathdate,
-            status:statusName.status,
-            gender:genderName.gender,
-            img:imgName.toString(),
-            national:countryName.name,
-          });
-          alert('success')
-         
-         setShowModal(!showModal)
-         setName('');
-         setBirthdate('');
-         setDeathdate('');
-         setCountryName('');
-         setGenderName('');
-        setStatusName('')
-        setImgName('')
-          Load()
-       
+            await axios.post('http://127.0.0.1:8000/api/addperson', {
+                name: name,
+                birthdate: birthdate,
+                deathdate: deathdate,
+                status: statusName.status,
+                gender: genderName.gender,
+                img: imgName.toString(),
+                national: countryName.name,
+            });
+            alert('success')
+
+            setShowModal(!showModal)
+            setName('');
+            setBirthdate('');
+            setDeathdate('');
+            setCountryName('');
+            setGenderName('');
+            setStatusName('')
+            setImgName('')
+
+            Load()
+
         }
-        catch(err) {
+        catch (err) {
             alert(err)
             alert('ADD FAILED')
         }
-      }
-    useEffect(() => {
-       if(show) {
-        const handleClick = () => {
-            setShowModal(!showModal);
+    }
+    // ham update 
+    async function updateperson(e) {
+        if(imgName.length<10) {
+            alert('Not enough img files');
+            return alert('Update fail')
+        }
+        e.preventDefault();
+        try {
+            await axios.put('http://127.0.0.1:8000/api/updateperson/' + value.id, {
+                name: name,
+                birthdate: birthdate,
+                deathdate: deathdate,
+                status: statusName.status,
+                gender: genderName.gender,
+                img: imgName.toString(),
+                national: countryName.name,
+            });
+            alert('success')
 
+            setShowModal(!showModal)
+            setName('');
+            setBirthdate('');
+            setDeathdate('');
+            setCountryName('');
+            setGenderName('');
+            setStatusName('')
+            setImgName('')
+            Load()
         }
-        show.current.addEventListener('click', handleClick);
-        return () => {
-            show.current.removeEventListener('click', handleClick);
+        catch (err) {
+            alert(err)
+            alert('ADD FAILED')
         }
-       }
+    }
+
+ 
+    // Ham show modal   
+    useEffect(() => {
+        if (show) {
+            const handleClick = () => {
+                setShowModal(!showModal);
+
+            }
+            show.current.addEventListener('click', handleClick);
+            return () => {
+                show.current.removeEventListener('click', handleClick);
+            }
+        }
     }, [show]);
-// ham tim country
+
+
+    // ham tim country
     const search = (event) => {
         setTimeout(() => {
 
@@ -347,39 +388,46 @@ const showToast = () => {
         }, 250);
     }
 
-//    ham set edit
-   useEffect(()=> {
-    if(value) {
-        setName(value.name);
-        setCountryName(value.national);
-        setBirthdate(value.birthdate)
-        if(value.deathdate!=='null') {
-            setDeathdate(value.deathdate)
+    //    ham set edit
+    useEffect(() => {
+        if (value) {
+            setName(value.name);
+            setCountryName(value.national);
+            setBirthdate(value.birthdate)
+            if (value.deathdate !== 'null') {
+                setDeathdate(value.deathdate)
+            }
+
+            setGenderName({ gender: value.gender })
+            setStatusName({ status: value.status })
+            if (value.img) {
+                setImgName(value.img.split(','));
+            }
+
         }
-        
-        setGenderName({gender: value.gender})
-        setStatusName({status : value.status})
-   
-        setImgName(value.img.split(','));
-       
+    }, [])
+    // ham  get img name
+    const handleImg = (e) => {
+        if(e.target.files.length===0) {
+            setImgName([]);
+        }
+        else {
+
+            let filter = [];
+            for (let i = 0; i < e.target.files.length; i++) {
+                filter.push(e.target.files[i].name)
+            }
+            setImgName(filter)
+        }
+
+
     }
-   },[])
-// ham  get img name
-const handleImg=(e)=> {
-    let filter=[];
-    for(let i=0;i<e.target.files.length;i++) {
-        filter.push(e.target.files[i].name)
+    const handleShowImg = (e,index) => {
+        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={require(`../../img/${e}`)} width='100' />
+
+
+
     }
-    setImgName(filter)
-  
-
-}
-const handleShowImg=(e)=> {
-  return      <img className='d-inline-flex ms-2 mt-1' alt={e} src={require(`../../img/${e}`)}  width='100'/>
-
-
-    
-}
 
 
     return (
@@ -389,7 +437,8 @@ const handleShowImg=(e)=> {
             <Modal show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                    <Toast ref={toast} />
+                        <Toast ref={toast} />
+                        {/* <Button  label="click" onClick={showToast}/> */}
                         <h1>{title} PERSON</h1>
                     </Modal.Title>
                 </Modal.Header>
@@ -398,8 +447,8 @@ const handleShowImg=(e)=> {
                     <Form>
                         <Form.Group className="mb-3" >
                             <Form.Label>Name</Form.Label>
-                            <InputText value={name} onChange={e=>setName(e.target.value)}  placeholder="Enter Name" name='name' style={{minWidth:'100%'}}  />
-                            
+                            <InputText value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" name='name' style={{ minWidth: '100%' }} />
+
                         </Form.Group>
 
 
@@ -408,57 +457,65 @@ const handleShowImg=(e)=> {
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Nation</Form.Label>
 
-                                    <AutoComplete field='name' dropdown value={countryName} onChange={e => setCountryName(e.value)} completeMethod={search} suggestions={filterCountry}  />
+                                    <AutoComplete field='name' dropdown value={countryName} onChange={e => setCountryName(e.value)} completeMethod={search} suggestions={filterCountry} />
                                 </Form.Group>
                             </Col>
 
                             <Col lg={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Gender</Form.Label>
-                                <Dropdown options={gender} value={genderName} onChange={e=>setGenderName(e.target.value)} optionLabel='gender' placeholder='Gender' style={{minWidth:'100%'}}  />
+                                    <Dropdown options={gender} value={genderName} onChange={e => setGenderName(e.target.value)} optionLabel='gender' placeholder='Gender' style={{ minWidth: '100%' }} />
 
                                 </Form.Group>
                             </Col>
-                            
-                            
+
+
                             <Col lg={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Status</Form.Label>
-                                <Dropdown options={status} value={statusName} onChange={e=>setStatusName(e.value)} optionLabel='status' placeholder='Status'  style={{minWidth:'100%'}}  />
+                                    <Dropdown options={status} value={statusName} onChange={e => setStatusName(e.value)} optionLabel='status' placeholder='Status' style={{ minWidth: '100%' }} />
 
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Row>
                             <Col lg={6}>
-                                    <Form.Group>
-                                        <Form.Label>Birthdate</Form.Label>
-                                        <Form.Control value={birthdate} onChange={e=>setBirthdate(e.target.value)} type='date' name='birthdate' />
-                                    </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Birthdate</Form.Label>
+                                    <Form.Control value={birthdate} onChange={e => setBirthdate(e.target.value)} type='date' name='birthdate' />
+                                </Form.Group>
                             </Col>
                             <Col lg={6}>
-                                    <Form.Group>
-                                        <Form.Label>Deathdate (allow null)</Form.Label>
-                                        <Form.Control  value={deathdate} onChange={e=>setDeathdate(e.target.value)}type='date' name='deathdate' />
-                                    </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Deathdate (allow null)</Form.Label>
+                                    <Form.Control value={deathdate} onChange={e => setDeathdate(e.target.value)} type='date' name='deathdate' />
+                                </Form.Group>
                             </Col>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group >
-                                <Form.Label>Images</Form.Label>
-                               <InputText  type='file' multiple  onChange={handleImg}/>
-                            {imgName.map(item=>handleShowImg(item))}
+                                <Form.Label>Images (&gt;=10 Files)</Form.Label>
+                                <InputText type='file' multiple onChange={handleImg} accept='image/*'  style={{minWidth:'100% '}} />
+                                {imgName&&imgName.length>0 && imgName.map((item,index)=> handleShowImg(item,index))}
                             </Form.Group>
                         </Row>
 
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                  
-             
-                    <Button variant="primary" onClick={addperson} >
-                      SUBMIT
-                    </Button>
+
+                    {value && (
+
+                        <Button variant="primary" onClick={updateperson} >
+                            SAVE
+                        </Button>
+                    )}
+                    {!value && (
+
+                        <Button variant="primary" onClick={addperson} >
+                            SUBMIT
+                        </Button>
+                    )}
                 </Modal.Footer>
             </Modal>
 

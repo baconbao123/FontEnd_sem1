@@ -42,6 +42,7 @@ export default function AD_show() {
 
   useEffect(() => {
     (async()=>await Load())();
+
     setLoading(false);
 
   }, [])
@@ -50,7 +51,37 @@ export default function AD_show() {
     const result=await axios.get('http://127.0.0.1:8000/api/person');
     setPerson(result.data);
   }
-  // ham add person
+   // Ham disable
+   const handleDisable=()=> {
+    if (selection.length>=1) {
+      console.log(selection);
+        selection.map((item=> {
+       
+
+            disableperson(item)
+            setSelection(selection.filter(item=>item !== item))
+        }))
+
+    }
+}
+async function disableperson(item) {
+
+    
+    try {
+        
+      await axios.put('http://127.0.0.1:8000/api/updateperson/' +item.id,{
+    
+        status: 'disable',
+   
+      }) 
+      alert(item.id + ' disable success')
+      Load();
+    }
+    catch (err) {
+      alert(err)
+      alert('disable failed')
+    }
+}
 
 
 // Hàm search Golbal
@@ -108,13 +139,13 @@ export default function AD_show() {
          <>
           <Button ref={showModalEdit} className='ms-3' type='button' label="edit" severity='warning' >
             <BsGear   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-            <AD_modal title="EDIT" show={showModalEdit} value={selection[0]}/>
+            <AD_modal Load={Load} title="EDIT" show={showModalEdit} value={selection[0]}/>
 
          </>
           )}
 
           {selection.length>=1&&(
-          <Button className='ms-3' type='button' label="disable" severity='danger' >
+          <Button  onClick={handleDisable} className='ms-3' type='button' label="disable" severity='danger' >
             <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
 
           )}
@@ -181,25 +212,27 @@ export default function AD_show() {
 
   }
   const itemImage=(e)=> {
-   
-    let store=e.img.split(',')
-    
-   return (
-    <>
-    
-    <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={require(`../../img/${store[0]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={require(`../../img/${store[1]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={require(`../../img/${store[2]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={require(`../../img/${store[3]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={require(`../../img/${store[4]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={require(`../../img/${store[5]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={require(`../../img/${store[6]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={require(`../../img/${store[7]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={require(`../../img/${store[8]}`)}  width='100'/>
-    <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={require(`../../img/${store[9]}`)}  width='100'/>
-    </>
+   if(e.img) {
 
-   )
+     let store=e.img.split(',')
+     
+    return (
+     <>
+     
+     <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={require(`../../img/${store[0]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={require(`../../img/${store[1]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={require(`../../img/${store[2]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={require(`../../img/${store[3]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={require(`../../img/${store[4]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={require(`../../img/${store[5]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={require(`../../img/${store[6]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={require(`../../img/${store[7]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={require(`../../img/${store[8]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={require(`../../img/${store[9]}`)}  width='100'/>
+     </>
+ 
+    )
+   }
      
      
     

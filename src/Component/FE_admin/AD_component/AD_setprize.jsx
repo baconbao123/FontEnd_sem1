@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import { DataTable, Column, Tag, Button, FilterMatchMode, FilterOperator, InputText, Dropdown } from 'primereact'
 import { BsSearch, BsPersonAdd, BsGear, BsTrashFill, BsTrophyFill } from "react-icons/bs";
 import { RiFilterOffFill } from "react-icons/ri";
-
+import axios from 'axios';
 import AD_nav from '../Layout/AD_nav'
 import AD_setprize_modal from "../AD_component/AD_setprize_modal"
 export default function AD_setprize() {
@@ -26,33 +26,35 @@ export default function AD_setprize() {
     }
   )
   useEffect(() => {
-    setPrizes([
-      { nobel_id: '1', person_id: '1', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '2', person_id: '2', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '3', person_id: '3', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '4', person_id: '4', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '5', person_id: '5', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '6', person_id: '6', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '7', person_id: '7', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '8', person_id: '8', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '9', person_id: '9', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '10', person_id: '10', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '11', person_id: '11', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '12', person_id: '12', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '13', person_id: '13', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '14', person_id: '14', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '15', person_id: '15', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '16', person_id: '16', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '17', person_id: '17', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '18', person_id: '18', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '19', person_id: '19', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-      { nobel_id: '20', person_id: '20', motivation: 'verry goood to pround of', nobel_share: '1/3', status: 'active' },
-
-    ])
-    
+   
+    (async()=>await Load())()
     setLoading(false)
   }, [])
-
+  // get data
+  async function Load() {
+    const result= await axios.get('http://127.0.0.1:8000/api/pn');
+    setPrizes(result.data) 
+  }
+      // ham disable 
+      const handleDisable=() => {
+        selection.map(item=>{
+          disablesetprize(item);
+          setSelection(selection.filter(item=>item !== item))
+        })
+      }
+      async function  disablesetprize(item){
+          try {
+              await axios.put('http://127.0.0.1:8000/api/updatepn/'+item.person_id +'/'+item.nobel_id,{
+                status: 'disable',
+              })
+              Load();
+              alert(item.person_id+ ' ' + item.nobel_id+' sucess disable');
+          }
+          catch(err) {
+              console.log(err);
+          }
+      }
+  
   // hàm set Init FIlter
   const initFilters = () => {
     setFilters({
@@ -107,14 +109,14 @@ export default function AD_setprize() {
                 ref={showModalEdit}
                 className='ms-3' type='button' label="edit" severity='warning' >
                 <BsGear className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-              <AD_setprize_modal title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
+              <AD_setprize_modal Load={Load} title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
 
 
             </>
           )}
 
           {selection.length >= 1 && (
-            <Button className='ms-3' type='button' label="disable" severity='danger' >
+            <Button  onClick={handleDisable} className='ms-3' type='button' label="disable" severity='danger' >
               <BsTrashFill className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
 
           )}
@@ -173,7 +175,7 @@ export default function AD_setprize() {
           </DataTable>
         </Col>
       </Row>
-      <AD_setprize_modal title={"ADD NEW NOBEL PERSON"} show={showModalButoon} />
+      <AD_setprize_modal Load={Load} title={"ADD NEW NOBEL PERSON"} show={showModalButoon} />
     </Container>
   )
 }

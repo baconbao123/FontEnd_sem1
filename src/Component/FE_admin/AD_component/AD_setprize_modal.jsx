@@ -7,29 +7,98 @@ import { AutoComplete } from 'primereact/autocomplete';
 import { Dropdown } from 'primereact/dropdown';
 import { FileUpload } from 'primereact/fileupload';
 
-import { InputText } from 'primereact/inputtext';
-
+import { InputText, InputTextarea } from 'primereact'
+import axios from 'axios';
 import { Toast } from 'primereact/toast';
-export default function AD_setprize_modal({ title, show, value }) {
+export default function AD_setprize_modal({ title, show, value, Load }) {
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [prizes, setPrizes] = useState([]);
     const [person, setPerson] = useState([])
     const [availabePrize, setAvailablePrize] = useState([]);
-    const status=[{status:'active'},{status:'disable'}]
-    const [statusName,setStatusName]=useState('')
+    const status = [{ status: 'active' }, { status: 'disable' }]
+    const [statusName, setStatusName] = useState('')
     const [personName, setPersonName] = useState('')
     const [prizeName, setPrizeName] = useState('')
     const [nobelShare, setNobelShare] = useState('')
-
+    const [suggestPrize, setSuggestPrize] = useState([]);
+    const [allPrize, setAllPrize] = useState([])
     const category = [{ category: 'Physic Prize' }, { category: 'Chemistry Prize' }, { category: 'Medicine Prize' }, { category: 'Literature Prize' }, { category: 'Peace Prize' }, { category: 'Prize in Economic Sciences' }]
     const [categoryName, setCategoryName] = useState('');
-
+    const [motivation, setMotivation] = useState('')
+    const [prizeContent, setPrizeContent] = useState()
+    // ham add set prize
+    async function addprize() {
+        try {
+            await axios.post('http://127.0.0.1:8000/api/addpn', {
+                person_id: personName.id,
+                nobel_id: prizeName.id,
+                motivation: motivation,
+                status: statusName.status,
+                nobel_share: nobelShare
+            })
+            alert('success')
+            Load()
+            setPersonName('');
+            setPrizeName('');
+            setMotivation('');
+            setStatusName('');
+            setNobelShare('');
+            setShowModal(false)
+        }
+        catch (err) {
+            alert(err)
+        }
+    }
+    
+    // ham update
+    async function updateprize() {
+        try {
+            await axios.put('http://127.0.0.1:8000/api/updatepn/'+value.person_id +'/'+value.nobel_id, {
+                person_id: personName.id,
+                nobel_id: prizeName.id,
+                motivation: motivation,
+                status: statusName.status,
+                nobel_share: nobelShare
+            })
+            alert('success')
+            Load()
+            setPersonName('');
+            setPrizeName('');
+            setMotivation('');
+            setStatusName('');
+            setNobelShare('');
+            setShowModal(false)
+        }
+        catch (err) {
+            alert(err)
+        }
+    }
 
     useEffect(() => {
         let _filter = prizes.filter((prizes) => prizes.nobel_name === categoryName.category)
-        setAvailablePrize(_filter);
-    }, [categoryName])
+    
+        if (value) {
+            if(prizeName.nobel_name===categoryName.category) {
+
+                _filter.push(prizeName)
+                setAvailablePrize(_filter);
+            }
+            else {
+                
+            setAvailablePrize(_filter);
+            }
+        }
+        else if(_filter.length>0) {
+
+            setAvailablePrize(_filter);
+
+        }
+      
+  
+
+
+    }, [categoryName, prizes])
     useEffect(() => {
         if (show) {
             const handleClick = () => {
@@ -42,75 +111,96 @@ export default function AD_setprize_modal({ title, show, value }) {
             }
         }
     }, [show]);
-    useEffect(() => {
-        setPrizes([
-            { id: '1', nobel_year: '2022', nobel_name: 'Chemistry Prize' },
-            { id: '2', nobel_year: '2002', nobel_name: 'Chemistry Prize' },
-            { id: '3', nobel_year: '2002', nobel_name: 'Medicine Prize' },
-            { id: '4', nobel_year: '2002', nobel_name: 'Medicine Prize' },
-            { id: '5', nobel_year: '2002', nobel_name: 'Medicine Prize' },
-            { id: '6', nobel_year: '2002', nobel_name: 'Medicine Prize' },
-            { id: '7', nobel_year: '2002', nobel_name: 'Chemistry Prize' },
-            { id: '8', nobel_year: '2002', nobel_name: 'Chemistry Prize' },
-            { id: '9', nobel_year: '2002', nobel_name: 'Literature Prize' },
-            { id: '10', nobel_year: '2016', nobel_name: 'Literature Prize' },
-            { id: '11', nobel_year: '2016', nobel_name: 'Literature Prize' },
-            { id: '12', nobel_year: '2016', nobel_name: 'Literature Prize' },
-            { id: '13', nobel_year: '2016', nobel_name: 'Chemistry Prize' },
-            { id: '14', nobel_year: '2016', nobel_name: 'Chemistry Prize' },
-            { id: '15', nobel_year: '2016', nobel_name: 'Chemistry Prize' },
-            { id: '16', nobel_year: '2016', nobel_name: 'Chemistry Prize' },
-            { id: '17', nobel_year: '2016', nobel_name: 'Chemistry Prize' },
-            { id: '18', nobel_year: '2022', nobel_name: 'Chemistry Prize' },
-            { id: '19', nobel_year: '2022', nobel_name: 'Chemistry Prize' },
-            { id: '20', nobel_year: '2022', nobel_name: 'Chemistry Prize' },
 
-        ])
-        setPerson([
-            { id: '1', name: 'nguyen', birthdate: '2004-06-16', deathdate: 'null', gender: 'male', national: 'VietName', status: 'active', img: 'hello' },
-            { id: '2', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active', img: 'hello' },
-            { id: '3', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active', img: 'hello' },
-            { id: '4', name: 'Ngoc', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable', img: 'hello' },
-            { id: '5', name: 'Thuy', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable', img: 'hello' },
-            { id: '6', name: 'nguyen', birthdate: '15/6/2004', deathdate: 'Null', gender: 'male', national: 'VietName', status: 'disable', img: 'hello' },
-            { id: '7', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable', img: 'hello' },
-            { id: '8', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'disable', img: 'hello' },
-            { id: '9', name: 'Ngoc', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active', img: 'hello' },
-            { id: '10', name: 'Thuy', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active', img: 'hello' },
-            { id: '11', name: 'nguyen', birthdate: '15/6/2004', deathdate: 'Null', gender: 'male', national: 'VietName', status: 'active', img: 'hello' },
-            { id: '12', name: 'Long', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'US', status: 'active', img: 'hello' },
-            { id: '13', name: 'Ang', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active', img: 'hello' },
-            { id: '14', name: 'Ngoc', birthdate: '15/6/2003', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active', img: 'hello' },
-            { id: '15', name: 'Thuyfdsafsadffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', birthdate: '15/6/2004', deathdate: 'Null', gender: 'female', national: 'VietName', status: 'active', img: 'hello' }
-        ])
-        if(value) {
-            setNobelShare(value.nobel_share)
-            setStatusName({status:value.status})
-        }
-    }, [])
-    useEffect(()=>{
-        if(value) {
-            let _filterPerson=person.filter(item=>item.id===value.person_id);
-            console.log(_filterPerson);
-            setPersonName(_filterPerson[0]);
+      // set nobel share 
+      useEffect(()=>{
+        if(prizeName) {
 
-            let _filterPrize=prizes.filter(item=>item.id===value.nobel_id);
-            console.log('filre',_filterPrize);
-            setPrizeName(_filterPrize[0]);
-            if(_filterPrize.length===1) {
-
-                setCategoryName({category:_filterPrize[0].nobel_name})
+            if(prizeName.person[0]) {
+                setNobelShare(prizeName.person[0].pivot.nobel_share);
             }
         }
-    },[person,prizes])
-    //    ham set edit
-    //    useEffect(()=> {
-    //     if(value) {
-    //         setYear(value.nobel_year);
-    //         setCategoryName({category: value.nobel_name})
-    //     }
-    //    },[])
+    },[prizeName])
 
+    useEffect(() => {
+        (async () => await LoadPrize())();
+        (async () => await LoadPerson())()
+
+        if (value) {
+            setNobelShare(value.nobel_share)
+            setStatusName({ status: value.status })
+            setMotivation(value.motivation)
+        }
+    }, [])
+// lọc giải
+    useEffect(() => {
+        
+        setSuggestPrize(allPrize.filter(prize => {
+            let check = 0;
+            if (prize.person.length === 0) {
+                return prize
+            }
+            else if (prize.person.length > 0) {
+                if (prize.person.length < prize.person[0].pivot.nobel_share) check = 1
+
+            }
+            if (check === 1) return prize
+        }))
+
+        // console.log('person',person);
+    }, [allPrize])
+
+
+
+    useEffect(() => {
+        if(!value) {
+            let result = suggestPrize.filter(prize => {
+                let check = 0;
+              if(personName) {
+                personName.nobel.map(nobel => {
+                    if (nobel.id === prize.id) check = 1
+                })
+              }
+                if (check === 0) return prize
+            })
+            setPrizes(result);
+        }
+
+    }, [personName])
+
+    // console.log('prizes',prizes);
+    async function LoadPrize() {
+        const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
+        setAllPrize(result.data)
+    }
+    async function LoadPerson() {
+        const result = await axios.get('http://127.0.0.1:8000/api/personprize');
+        setPerson(result.data)
+    }
+
+    
+    useEffect(() => {
+        if (value) {
+            let _filterPerson = person.filter(item => item.id === value.person_id);
+            // console.log(_filterPerson);
+            setPersonName(_filterPerson[0]);
+
+            let _filterPrize = allPrize.filter(item => item.id === value.nobel_id);
+            console.log('all prize',prizes);
+            console.log('value',value);
+            console.log('filre',_filterPrize[0]);
+            setPrizeName(_filterPrize[0]);
+            // setAvailablePrize(prizeName)
+            console.log('prize name',prizeName);
+            // console.log('available',availabePrize);
+            if (_filterPrize.length >0) {
+
+
+                setCategoryName({ category: _filterPrize[0].nobel_name })
+            }
+        }
+    }, [person,prizes])
+   console.log(allPrize);
 
     return (
         <>
@@ -172,32 +262,44 @@ export default function AD_setprize_modal({ title, show, value }) {
                             </Col>
                         </Row>
                         <Row className='mt-4'>
+                            <Form.Group>
+                                <Form.Label>motivation</Form.Label>
+                                <InputTextarea placeholder='enter experiment' style={{ minWidth: '100%', minHeight: '12rem' }} value={motivation} onChange={e => setMotivation(e.target.value)} />
+                            </Form.Group>
+                        </Row>
+                        <Row className='mt-4'>
                             <Col lg={6}>
                                 <Form.Group >
                                     <Form.Label>
                                         Nobel Share
                                     </Form.Label>
-                                        <InputText value={nobelShare} onChange={e=>setNobelShare(e.value)}  placeholder='1/n' style={{ minWidth: '100%' }} />
+                                    <InputText value={nobelShare} onChange={e => setNobelShare(e.target.value)} placeholder='1/n' style={{ minWidth: '100%' }} />
                                 </Form.Group>
                             </Col>
                             <Col lg={6}>
                                 <Form.Group >
                                     <Form.Label>
-                                       Satus
+                                        Satus
                                     </Form.Label>
-                                        <Dropdown value={statusName} onChange={e=>setStatusName(e.value)} options={status} optionLabel='status' placeholder='select staus ' style={{ minWidth: '100%' }} />
+                                    <Dropdown value={statusName} onChange={e => setStatusName(e.value)} options={status} optionLabel='status' placeholder='select staus ' style={{ minWidth: '100%' }} />
                                 </Form.Group>
                             </Col>
                         </Row>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" >
-                        Close
-                    </Button>
-                    <Button variant="primary">
-                        Save Changes
-                    </Button>
+                    {!value && (
+
+                        <Button onClick={addprize} variant="primary">
+                            ADD NEW
+                        </Button>
+                    )}
+                    {value && (
+
+                        <Button onClick={updateprize} variant="primary">
+                            SAVE CHANGE
+                        </Button>
+                    )}
                 </Modal.Footer>
             </Modal>
 

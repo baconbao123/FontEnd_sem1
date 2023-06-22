@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {Container, Row, Col, Image, Carousel } from 'react-bootstrap'
+import { Row, Col, Image, Carousel } from 'react-bootstrap'
 import {AiOutlineDownload} from 'react-icons/ai';
 import {saveAs} from 'file-saver';
 import AOS from "aos";
