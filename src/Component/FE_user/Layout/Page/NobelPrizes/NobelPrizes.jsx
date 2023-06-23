@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -8,8 +8,13 @@ import { Paginator } from "primereact/paginator";
 
 import { GoSearch } from "react-icons/go";
 import { BiRefresh } from "react-icons/bi";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 function NobelPrizes() {
+    // effect srcoll
+    useEffect(() => {
+      AOS.init();
+    }, []);
   // Data
   const nobelPrizes = [
     {
@@ -35,6 +40,12 @@ function NobelPrizes() {
         },
         {
           namePrize: "Economic Sciences",
+          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
+          motivation:
+            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
+        },
+        {
+          namePrize: "Medical",
           namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
           motivation:
             "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
@@ -144,49 +155,44 @@ function NobelPrizes() {
   return (
     <div className="container nobel-prizes">
       <section className="row col-lg-6 col-lg-6 title-nobel-prizes text-light">
-        <h1>All Nobel Prizes</h1>
+        <h1 data-aos="fade-up">All Nobel Prizes</h1>
       </section>
       {/* Form select search */}
-      <section className="row mt-5 form-nobel-prizes ">
-        <div className="d-flex">
-          <div className="col-lg-6"> </div>
-          <div className="col-lg-6 col-md-7 gap-2 d-flex">
-            <Form.Select
-              className="w-25"
-              value={selectedPrize}
-              onChange={(e) => setSelectedPrize(e.target.value)}
-            >
-              <option className="active">Nobel Prizes</option>
-              <option value="Physics">Physics</option>
-              <option value="Chemistry">Chemistry</option>
-              <option value="Literature">Literature</option>
-              <option value="Medical">Medical</option>
-              <option value="Peace">Peace</option>
-              <option value="Economic Sciences">Economic Sciences</option>
-            </Form.Select>
-            <Form.Select
-              className="w-25"
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
-            >
-              <option className="active">Year</option>
-              {nobelPrizes.map((year, index) => (
-                <option value={year.year} key={index}>
-                  {year.year}
-                </option>
-              ))}
-            </Form.Select>
-            {selectedPrize !== "Nobel Prizes" || selectedYear !== "Year" ? (
-              <button
-                type="button"
-                className="btn btn-outline-primary w-25"
-                onClick={() => handleReset()}
-              >
-                Reset <BiRefresh />
-              </button>
-            ) : null}
-          </div>
-        </div>
+      <section className="row mt-1 form-year-nobel-detail gap-3">
+        <Form.Select
+          className="form-select-nobel col-lg-12"
+          value={selectedPrize}
+          onChange={(e) => setSelectedPrize(e.target.value)}
+        >
+          <option className="active">Nobel Prizes</option>
+          <option value="Physics">Physics</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Literature">Literature</option>
+          <option value="Medical">Medical</option>
+          <option value="Peace">Peace</option>
+          <option value="Economic Sciences">Economic Sciences</option>
+        </Form.Select>
+        <Form.Select
+          className="form-select-nobel col-lg-12"
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+        >
+          <option className="active">All Year</option>
+          {nobelPrizes.map((year, index) => (
+            <option value={year.year} key={index}>
+              {year.year}
+            </option>
+          ))}
+        </Form.Select>
+        {selectedPrize !== "Nobel Prizes" || selectedYear !== "Year" ? (
+          <button
+            type="button"
+            className="btn btn-outline-primary btn-reset col-lg-12"
+            onClick={() => handleReset()}
+          >
+            Reset <BiRefresh />
+          </button>
+        ) : null}
       </section>
       {/* Item-nobel-prize */}
       <section className="item-nobel-prizes w-100 mt-4 mb-4">
@@ -208,9 +214,11 @@ function NobelPrizes() {
                 .map((prize, i) => (
                   <Link
                     to={`/nobel-prizes/${prize.namePrize}/${item.year}`}
-                    key={`${index}-${i}`}
+                    key={`${index}-${i}`} 
+                    
                   >
-                    <div className="item-nobel-prize col-lg-12 bg-light mt-4">
+                    <div className="item-nobel-prize col-lg-12 bg-light mt-4 " 
+                    >
                       <h3 className="title-nobel-prize mb-4">
                         The Nobel Prize in {prize.namePrize} {item.year}
                       </h3>
@@ -225,7 +233,7 @@ function NobelPrizes() {
           ))}
       </section>
       {/* Pagination */}
-      <section className="mt-4">
+      {/* <section className="mt-4">
         <Paginator
           first={first}
           rows={rows}
@@ -233,7 +241,7 @@ function NobelPrizes() {
           onPageChange={onPageChange}
           className="paginator"
         />
-      </section>
+      </section> */}
     </div>
   );
 }

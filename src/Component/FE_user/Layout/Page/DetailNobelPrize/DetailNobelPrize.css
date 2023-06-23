@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Montserrat:wght@700@300&family=Open+Sans:wght@600;700&family=Raleway:wght@300&family=Roboto:wght@300&display=swap");
+
+.card-nobel-prizes{
+    margin-top: 125px;
+}
+.form-year-nobel-detail{
+    display: flex;
+    justify-content: end;
+}
+.form-select-nobel{
+    width: 10%;
+    
+}
+
+.card {
+    display: block;
+    margin-bottom: 20px;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.card .card-body {
+    padding: 10px;
+    margin-top: 0px;
+    color: #ffffff;
+    text-align: center;
+}
+.card .card-body a{
+    text-decoration: none;
+}
+.card-title-person{
+    font-family: "Open Sans", sans-serif !important;
+    color: #2650F2 !important;
+    font-size: 20px !important;
+    font-weight: 800;
+}
+p.prizes.card-text>p{
+    font-size: 18px !important;
+    color: #3f3f3f;
+    font-family: "Roboto",sans-serif;
+    font-weight: 300 !important;
+}
+img.card-img {
+    padding: 15px 15px 0px 15px;
+    background-color: #fff;
+    border-radius: 0 !important;
+    object-fit: cover !important;
+}
+button.btn.btn-primary{
+    background-color: transparent !important;
+    color: #000;
+    border-radius: 0 !important;
+    border: 1px solid #000 !important;
+    padding: 8px 25px;
+}
+button.btn.btn-primary:hover{
+    background-color: #F1A40E !important;
+    color: #ffffff;
+    border: 1px solid #F1A40E !important;
+}

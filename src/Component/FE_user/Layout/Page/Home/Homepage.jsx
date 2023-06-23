@@ -1,106 +1,103 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {useCallback, useMemo } from "react";
 import "./Homepage.css";
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
-import item1 from "../../../../img/1.png";
-import item2 from "../../../../img/2.png";
-import item3 from "../../../../img/3.png";
-import item4 from "../../../../img/4.png";
-import item5 from "../../../../img/5.png";
-import item6 from "../../../../img/6.png";
 
-import post1 from "../../../../img/blog-1.jpg";
-import post2 from "../../../../img/blog-2.jpg";
+
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
-function Homepage() {
+const Homepage = React.memo(() => {
   // effect srcoll
   useEffect(() => {
     AOS.init();
   }, []);
-  // DATA
-  const itemCategorys = [
-    {
-      title: "Literature",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: item1,
-    },
-    {
-      title: "Chemistry",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: item2,
-    },
-    {
-      title: "Medicine",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: item3,
-    },
-    {
-      title: "Peace",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: item4,
-    },
-    {
-      title: "Physics",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: item5,
-    },
-    {
-      title: "Economic Sciences",
-      subtitle:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      img: item6,
-    },
-  ];
 
-  const posts = [
-    {
-      imgPost: post1,
-      timePost: "6/14/2023",
-      titlePost: "How many peace laureates can you match?",
-      subtitlePost:
-        "Can you match the right peace laureate with the right accomplishment? Have a try!",
-    },
-    {
-      imgPost: post2,
-      timePost: "6/14/2023",
-      titlePost: "How many peace laureates can you match?",
-      subtitlePost:
-        "Can you match the right peace laureate with the right accomplishment? Have a try!",
-    },
-    {
-      imgPost: post2,
-      timePost: "6/14/2023",
-      titlePost: "How many peace laureates can you match?",
-      subtitlePost:
-        "Can you match the right peace laureate with the right accomplishment? Have a try!",
-    },
-  ];
+  // DATA
+  const itemCategorys = useMemo(
+    () => [
+      {
+        title: "Literature",
+        subtitle:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        img: '1.png',
+      },
+      {
+        title: "Chemistry",
+        subtitle:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        img: '2.png',
+      },
+      {
+        title: "Medicine",
+        subtitle:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        img: '3.png',
+      },
+      {
+        title: "Peace",
+        subtitle:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        img: '4.png',
+      },
+      {
+        title: "Physics",
+        subtitle:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        img: '5.png',
+      },
+      {
+        title: "Economic Sciences",
+        subtitle:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        img: '6.png',
+      },
+    ]);
+
+  const posts = useMemo(
+    () => [
+      {
+        imgPost: 'blog-1.jpg',
+        timePost: "6/14/2023",
+        titlePost: "How many peace laureates can you match?",
+        subtitlePost:
+          "Can you match the right peace laureate with the right accomplishment? Have a try!",
+      },
+      {
+        imgPost: 'blog-2.jpg',
+        timePost: "6/14/2023",
+        titlePost: "How many peace laureates can you match?",
+        subtitlePost:
+          "Can you match the right peace laureate with the right accomplishment? Have a try!",
+      },
+      {
+        imgPost: 'blog-1.jpg',
+        timePost: "6/14/2023",
+        titlePost: "How many peace laureates can you match?",
+        subtitlePost:
+          "Can you match the right peace laureate with the right accomplishment? Have a try!",
+      },
+    ]);
 
   // set show max 2 post
   const [numPosts, setNumPosts] = useState(2);
+
+  const handleButtonClick = useCallback(() => {
+    // Xử lý sự kiện khi nút được nhấn
+  }, []);
+
   return (
     <div className="container">
       <div className="overlay">
-      
         {/* header content */}
         <header className="header">
           <div className="overlay"></div>
           <div className="header-content">
-            <h1
-              className="header-title"
-              data-aos-duration="800"
-              data-aos="zoom-in"
-            >
+            <h1 className="header-title">
               "FOR THE GREATEST BENEFIT TO HUMANKIND"
             </h1>
             <p className="header-subtitle">- Alfred Nobel -</p>
@@ -112,8 +109,6 @@ function Homepage() {
             <h6 className="title mb-4">Explore Nobel Prizes</h6>
             <p
               className="mb-5 text-container"
-              data-aos="fade-up"
-              data-aos-duration="800"
             >
               Between 1901 and 2022, the Nobel Prizes and the Sveriges Riksbank
               Prize in Economic Sciences in Memory of Alfred Nobel were awarded
@@ -129,18 +124,16 @@ function Homepage() {
               <div
                 className="col-md-4 col-lg-4"
                 key={index}
-                data-aos="fade-up"
-                data-aos-duration="800"
               >
-                <a href="#" className="overlay-img">
-                  <img src={item.img} alt={item.title} />
+                <Link to="/chemistry" className="overlay-img">
+                  <img src={require(`../../../../img/${item.img}`)} alt={item.title} />
                   <div className="overlay"></div>
                   <div className="des text-center text-light">
                     <h1 className="title">{item.title}</h1>
                     <h6 className="subtitle">Nobel prize</h6>
                     <p>{item.subtitle}</p>
                   </div>
-                </a>
+                </Link>
               </div>
             ))}
           </div>
@@ -168,7 +161,7 @@ function Homepage() {
             >
               <a href="#" className="card">
                 <img
-                  src={post.imgPost}
+                  src={require(`../../../../img/${post.imgPost}`)}
                   className="card-img"
                   alt={post.titlePost}
                 />
@@ -193,6 +186,6 @@ function Homepage() {
       </div>
     </div>
   );
-}
+});
 
 export default Homepage;

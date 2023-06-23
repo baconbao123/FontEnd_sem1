@@ -25,6 +25,7 @@ import BiographyContent from "./Component/FE_user/Layout/Page/Biography/Biograph
 import Blog from "./Component/FE_user/Layout/Page/Blog/Blog";
 import BlogDetail from "./Component/FE_user/Layout/Page/Blog/BlogDetail";
 
+import DetailNobelPrize from "./Component/FE_user/Layout/Page/DetailNobelPrize/DetailNobelPrize";
 
 
 
@@ -48,7 +49,7 @@ function App() {
       </Routes>
 
       {/* User */}
-      {location.pathname ==="/nobel-prizes" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/chemistry/biography/')  || location.pathname.startsWith('/blog/')? <Navbar /> : null}
+      {location.pathname ==="/nobel-prizes" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/chemistry/biography/')  || location.pathname.startsWith('/blog/') || location.pathname === "/chemistry" ? <Navbar /> : null}
       
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -58,6 +59,7 @@ function App() {
         <Route path="/chemistry/biography/:id" element={<BiographyContent />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
+        <Route path="/chemistry" element={<DetailNobelPrize />} />
       </Routes>
       <ScollToTop />
     </>
