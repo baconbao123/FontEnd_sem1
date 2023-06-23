@@ -233,16 +233,16 @@ async function activeperson(item) {
      return (
       <>
       
-      <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={require(`../../img/${store[0]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={require(`../../img/${store[1]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={require(`../../img/${store[2]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={require(`../../img/${store[3]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={require(`../../img/${store[4]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={require(`../../img/${store[5]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={require(`../../img/${store[6]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={require(`../../img/${store[7]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={require(`../../img/${store[8]}`)}  width='100'/>
-      <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={require(`../../img/${store[9]}`)}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={"http://127.0.0.1:8000/api/images/"+store[0]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={"http://127.0.0.1:8000/api/images/"+store[1]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={"http://127.0.0.1:8000/api/images/"+store[2]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={"http://127.0.0.1:8000/api/images/"+store[3]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={"http://127.0.0.1:8000/api/images/"+store[4]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={"http://127.0.0.1:8000/api/images/"+store[5]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={"http://127.0.0.1:8000/api/images/"+store[6]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={"http://127.0.0.1:8000/api/images/"+store[7]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={"http://127.0.0.1:8000/api/images/"+store[8]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={"http://127.0.0.1:8000/api/images/"+store[9]}  width='100'/>
       </>
   
      )

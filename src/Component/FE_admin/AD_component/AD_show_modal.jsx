@@ -9,7 +9,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { InputText } from 'primereact/inputtext';
-export default function AD_modal({ title, show, value, Load }) {
+export default function AD_modal({ title, show, value, Load,setSelection }) {
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [country, setCountry] = useState([]);
@@ -285,16 +285,17 @@ export default function AD_modal({ title, show, value, Load }) {
     async function addperson(e) {
        
         e.preventDefault();
+        const data=new FormData();
+        imgName.map(item=>data.append('img[]',item));
+        data.append('name',name);
+        data.append('birthdate',birthdate);
+        data.append('deathdate',deathdate);
+        data.append('status',statusName.status);
+        data.append('gender',genderName.gender)
+        data.append('national',countryName.name)
         try {
-            await axios.post('http://127.0.0.1:8000/api/addperson', {
-                name: name,
-                birthdate: birthdate,
-                deathdate: deathdate,
-                status: statusName.status,
-                gender: genderName.gender,
-                img: imgName.toString(),
-                national: countryName.name,
-            });
+            await axios.post('http://127.0.0.1:8000/api/addperson',data);
+          
             alert('success')
 
             setShowModal(!showModal)
@@ -305,7 +306,6 @@ export default function AD_modal({ title, show, value, Load }) {
             setGenderName('');
             setStatusName('')
             setImgName('')
-
             Load()
 
         }
@@ -316,38 +316,111 @@ export default function AD_modal({ title, show, value, Load }) {
     }
     // ham update 
     async function updateperson(e) {
-        if(imgName.length<10) {
-            alert('Not enough img files');
-            return alert('Update fail')
+        e.preventDefault()
+        const store=value.img.split(',');
+        let check=0;
+        console.log(imgName);
+        console.log(store);
+        if(store.length!==imgName.length) {
+            check++
         }
-        e.preventDefault();
-        try {
-            await axios.put('http://127.0.0.1:8000/api/updateperson/' + value.id, {
-                name: name,
-                birthdate: birthdate,
-                deathdate: deathdate,
-                status: statusName.status,
-                gender: genderName.gender,
-                img: imgName.toString(),
-                national: countryName.name,
-            });
-            alert('success')
+        else {
+            for(let i=0;i<store.length;i++) {
+                if(imgName[i]!==store[i]) {
+                    check++
+                }
+            }
+        }
+        
+        if(check>0) {
+            console.log(check);
+            const data=new FormData();
+            data.append('_method',"PUT")
+             imgName.map(item=>data.append('image[]',item));
+            data.append('name',name);
+            data.append('birthdate',birthdate);
+            if(!deathdate) {
 
-            setShowModal(!showModal)
-            setName('');
-            setBirthdate('');
-            setDeathdate('');
-            setCountryName('');
-            setGenderName('');
-            setStatusName('')
-            setImgName('')
-            Load()
+                data.append('deathdate','');
+            }
+            else {
+                data.append('deathdate',deathdate);
+
+            }
+            data.append('status',statusName.status);
+            if(!genderName.gender) {
+
+                data.append('gender','')
+
+            }
+            else {
+                data.append('gender',genderName.gender)
+
+
+            }
+            if(!countryName) {
+
+                data.append('national','')
+
+            }
+            else {
+                data.append('national',countryName)
+
+
+            }
+          
+            e.preventDefault();
+            try {
+                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
+                alert('success')
+    
+                setShowModal(!showModal)
+                setName('');
+                setBirthdate('');
+                setDeathdate('');
+                setCountryName('');
+                setGenderName('');
+                setStatusName('')
+                setImgName('')
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
         }
-        catch (err) {
-            alert(err)
-            alert('ADD FAILED')
+        else {
+
+            try {
+                await axios.put('http://127.0.0.1:8000/api/updateperson/' + value.id, {
+                    name: name,
+                    birthdate: birthdate,
+                    deathdate: deathdate,
+                    status: statusName.status,
+                    gender: genderName.gender,
+                    img: imgName.toString(),
+                    national: countryName.name,
+                })
+                alert('success')
+    
+                setShowModal(!showModal)
+                setName('');
+                setBirthdate('');
+                setDeathdate('');
+                setCountryName('');
+                setGenderName('');
+                setStatusName('')
+                setImgName('')
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
         }
-    }
+        }
 
  
     // Ham show modal   
@@ -407,28 +480,35 @@ export default function AD_modal({ title, show, value, Load }) {
         }
     }, [])
     // ham  get img name
-    const handleImg = (e) => {
-        if(e.target.files.length===0) {
-            setImgName([]);
-        }
-        else {
+    // const handleImg = (e) => {
+    //     if(e.target.files.length===0) {
+    //         setImgName([]);
+    //     }
+    //     else {
 
-            let filter = [];
-            for (let i = 0; i < e.target.files.length; i++) {
-                filter.push(e.target.files[i].name)
-            }
-            setImgName(filter)
-        }
+    //         let filter = [];
+    //         for (let i = 0; i < e.target.files.length; i++) {
+    //             filter.push(e.target.files[i].name)
+    //         }
+    //         setImgName(filter)
+    //     }
 
 
-    }
+    // }
     const handleShowImg = (e,index) => {
-        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={require(`../../img/${e}`)} width='100' />
+        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={"http://127.0.0.1:8000/api/images/"+e} width='100' />
 
 
 
     }
-
+    const handleImg=(e)=> {
+        const store=[]
+        for(let i=0;i<e.target.files.length;i++) {
+            store.push(e.target.files[i])
+        }
+        setImgName(store)
+    }
+    console.log(img);
 
     return (
         <>
@@ -442,9 +522,9 @@ export default function AD_modal({ title, show, value, Load }) {
                         <h1>{title} PERSON</h1>
                     </Modal.Title>
                 </Modal.Header>
+                    <Form  onSubmit={value?updateperson:addperson} encType='multipart/form-data' >
                 <Modal.Body>
 
-                    <Form>
                         <Form.Group className="mb-3" >
                             <Form.Label>Name</Form.Label>
                             <InputText value={name} onChange={e => setName(e.target.value)} placeholder="Enter Name" name='name' style={{ minWidth: '100%' }} />
@@ -496,27 +576,28 @@ export default function AD_modal({ title, show, value, Load }) {
                             <Form.Group >
                                 <Form.Label>Images (&gt;=10 Files)</Form.Label>
                                 <InputText type='file' multiple onChange={handleImg} accept='image/*'  style={{minWidth:'100% '}} />
-                                {imgName&&imgName.length>0 && imgName.map((item,index)=> handleShowImg(item,index))}
+                                {value&&imgName&&imgName.length>0 && imgName.map((item,index)=> handleShowImg(item,index))}
                             </Form.Group>
                         </Row>
 
-                    </Form>
+                
                 </Modal.Body>
                 <Modal.Footer>
 
                     {value && (
 
-                        <Button variant="primary" onClick={updateperson} >
+                        <Button variant="primary" type='submit' >
                             SAVE
                         </Button>
                     )}
                     {!value && (
 
-                        <Button variant="primary" onClick={addperson} >
+                        <Button variant="primary" type='submit' >
                             SUBMIT
                         </Button>
                     )}
                 </Modal.Footer>
+                </Form>
             </Modal>
 
         </>

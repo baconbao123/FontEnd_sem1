@@ -24,5 +24,102 @@
     .cursor-pointer {
         cursor: pointer;
     }
-    
+    .bg-white {
+        background-color: #fff!important;
+    }
+    .card-ad-home {
+        height: 170px;
+        border-radius: 5px;
+    }
+    .img-ad-avatar {
+        width: 70px;
+        border-radius: 50%;
+        text-align: right;
+    }
+    .header-ad-containt {
+        height: 100%;
+    }
+    .card-body-home {
+        height: 100vh;
+    }
+    // card header
+    .card-header {
+        width: 300px;
+        height: 200px;
+        background-color: #4158D0;
+        background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+        border-radius: 8px;
+        color: white;
+        overflow: hidden;
+        position: relative;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        cursor: pointer;
+      }
+      
+      .card-header-content {
+        padding: 20px;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100%;
+      }
+      
+      .card-header-content .card-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: inherit;
+        text-transform: uppercase;
+      }
+      
+      .card-header-content .card-para {
+        color: inherit;
+        opacity: 0.8;
+        font-size: 14px;
+      }
+      
+      .card-header:hover {
+        transform: rotateY(10deg) rotateX(10deg) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      .card-header:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+        transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        z-index: 1;
+      }
+      
+      .card-header:hover:before {
+        transform: translateX(-100%);
+      }
+      
+      .card-header:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.1));
+        transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        z-index: 1;
+      }
+      
+      .card-header:hover:after {
+        transform: translateX(100%);
+      }
+      
 }

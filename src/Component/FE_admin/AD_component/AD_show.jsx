@@ -111,6 +111,10 @@ async function disableperson(item) {
     initFilters();
   };
 
+  // const handle selection
+  const handleSelection=()=>{
+    setSelection('')
+  }
 
 // render header
   const renderHeader = () => {
@@ -134,12 +138,12 @@ async function disableperson(item) {
         <section style={{minWidth:'24rem'}}>
         <Button ref={showModalButoon} className='d-inline-flex justify-content-end ' type='button' label="ADD"  severity='info'>
           <BsPersonAdd className='ms-2  p-input-icon-left'/> </Button>
-
+       
           {selection.length===1&&(
          <>
           <Button ref={showModalEdit} className='ms-3' type='button' label="edit" severity='warning' >
             <BsGear   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-            <AD_modal Load={Load} title="EDIT" show={showModalEdit} value={selection[0]}/>
+            <AD_modal setSelection={handleSelection} Load={Load} title="EDIT" show={showModalEdit} value={selection[0]}/>
 
          </>
           )}
@@ -211,6 +215,7 @@ async function disableperson(item) {
      )
 
   }
+  console.log(person);
   const itemImage=(e)=> {
    if(e.img) {
 
@@ -219,16 +224,16 @@ async function disableperson(item) {
     return (
      <>
      
-     <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={require(`../../img/${store[0]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={require(`../../img/${store[1]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={require(`../../img/${store[2]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={require(`../../img/${store[3]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={require(`../../img/${store[4]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={require(`../../img/${store[5]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={require(`../../img/${store[6]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={require(`../../img/${store[7]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={require(`../../img/${store[8]}`)}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={require(`../../img/${store[9]}`)}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={"http://127.0.0.1:8000/api/images/"+store[0]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={"http://127.0.0.1:8000/api/images/"+store[1]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={"http://127.0.0.1:8000/api/images/"+store[2]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={"http://127.0.0.1:8000/api/images/"+store[3]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={"http://127.0.0.1:8000/api/images/"+store[4]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={"http://127.0.0.1:8000/api/images/"+store[5]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={"http://127.0.0.1:8000/api/images/"+store[6]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={"http://127.0.0.1:8000/api/images/"+store[7]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={"http://127.0.0.1:8000/api/images/"+store[8]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={"http://127.0.0.1:8000/api/images/"+store[9]}  width='100'/>
      </>
  
     )
@@ -272,7 +277,9 @@ async function disableperson(item) {
               <Column field='national' header='national' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
               <Column field='gender' header='gender' filter  sortable filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }}/>
               <Column field='status' header='status' filter sortable filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
-              <Column field='img' header='img' body={itemImage}   style={{ minWidth: '40rem' }}   />
+              <Column field='img' header='img' 
+              body={itemImage} 
+                style={{ minWidth: '40rem' }}   />
               
             </DataTable>
           </section>

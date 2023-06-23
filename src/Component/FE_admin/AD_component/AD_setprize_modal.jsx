@@ -39,6 +39,8 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             })
             alert('success')
             Load()
+            LoadPrize();
+            LoadPerson();
             setPersonName('');
             setPrizeName('');
             setMotivation('');
@@ -62,7 +64,10 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
                 nobel_share: nobelShare
             })
             alert('success')
-            Load()
+            Load();
+            LoadPrize();
+            LoadPerson();
+
             setPersonName('');
             setPrizeName('');
             setMotivation('');
@@ -121,10 +126,11 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             }
         }
     },[prizeName])
-
+    console.log(prizeName);
     useEffect(() => {
         (async () => await LoadPrize())();
         (async () => await LoadPerson())()
+        
 
         if (value) {
             setNobelShare(value.nobel_share)
@@ -186,12 +192,12 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             setPersonName(_filterPerson[0]);
 
             let _filterPrize = allPrize.filter(item => item.id === value.nobel_id);
-            console.log('all prize',prizes);
-            console.log('value',value);
-            console.log('filre',_filterPrize[0]);
+            // console.log('all prize',prizes);
+            // console.log('value',value);
+            // console.log('filre',_filterPrize[0]);
             setPrizeName(_filterPrize[0]);
             // setAvailablePrize(prizeName)
-            console.log('prize name',prizeName);
+            // console.log('prize name',prizeName);
             // console.log('available',availabePrize);
             if (_filterPrize.length >0) {
 
@@ -200,7 +206,7 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             }
         }
     }, [person,prizes])
-   console.log(allPrize);
+//    console.log(allPrize);
 
     return (
         <>
