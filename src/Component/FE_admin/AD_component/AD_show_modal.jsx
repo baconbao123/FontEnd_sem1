@@ -18,15 +18,18 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
     const gender = [{ gender: 'male' }, { gender: 'female' }]
     const status = [{ status: "active" }, { status: "disable" }]
     const [genderName, setGenderName] = useState('')
-    const [statusName, setStatusName] = useState('')
+    const [statusName, setStatusName] = useState({status:''})
     const [name, setName] = useState('');
     const [birthdate, setBirthdate] = useState('');
     const [deathdate, setDeathdate] = useState('');
 
-    const [img, setImg] = useState('');
+    const [imgemty, setImgemty] = useState(true);
+    const [pdfemty, setpdfemty] = useState(true);
+
+    
     const [imgName, setImgName] = useState([]);
     const [imgcontain, setImgcontain] = useState([]);
-
+    const [pdf,setPdf]=useState()
     const toast = useRef(null);
     useEffect(() => {
         setCountry(
@@ -285,55 +288,137 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
     async function addperson(e) {
        
         e.preventDefault();
-        const data=new FormData();
-        imgName.map(item=>data.append('img[]',item));
-        data.append('name',name);
-        data.append('birthdate',birthdate);
-        data.append('deathdate',deathdate);
-        data.append('status',statusName.status);
-        data.append('gender',genderName.gender)
-        data.append('national',countryName.name)
-        try {
-            await axios.post('http://127.0.0.1:8000/api/addperson',data);
-          
-            alert('success')
-
-            setShowModal(!showModal)
-            setName('');
-            setBirthdate('');
-            setDeathdate('');
-            setCountryName('');
-            setGenderName('');
-            setStatusName('')
-            setImgName('')
-            Load()
-
+        if(imgName.length<6){
+            alert('At least 6 images')
+            
         }
-        catch (err) {
-            alert(err)
-            alert('ADD FAILED')
+        else {
+            
+            const data=new FormData();
+            if(imgName) {
+    
+                imgName.map(item=>data.append('img[]',item));
+            }
+            data.append('name',name);
+            data.append('birthdate',birthdate);
+            data.append('deathdate',deathdate);
+            data.append('status',statusName.status);
+            data.append('gender',genderName.gender)
+            data.append('national',countryName.name)
+            if(pdf) {
+    
+                data.append('pdf',pdf)
+            }
+            try {
+                await axios.post('http://127.0.0.1:8000/api/addperson',data);
+              
+                alert('success')
+    
+                setShowModal(!showModal)
+                setName('');
+                setBirthdate('');
+                setDeathdate('');
+                setCountryName('');
+                setGenderName('');
+                setStatusName('')
+                setImgName('')
+                Load()
+    
+            }
+            catch (err) {
+                alert(err)
+                alert('ADD FAILED')
+            }
         }
     }
     // ham update 
     async function updateperson(e) {
         e.preventDefault()
-        const store=value.img.split(',');
+       
+        const storeImg=value.img.split(',');
+        const storePdf=value.pdf;
+    
         let check=0;
+        let count=0;
         console.log(imgName);
-        console.log(store);
-        if(store.length!==imgName.length) {
+        console.log(storeImg);
+        if(storeImg.length!==imgName.length) {
             check++
         }
         else {
-            for(let i=0;i<store.length;i++) {
-                if(imgName[i]!==store[i]) {
+            for(let i=0;i<storeImg.length;i++) {
+                if(imgName[i]!==storeImg[i]) {
                     check++
                 }
             }
         }
-        
-        if(check>0) {
+        if(pdf!==storePdf) {
+            count=1;
+        }
+        // image and pdf change
+        if(check>0 &&count>0) {
             console.log(check);
+            const data=new FormData();
+            data.append('_method',"PUT")
+             imgName.map(item=>data.append('image[]',item));
+             data.append('pdf',pdf)
+            data.append('name',name);
+            data.append('birthdate',birthdate);
+         
+            if(!deathdate) {
+
+                data.append('deathdate','');
+            }
+            else {
+                data.append('deathdate',deathdate);
+
+            }
+            data.append('status',statusName.status);
+            if(!genderName.gender) {
+
+                data.append('gender','')
+
+            }
+            else {
+                data.append('gender',genderName.gender)
+
+
+            }
+            if(!countryName) {
+
+                data.append('national','')
+
+            }
+            else {
+                data.append('national',countryName)
+
+
+            }
+          
+            e.preventDefault();
+            try {
+                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
+                alert('success')
+    
+                setShowModal(!showModal)
+                setName('');
+                setBirthdate('');
+                setDeathdate('');
+                setCountryName('');
+                setGenderName('');
+                setStatusName('')
+                setImgName('')
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
+        }
+        //Img change
+        else if(check>0) {
+            
             const data=new FormData();
             data.append('_method',"PUT")
              imgName.map(item=>data.append('image[]',item));
@@ -390,6 +475,65 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 alert('Update FAILED')
             }
         }
+        else if(count>0) {
+            
+            const data=new FormData();
+            data.append('_method',"PUT")
+           data.append('pdf',pdf)
+            data.append('name',name);
+            data.append('birthdate',birthdate);
+            if(!deathdate) {
+
+                data.append('deathdate','');
+            }
+            else {
+                data.append('deathdate',deathdate);
+
+            }
+            data.append('status',statusName.status);
+            if(!genderName.gender) {
+
+                data.append('gender','')
+
+            }
+            else {
+                data.append('gender',genderName.gender)
+
+
+            }
+            if(!countryName) {
+
+                data.append('national','')
+
+            }
+            else {
+                data.append('national',countryName)
+
+
+            }
+          
+            e.preventDefault();
+            try {
+                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
+                alert('success')
+    
+                setShowModal(!showModal)
+                setName('');
+                setBirthdate('');
+                setDeathdate('');
+                setCountryName('');
+                setGenderName('');
+                setStatusName('')
+                setImgName('')
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
+        }
+        // Image and pdf not change
         else {
 
             try {
@@ -476,40 +620,72 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
             if (value.img) {
                 setImgName(value.img.split(','));
             }
-
+            if(value.pdf) {
+                setPdf(value.pdf)
+            }
         }
     }, [])
-    // ham  get img name
-    // const handleImg = (e) => {
-    //     if(e.target.files.length===0) {
-    //         setImgName([]);
-    //     }
-    //     else {
 
-    //         let filter = [];
-    //         for (let i = 0; i < e.target.files.length; i++) {
-    //             filter.push(e.target.files[i].name)
-    //         }
-    //         setImgName(filter)
-    //     }
-
-
-    // }
+    // ham img 
     const handleShowImg = (e,index) => {
         return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={"http://127.0.0.1:8000/api/images/"+e} width='100' />
 
-
+    }
+    const handleShowImgInput=(e,index)=> {
+        console.log('da vao duoc ham');
+       
 
     }
+    
+
+
     const handleImg=(e)=> {
+        console.log(e.target.files);
+        setImgemty(false)
         const store=[]
+      
         for(let i=0;i<e.target.files.length;i++) {
             store.push(e.target.files[i])
-        }
-        setImgName(store)
-    }
-    console.log(img);
+           
+           
+         
 
+        }
+      
+        setImgName(store)
+        // dua duong dan file vao
+        const myDiv=document.getElementById('inputfile')
+        myDiv.innerHTML=''
+        let storeImg=[]
+        store.map((item,index)=> {
+
+            const reader = new FileReader();
+            reader.readAsDataURL(item);
+            reader.onload = () => {
+              const imgPath = reader.result;
+              const imageElement = document.createElement("img");
+              imageElement.src = imgPath;
+            //   imageElement.width=100
+         
+
+              imageElement.style.maxWidth = "20%";
+              myDiv.appendChild(imageElement);
+            };
+        })
+      
+       
+     
+    
+   
+   
+       
+    }
+  
+// ham pdf 
+    const handlePdf=(e)=> {
+        setPdf(e.target.files[0]);
+        setpdfemty(false)
+    }
     return (
         <>
 
@@ -574,12 +750,22 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group >
-                                <Form.Label>Images (&gt;=10 Files)</Form.Label>
-                                <InputText type='file' multiple onChange={handleImg} accept='image/*'  style={{minWidth:'100% '}} />
-                                {value&&imgName&&imgName.length>0 && imgName.map((item,index)=> handleShowImg(item,index))}
+                                <Form.Label>PDF</Form.Label>
+                                <InputText type='file'  onChange={handlePdf} accept="application/pdf"  style={{minWidth:'100% '}} />
+                                {pdfemty&&value&&pdf&&(
+                                      <a target="_blank" href={"http://127.0.0.1:8000/api/pdfs/"+pdf}>{pdf}</a>
+                                )}
                             </Form.Group>
                         </Row>
+                        <Row className='mt-4'>
+                            <Form.Group  >
+                                <Form.Label>Images (&gt;=6 Files)</Form.Label>
+                                <InputText type='file' multiple onChange={handleImg} accept='image/*'  style={{minWidth:'100% '}} />
+                                {imgemty&&value&&imgName&&imgName.length>0 && imgName.map((item,index)=> handleShowImg(item,index))}
 
+                            </Form.Group>
+                        </Row>
+                        <Row className='mt-4'  id='inputfile'></Row>
                 
                 </Modal.Body>
                 <Modal.Footer>

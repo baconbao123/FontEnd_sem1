@@ -89,6 +89,10 @@ export default function AD_life() {
         setFilters(_filter);
         setGlobal(value);
     }
+//  handle selection
+const handelSelection= ()=> {
+    setSelection('')
+}
 
     const renderHeader = () => {
         return (
@@ -120,7 +124,7 @@ export default function AD_life() {
                                 <BsGear className='ms-2' />
 
                             </Button>
-                            <AD_life_modal Load={Load} value={selection[0]} title={'EDIT'} show={showModalEdit} />
+                            <AD_life_modal selection={handelSelection} Load={Load} value={selection[0]} title={'EDIT'} show={showModalEdit} />
                         </>
                     )}
 
@@ -179,16 +183,17 @@ export default function AD_life() {
                             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
                             <Column field='id' filter sortable header='id' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
                             <Column field='person_id' filter sortable header='person_id' style={{ minWidth: '12rem' }} />
-                            <Column field='life' filter header='life' style={{ minWidth: '24rem' }} />
+                            <Column field='life' filter header='life' style={{ minWidth: '70rem' }} />
                             <Column field='childhood' filter header='childhood' style={{ minWidth: '24rem' }} />
-                            <Column field='education' filter header='education' style={{ minWidth: '24rem' }} />
-                            <Column field='experiment' filter header='experiment' style={{ minWidth: '24rem' }} />
-                            <Column field='struggles' filter header='struggles' style={{ minWidth: '12rem' }} />
+                            <Column field='education' filter header='education' style={{ minWidth: '70rem' }} />
+                            <Column field='experiment' filter header='experiment' style={{ minWidth: '70rem' }} />
+                            <Column field='struggles' filter header='struggles' style={{ minWidth: '70rem' }} />
                             <Column field='time_line' filter header='time_line' style={{ minWidth: '70rem' }} />
-                            <Column field='personalities' filter header='personalities' style={{ minWidth: '12rem' }} />
-                            <Column field='achievements_detail' filter header='achievements_detail' style={{ minWidth: '12rem' }} />
+                            <Column field='personalities' filter header='personalities' style={{ minWidth: '70rem' }} />
+                            <Column field='achievements_detail' filter header='achievements_detail' style={{ minWidth: '70rem' }} />
                             <Column field='quote' filter header='quote' style={{ minWidth: '12rem' }} />
                             <Column field='book' filter header='book' style={{ minWidth: '12rem' }} />
+                          
                             <Column field='status' header='status'  body={itemStatus}/>
                         </DataTable>
                     </section>

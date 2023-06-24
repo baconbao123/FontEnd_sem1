@@ -216,6 +216,7 @@ async function disableperson(item) {
 
   }
   console.log(person);
+
   const itemImage=(e)=> {
    if(e.img) {
 
@@ -230,19 +231,20 @@ async function disableperson(item) {
      <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={"http://127.0.0.1:8000/api/images/"+store[3]}  width='100'/>
      <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={"http://127.0.0.1:8000/api/images/"+store[4]}  width='100'/>
      <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={"http://127.0.0.1:8000/api/images/"+store[5]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={"http://127.0.0.1:8000/api/images/"+store[6]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={"http://127.0.0.1:8000/api/images/"+store[7]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={"http://127.0.0.1:8000/api/images/"+store[8]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={"http://127.0.0.1:8000/api/images/"+store[9]}  width='100'/>
+     
      </>
  
     )
+   }   }
+   const pdfItem=(e)=> {
+    if(e.pdf) {
+      return (
+        <>
+        <a target="_blank" href={"http://127.0.0.1:8000/api/pdfs/"+e.pdf}>{e.pdf}</a>
+        </>
+      )
+    }
    }
-     
-     
-    
-  }
- 
 
  
   return (
@@ -278,8 +280,11 @@ async function disableperson(item) {
               <Column field='gender' header='gender' filter  sortable filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }}/>
               <Column field='status' header='status' filter sortable filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
               <Column field='img' header='img' 
+              
               body={itemImage} 
                 style={{ minWidth: '40rem' }}   />
+
+              <Column field='pdf' body={pdfItem} header='pdf' style={{ minWidth: '12rem' }} />
               
             </DataTable>
           </section>

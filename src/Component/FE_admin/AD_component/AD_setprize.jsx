@@ -51,7 +51,7 @@ export default function AD_setprize() {
               alert(item.person_id+ ' ' + item.nobel_id+' sucess disable');
           }
           catch(err) {
-              console.log(err);
+             alert("DISABLE FAIL")
           }
       }
   
@@ -79,6 +79,10 @@ export default function AD_setprize() {
     _filter['global'].value = value;
     setFilters(_filter);
     setGlobal(value);
+  }
+  // handle selection
+  const handleSelection=()=>{
+    setSelection('')
   }
   const renderHeader = () => {
     return (
@@ -109,7 +113,7 @@ export default function AD_setprize() {
                 ref={showModalEdit}
                 className='ms-3' type='button' label="edit" severity='warning' >
                 <BsGear className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-              <AD_setprize_modal Load={Load} title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
+              <AD_setprize_modal Load={Load} setSelection={handleSelection} title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
 
 
             </>

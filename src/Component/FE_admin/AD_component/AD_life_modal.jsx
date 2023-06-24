@@ -9,7 +9,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputText } from 'primereact/inputtext';
 import axios from 'axios';
   
-export default function AD_life_modal({value,title, show,Load}) {
+export default function AD_life_modal({value,title, show,Load,selection}) {
     const [showModal, setShowModal] = useState(false);
     const [person,setPerson]=useState([])
     const [storePerson,setStorePerson]=useState([])
@@ -69,6 +69,7 @@ export default function AD_life_modal({value,title, show,Load}) {
        const result= await axios.get('http://127.0.0.1:8000/api/personlife');
        setPerson(result.data)
       }
+  
  
 //  Ham add life
       async function addlife(e) {
@@ -127,10 +128,11 @@ export default function AD_life_modal({value,title, show,Load}) {
             })
             alert('sucess updated');
             setShowModal(false);
+            selection()
             return Load()
         }
         catch(err) {
-            alert(err)
+           alert("PERSON  IS DISABLED, UPDATED FAIL ")
         }
       }
 

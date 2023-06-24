@@ -10,7 +10,7 @@ import { FileUpload } from 'primereact/fileupload';
 import { InputText, InputTextarea } from 'primereact'
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
-export default function AD_setprize_modal({ title, show, value, Load }) {
+export default function AD_setprize_modal({ title, show, value, Load,setSelection }) {
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [prizes, setPrizes] = useState([]);
@@ -37,7 +37,7 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
                 status: statusName.status,
                 nobel_share: nobelShare
             })
-            alert('success')
+            alert('ADD SUCCESS')
             Load()
             LoadPrize();
             LoadPerson();
@@ -49,7 +49,7 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             setShowModal(false)
         }
         catch (err) {
-            alert(err)
+            alert("ADD FAILED")
         }
     }
     
@@ -63,8 +63,9 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
                 status: statusName.status,
                 nobel_share: nobelShare
             })
-            alert('success')
+            alert('UPDATE SUCCESS')
             Load();
+            setSelection()
             LoadPrize();
             LoadPerson();
 
@@ -76,10 +77,10 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             setShowModal(false)
         }
         catch (err) {
-            alert(err)
+            alert("UPDATE FAILED")
         }
     }
-
+// set availabe  prize
     useEffect(() => {
         let _filter = prizes.filter((prizes) => prizes.nobel_name === categoryName.category)
     
@@ -94,7 +95,7 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             setAvailablePrize(_filter);
             }
         }
-        else if(_filter.length>0) {
+        else  {
 
             setAvailablePrize(_filter);
 
@@ -126,7 +127,7 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             }
         }
     },[prizeName])
-    console.log(prizeName);
+ 
     useEffect(() => {
         (async () => await LoadPrize())();
         (async () => await LoadPerson())()
@@ -153,7 +154,7 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
             if (check === 1) return prize
         }))
 
-        // console.log('person',person);
+  
     }, [allPrize])
 
 
@@ -173,7 +174,11 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
         }
 
     }, [personName])
-
+    // set person have life 
+    useEffect(()=> {
+       
+     
+    },[person])
     // console.log('prizes',prizes);
     async function LoadPrize() {
         const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
@@ -181,7 +186,11 @@ export default function AD_setprize_modal({ title, show, value, Load }) {
     }
     async function LoadPerson() {
         const result = await axios.get('http://127.0.0.1:8000/api/personprize');
-        setPerson(result.data)
+        let data=result.data.filter(item=>{
+            if(item.life_story)return item
+        })
+       
+        setPerson(data)
     }
 
     
