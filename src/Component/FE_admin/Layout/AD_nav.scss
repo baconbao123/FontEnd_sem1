@@ -1,7 +1,8 @@
 .AD-nav-content {
   background-color: #f7faff;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  max-height: fit-content;
   position: sticky;
   top: 0;
   left: 0;
@@ -72,13 +73,15 @@
         margin-left: 20%;
         margin-top: 20px;
         height: fit-content;
-
+       
       
 
         .link-default {
           text-decoration: none;
           color: #a5adc6;
+          display: block;
         }
+       
       }
     }
   }
