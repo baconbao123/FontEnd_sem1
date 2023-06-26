@@ -1,21 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Navbar.css";
 import logo from "../../../Component/img/logo.png";
-import { Link ,useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { GoSearch } from 'react-icons/go'
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 function Navbar() {
+  useEffect(() => {
+    AOS.init();
+  }, []);
   const [scrolled, setScrolled] = useState(false);
   const [clickSearch, setClickSearch] = useState(false);
+  const [onMouseEnterNav, setOnMouseEnterNav] = useState(false);
+  const [onMouseEnterNav1, setOnMouseEnterNav1] = useState(false);
   const searchRef = useRef(null);
 
   // path active
   const [activeLink, setActiveLink] = useState('');
 
-   const location = useLocation();
-   useEffect(() => {
-      setActiveLink(location.pathname);
-   }, [location.pathname]);
+  const location = useLocation();
+  useEffect(() => {
+    setActiveLink(location.pathname);
+  }, [location.pathname]);
   //  scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -50,6 +56,20 @@ function Navbar() {
   function onClickSearch() {
     setClickSearch(!clickSearch);
   }
+  function onMouseEnterNavbar() {
+    setOnMouseEnterNav(true);
+  }
+
+  function onMouseLeaveNavbar() {
+    setOnMouseEnterNav(false);
+  }
+  function onMouseEnterNavbar1() {
+    setOnMouseEnterNav1(true);
+  }
+
+  function onMouseLeaveNavbar1() {
+    setOnMouseEnterNav1(false);
+  }
 
   return (
     <div>
@@ -60,23 +80,47 @@ function Navbar() {
               Home
             </Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item has-children"
+            onMouseEnter={onMouseEnterNavbar}
+            onMouseLeave={onMouseLeaveNavbar}>
             <Link to='/nobel-prizes' className={`nav-link nav-active-hover ${activeLink === '/nobel-prizes' ? 'active-top-nav' : ''}`}>
-              Nobel Prizes
+              Nobel Prizes & Laureates
             </Link>
+            {onMouseEnterNav &&
+              (<ul class="dropdown arrow-top" data-aos='fade-up'>
+                <li><a href="#1">Laureates</a></li>
+                <li><a href="#2"> Nobel Prizes</a></li>
+                <li><a href="#3">Literature</a></li>
+                <li><a href="#3">Medicine</a></li>
+                <li><a href="#3">Chemistry</a></li>
+                <li><a href="#3">Peace</a></li>
+                <li><a href="#3">Physics</a></li>
+                <li><a href="#3">Economic Sciences</a></li>
+              </ul>)
+            }
+
           </li>
           <li className="nav-item">
             <Link to='/' className="nav-link nav-active-hover">
               <img src={logo} alt="Logo" width="100px" />
             </Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item has-children"
+            onMouseEnter={onMouseEnterNavbar1}
+            onMouseLeave={onMouseLeaveNavbar1}
+          >
             <Link to='/alfred-nobel' className={`nav-link nav-active-hover ${activeLink === '/alfred-nobel' ? 'active-top-nav' : ''}`}>
-              Alfred Nobel
+              Alfred Nobel &  Blog
             </Link>
+            {onMouseEnterNav &&
+              (<ul class="dropdown arrow-top" data-aos='fade-up'>
+                <li><a href="#1">Alfred Nobel</a></li>
+                <li><a href="#3"> Blogs</a></li>
+              </ul>)
+            }
           </li>
           <li className="nav-item search">
-            <a className="nav-link search-toggle" onClick={onClickSearch} style={{cursor:'pointer'}}> 
+            <a className="nav-link search-toggle" onClick={onClickSearch} style={{ cursor: 'pointer' }}>
               <GoSearch /> Search
             </a>
             {clickSearch && (

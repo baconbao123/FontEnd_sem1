@@ -49,11 +49,10 @@
   height: 75px;
   border-bottom: 1px solid rgba(173, 181, 189, 0.1);
 }
-.black-bg{
+.black-bg {
   background: #212529 !important; /* Set the background color when /chemistry/biography-mariecurie */
   height: 75px !important;
   border-bottom: 1px solid rgba(173, 181, 189, 0.1);
-  
 }
 @media (prefers-reduced-motion: reduce) {
   .page-navbar {
@@ -103,7 +102,6 @@
   font-size: calc(12px + (15 - 12) * ((100vw - 300px) / (1300 - 300)));
 }
 
-
 .page-navbar .nav-navbar .nav-link i {
   font-weight: bold;
   display: inline-block;
@@ -116,35 +114,33 @@
   width: calc(50px + (45 - 25) * ((100vw - 300px) / (1300 - 300)));
 }
 /* active navbar hover */
-.nav-active-hover:hover{
+.nav-active-hover:hover {
   text-shadow: 3px 3px 3px rgb(32, 89, 246);
 }
 
 /* active navbar */
 .active-top-nav::after {
   content: "";
-  display:block;
+  display: block;
   width: 10% !important;
   height: 1px;
   background-color: #ffffff;
-  margin-top: 2px!important;
+  margin-top: 2px !important;
   margin: auto;
-  
 }
-.active-top-nav{
+.active-top-nav {
   text-shadow: 3px 3px 3px rgb(32, 89, 246);
 }
 
 /* Search */
-.nav-item .search{
+.nav-item .search {
   position: relative;
-
 }
-.search-wrapper{
+.search-wrapper {
   position: absolute;
-  top:80px;
+  top: 80px;
 }
-.search-wrapper .form-control{
+.search-wrapper .form-control {
   background: rgba(65, 67, 68, 0.9) !important;
   color: #ece7e7 !important;
 }
@@ -179,4 +175,35 @@ input::placeholder {
   margin-top: 500px;
 }
 
+/* show menu */
+
+.has-children .dropdown.arrow-top {
+  position: absolute;
+   background-color: #232222e9;
+   border-radius:5px ;
+   margin-top: 0;
+}
+
+.has-children .dropdown a {
+  text-transform: none;
+  letter-spacing: normal;
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+}
+.has-children .dropdown a:hover{
+  color: #007bff;
+  font-family: 'Roboto',sans-serif;
+}
+
+.has-children .dropdown > li {
+  list-style: none;
+  padding: 0px;
+  margin: 0;
+  min-width: 235px;
+}
+.has-children .dropdown > li > a {
+  padding: 9px 50px 9px 20px;
+  display: block;
+}
 

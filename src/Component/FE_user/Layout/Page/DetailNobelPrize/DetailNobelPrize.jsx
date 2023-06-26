@@ -48,5 +48,5 @@ function DetailNobelPrize() {
     </div>
   );
 }
-// hello
+
 export default DetailNobelPrize;
