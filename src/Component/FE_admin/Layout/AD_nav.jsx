@@ -49,6 +49,18 @@ export default function AD_nav() {
         },
         {
           id:'4',
+          content:'Blog',
+          item_icon:BsChatLeftTextFill,
+          child:[
+            {child_id:'1',child_content:'Blog',child_link:'/admin/blog'},
+            // {child_id:'2',child_content:'Set-Prize',child_link:'/admin/'},
+
+
+          ],
+          link:''
+        },
+        {
+          id:'5',
           content:'Disable',
           item_icon:BsTrashFill,
           child:[
@@ -62,18 +74,7 @@ export default function AD_nav() {
           ],
           link:''
         },
-        {
-          id:'4',
-          content:'Blog',
-          item_icon:BsChatLeftTextFill,
-          child:[
-            {child_id:'1',child_content:'Blog',child_link:'/admin/blog'},
-            // {child_id:'2',child_content:'Set-Prize',child_link:'/admin/'},
-
-
-          ],
-          link:''
-        },
+      
        ]
       
     )

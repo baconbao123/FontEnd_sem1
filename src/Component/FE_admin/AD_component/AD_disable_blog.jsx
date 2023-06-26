@@ -6,14 +6,14 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Tag } from 'primereact/tag';
-import { BsSearch,BsPersonAdd,BsGear,BsTrashFill} from "react-icons/bs";
+import { BsSearch,BsPersonAdd,BsGear,BsTrashFill,BsPlusLg} from "react-icons/bs";
 import {RiFilterOffFill  } from "react-icons/ri";
 import { Button } from 'primereact/button';
 import axios from 'axios';
 import AD_nav from '../Layout/AD_nav';
 import AD_blog_modal  from './AD_blog_modal';
 
-export default function AD_blog() {
+export default function AD_disable_blog() {
 // Khởi tạo các biến
   const [blog, setBlog] = useState([]);
   const [loading, setLoading] = useState(true)
@@ -49,41 +49,68 @@ export default function AD_blog() {
   }, [])
 
   async function  Load() {
-    const result=await axios.get('http://127.0.0.1:8000/api/blog');
+    const result=await axios.get('http://127.0.0.1:8000/api/disableblog');
         setBlog(result.data);
   }
-   // Ham disable
-   const handleDisable=()=> {
+   // Ham active
+   const handleActive=()=> {
     if (selection.length>=1) {
       console.log(selection);
         selection.map((item=> {
        
 
-            disableperson(item)
+            activeperson(item)
             setSelection(selection.filter(item=>item !== item))
         }))
 
     }
 }
-async function disableperson(item) {
+async function activeperson(item) {
 
     
     try {
         
       await axios.put('http://127.0.0.1:8000/api/updateblog/' +item.id,{
     
-        status: 'disable',
+        status: 'active',
    
       }) 
-      alert(item.id + ' disable success')
+      alert(item.id + ' active  success')
       Load();
     }
     catch (err) {
       alert(err)
-      alert('disable failed')
+      alert('active failed')
     }
 }
 
+   // Ham delete
+   const handleDelete=()=> {
+    if (selection.length>=1) {
+      console.log(selection);
+        selection.map((item=> {
+       
+
+            deleteperson(item)
+            setSelection(selection.filter(item=>item !== item))
+        }))
+
+    }
+}
+async function deleteperson(item) {
+
+    
+    try {
+        
+      await axios.delete('http://127.0.0.1:8000/api/deleteblog/' +item.id,) 
+      alert(item.id + ' delete  success')
+      Load();
+    }
+    catch (err) {
+      alert(err)
+      alert('delete failed')
+    }
+}
 
 // Hàm search Golbal
   const hanldeGlobalSearch = (e) => {
@@ -131,31 +158,22 @@ async function disableperson(item) {
              </Button>
          
         </span>
-        <h1 className='d-flex'>BLOG</h1>
+        <h1 className='d-flex'> DISABLE BLOG</h1>
         <span className='AD-show-dropdown'>
 
         show
         <Dropdown  className='ms-2' value={show} options={showRow} onChange={e=>setShow(e.value)} />
         </span>
         <section style={{minWidth:'24rem'}}>
-        <Button ref={showModalButoon} className='d-inline-flex justify-content-end ' type='button' label="ADD"  severity='info'>
-          <BsPersonAdd className='ms-2  p-input-icon-left'/> </Button>
-       
-          {selection.length===1&&(
-         <>
-          <Button ref={showModalEdit} className='ms-3' type='button' label="edit" severity='warning' >
-            <BsGear   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-            <AD_blog_modal setSelection={handleSelection} Load={Load} title="EDIT" show={showModalEdit} value={selection[0]}/>
-
-         </>
-          )}
 
           {selection.length>=1&&(
-          <Button  onClick={handleDisable} className='ms-3' type='button' label="disable" severity='danger' >
-            <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-
+            <>
+          <Button onClick={handleActive}   className='ms-3' type='button' label="Active" severity='success' >
+            <BsPlusLg   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
+          <Button  onClick={handleDelete}  className='ms-3' type='button' label="Delete" severity='danger' >
+            <BsTrashFill   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
+            </>
           )}
- 
         </section>
         
       </div>
@@ -177,17 +195,7 @@ async function disableperson(item) {
     }
     return <Tag value={value} severity={status}/>
   }
-  const  genderStatus=(e)=> {
-    let status='';
-     if(e.gender==='female') {
-      status='info';
-      
-     }
-     else   {
-      status='success'
-     }
-    return <Tag value={e.gender} severity={status}/>
-  }
+ 
   const statusDropdown=(e)=> {
     return <Tag value={e} severity={e} />
   }
@@ -201,12 +209,12 @@ async function disableperson(item) {
     )
   }
  
-
-
+ 
   const itemImage=(e)=> {
    if(e.img) {
 
      let store=e.img.split(',')
+     
      
     return (
      <>
@@ -274,7 +282,7 @@ async function disableperson(item) {
 
         </Col>
 
-        <AD_blog_modal title={"ADD NEW BLOG"} show={showModalButoon} Load={Load} />
+  
         
       </Row>
     </Container>
