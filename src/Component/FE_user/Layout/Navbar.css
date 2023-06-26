@@ -179,14 +179,14 @@ input::placeholder {
 
 .has-children .dropdown.arrow-top {
   position: absolute;
-   background-color: #232222e9;
+   background-color: #1d202f;
    border-radius:5px ;
    margin-top: 0;
 }
 
 .has-children .dropdown a {
   text-transform: none;
-  letter-spacing: normal;
+
   color: #ffffff;
   text-decoration: none;
   text-align: center;

@@ -112,7 +112,7 @@ function Navbar() {
             <Link to='/alfred-nobel' className={`nav-link nav-active-hover ${activeLink === '/alfred-nobel' ? 'active-top-nav' : ''}`}>
               Alfred Nobel &  Blog
             </Link>
-            {onMouseEnterNav &&
+            {onMouseEnterNav1 &&
               (<ul class="dropdown arrow-top" data-aos='fade-up'>
                 <li><a href="#1">Alfred Nobel</a></li>
                 <li><a href="#3"> Blogs</a></li>
