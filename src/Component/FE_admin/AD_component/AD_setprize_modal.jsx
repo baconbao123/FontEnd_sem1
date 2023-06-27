@@ -6,11 +6,18 @@ import { Row, Col } from 'react-bootstrap'
 import { AutoComplete } from 'primereact/autocomplete';
 import { Dropdown } from 'primereact/dropdown';
 import { FileUpload } from 'primereact/fileupload';
-
+import { useNavigate } from 'react-router-dom'
 import { InputText, InputTextarea } from 'primereact'
+import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
 export default function AD_setprize_modal({ title, show, value, Load,setSelection }) {
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(!Cookies.get('login')){
+          navigate('/login')
+        }
+       })
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [prizes, setPrizes] = useState([]);

@@ -8,11 +8,17 @@ import { Button } from 'primereact'
 import { Dropdown } from 'primereact/dropdown';
 import { BsSearch, BsTrashFill,BsPlusLg } from "react-icons/bs";
 import { InputText } from 'primereact/inputtext';
-
+import Cookies from 'js-cookie';
 import AD_life_modal from './AD_life_modal';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom'
 export default function AD_disable_life() {
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(!Cookies.get('login')){
+      navigate('/login')
+    }
+   })
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [global, setGlobal] = useState('')

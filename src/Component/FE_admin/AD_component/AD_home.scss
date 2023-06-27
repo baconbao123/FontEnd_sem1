@@ -2,6 +2,8 @@
     padding-top: 50px;
     background-color: #f7faff;
     width: inherit;
+    min-height: 100vh;
+    max-height: fit-content;
     .padding-0 {
         padding:0;
     }
@@ -40,7 +42,8 @@
         height: 100%;
     }
     .card-body-home {
-        height: 100vh;
+        min-height: 100vh;
+        max-height: fit-content;
     }
     // card header
     .card-header {
@@ -120,6 +123,10 @@
       
       .card-header:hover:after {
         transform: translateX(100%);
+      }
+      // Login
+      .logo-login {
+        width: 300px;
       }
       
 }

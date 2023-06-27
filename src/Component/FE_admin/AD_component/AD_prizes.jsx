@@ -6,7 +6,15 @@ import { DataTable,Column,Tag, Button,FilterMatchMode, FilterOperator, InputText
 import { BsSearch,BsPersonAdd,BsGear,BsTrashFill,BsTrophyFill} from "react-icons/bs";
 import {RiFilterOffFill  } from "react-icons/ri";
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 export default function AD_prizes() {
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(!Cookies.get('login')){
+      navigate('/login')
+    }
+   })
     const [prizes,setPrizes]=useState([]);
     const [loading, setLoading] = useState(true);
     const [global, setGlobal] = useState('');

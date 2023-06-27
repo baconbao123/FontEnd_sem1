@@ -5,11 +5,18 @@ import Form from 'react-bootstrap/Form';
 import { Row, Col } from 'react-bootstrap'
 import { InputTextarea } from 'primereact';
 import { Dropdown } from 'primereact/dropdown';
-
+import { useNavigate } from 'react-router-dom'
 import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { InputText } from 'primereact/inputtext';
+import Cookies from 'js-cookie';
 export default function AD_blog_modal({ title, show, value, Load,setSelection }) {
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(!Cookies.get('login')){
+          navigate('/login')
+        }
+       })
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
 

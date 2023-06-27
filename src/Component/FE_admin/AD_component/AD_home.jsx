@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes,useNavigate } from 'react-router-dom'
+
 import { Card, Button } from 'react-bootstrap'
 import AD_nav from '../Layout/AD_nav'
 import '../AD_component/AD_home.scss'
-import AD_show from './AD_show'
+
 import AD_card_item from './AD_card_item'
+
+import Cookies from 'js-cookie';
 export default function AD_home() {
+  const navigate = useNavigate();
+  const logout=()=> {
+    Cookies.remove('login');
+    navigate('/login')
+  }
+ useEffect(()=>{
+  if(!Cookies.get('login')){
+    navigate('/login')
+  }
+ })
+
   return (
     <Container fluid className='wrapper'>
       <Row>
@@ -25,7 +39,7 @@ export default function AD_home() {
                   <h1 > ADMIN</h1>
                 </span>
                 <section className='d-inline-block'>
-                <img className="img-ad-avatar"  src={require(`../../img/admin_avatar.png`)}  alt='Image' />
+               <Button onClick={logout}>LOG OUT</Button>
                 </section>
                 </section>
               </Card>

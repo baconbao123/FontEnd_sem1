@@ -8,10 +8,17 @@ import { Dropdown } from 'primereact/dropdown';
 import { FileUpload } from 'primereact/fileupload';
 
 import { InputText } from 'primereact/inputtext';
-
+import Cookies from 'js-cookie';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 export default function AD_prizes_modal({ title, show, value, Load }) {
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(!Cookies.get('login')){
+          navigate('/login')
+        }
+       })
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [prizes, setPrizes] = useState([]);
