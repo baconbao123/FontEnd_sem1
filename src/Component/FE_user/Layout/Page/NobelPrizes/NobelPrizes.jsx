@@ -1,149 +1,32 @@
-import React, { useState ,useEffect} from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
-import { Link } from "react-router-dom";
+import { Link ,useParams} from "react-router-dom";
+import axios from "axios";
 import "./NobelPrizes.css";
-import { Paginator } from "primereact/paginator";
-
-import { GoSearch } from "react-icons/go";
 import { BiRefresh } from "react-icons/bi";
 import AOS from "aos";
 import "aos/dist/aos.css";
 function NobelPrizes() {
-    // effect srcoll
-    useEffect(() => {
-      AOS.init();
-    }, []);
+  // effect srcoll
+  useEffect(() => {
+    AOS.init();
+  }, []);
   // Data
-  const nobelPrizes = [
-    {
-      year: "2022",
-      nobelPrize: [
-        {
-          namePrize: "Physics",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Literature",
-          namePerson: ["Alain Aspect"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Chemistry",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Economic Sciences",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Medical",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Peace",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-      ],
-    },
-    {
-      year: "2021",
-      nobelPrize: [
-        {
-          namePrize: "Physics",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Literature",
-          namePerson: ["Alain Aspect"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Chemistry",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Economic Sciences",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Peace",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-      ],
-    },
-    {
-      year: "2020",
-      nobelPrize: [
-        {
-          namePrize: "Physics",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Literature",
-          namePerson: ["Alain Aspect"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Chemistry",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Economic Sciences",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-        {
-          namePrize: "Peace",
-          namePerson: ["Alain Aspect", "Anton Zeilinger", "John F. Clauser"],
-          motivation:
-            "for experiments with entangled photons, establishing the violation of Bell inequalities and pioneering quantum information science",
-        },
-      ],
-    },
-    // Add more data for other years
-  ];
-  // State for pagination
-  const [first, setFirst] = useState(0);
-  const [rows, setRows] = useState(2);
+  const [nobelPrize, setNobelPrize]=useState([]);
+  const {name,year,id} = useParams();
+  useEffect(() => {
+    // simulate fetching data from an API
+    const fetchData = async () => {
+      const res = await axios.get('http://127.0.0.1:8000/api/personprizes/');
+      if (res && res.data) {
+        setNobelPrize(res.data);
+    }
+    };
+    fetchData();
+  }, [name,year,id]);
 
-  // Calculate the number of pages based on the number of rows
-  const totalRecords = nobelPrizes.length;
-  const totalPages = Math.ceil(totalRecords / rows);
 
-  // Handle page change
-  const onPageChange = (event) => {
-    setFirst(event.first);
-    setRows(event.rows);
-  };
-
+  console.log(nobelPrize);
   // State for search
   const [selectedPrize, setSelectedPrize] = useState("Nobel Prizes");
   const [selectedYear, setSelectedYear] = useState("Year");
@@ -152,11 +35,29 @@ function NobelPrizes() {
     setSelectedPrize("Nobel Prizes");
     setSelectedYear("Year");
   };
+  // Filtered Nobel Prizes
+  const filteredPrizes = nobelPrize.map((prize) => ({
+    id: prize.nobelPrize[0].id,
+    year: prize.year,
+    nobelPrize: prize.nobelPrize.filter(
+      (p) =>
+        (selectedPrize === "Nobel Prizes" ||
+          p.namePrize.toLowerCase() === selectedPrize.toLowerCase()) &&
+        p.status === "active"
+    ),
+    status: prize.status,
+  })).filter(
+    (prize) =>
+      (selectedYear === "Year" || prize.year === selectedYear) &&
+      prize.nobelPrize.length > 0
+  );
+
   return (
     <div className="container nobel-prizes">
       <section className="row col-lg-6 col-lg-6 title-nobel-prizes text-light">
         <h1 data-aos="fade-up">All Nobel Prizes</h1>
       </section>
+
       {/* Form select search */}
       <section className="row mt-1 form-year-nobel-detail gap-3">
         <Form.Select
@@ -165,12 +66,12 @@ function NobelPrizes() {
           onChange={(e) => setSelectedPrize(e.target.value)}
         >
           <option className="active">Nobel Prizes</option>
-          <option value="Physics">Physics</option>
-          <option value="Chemistry">Chemistry</option>
-          <option value="Literature">Literature</option>
-          <option value="Medical">Medical</option>
-          <option value="Peace">Peace</option>
-          <option value="Economic Sciences">Economic Sciences</option>
+          <option value="Physic Prize">Physics</option>
+          <option value="Chemistry Prize">Chemistry</option>
+          <option value="Literature Prize">Literature</option>
+          <option value="Medicine Prize">Medical</option>
+          <option value="Peace Prize">Peace</option>
+          <option value="Economic Sciences Prize">Economic Sciences</option>
         </Form.Select>
         <Form.Select
           className="form-select-nobel col-lg-12"
@@ -178,70 +79,63 @@ function NobelPrizes() {
           onChange={(e) => setSelectedYear(e.target.value)}
         >
           <option className="active">All Year</option>
-          {nobelPrizes.map((year, index) => (
-            <option value={year.year} key={index}>
-              {year.year}
+          {nobelPrize.map((prize, index) => (
+            <option value={prize.year} key={index}>
+              {prize.year}
             </option>
           ))}
         </Form.Select>
-        {selectedPrize !== "Nobel Prizes" || selectedYear !== "Year" ? (
-          <button
-            type="button"
-            className="btn btn-outline-primary btn-reset col-lg-12"
-            onClick={() => handleReset()}
-          >
-            Reset <BiRefresh />
-          </button>
-        ) : null}
+
+        <button
+          type="button"
+          className="btn btn-outline-primary btn-reset col-lg-12"
+          onClick={() => handleReset()}
+        >
+          Reset <BiRefresh />
+        </button>
       </section>
+
       {/* Item-nobel-prize */}
       <section className="item-nobel-prizes w-100 mt-4 mb-4">
-        {nobelPrizes
-          .filter((prize) =>
-            selectedYear === "Year" ? true : prize.year === selectedYear
+        {filteredPrizes.length === 0 ? (
+          <div style={{ color: "gray" }} className="row justify-content-center col-lg-12 col-md-12"> 
+            <img src={require(`../../../../img/no-data.png`)} alt="" className="w-25" style={{filter: 'grayscale(100%)'}} />
+            <p className="text-center">No Nobel Prizes found for the selected category.</p>
+          </div>
+        ) : (
+          filteredPrizes.map(
+            (item, index) =>
+              item.status === "active" && (
+                <React.Fragment key={index}>
+                  <div className="year text-light mt-4">
+                    <h3>{item.year}</h3>
+                  </div>
+                  {item.nobelPrize.map(
+                    (prize, i) =>
+                      prize.status === "active" && (
+                        <Link
+                          to={`/nobel-prizes/${prize.namePrize}/${item.year}/${prize.id}`}
+                          key={`${index}-${i}`}
+                        >
+                          <div className="item-nobel-prize col-lg-12 bg-light mt-4">
+                            <h3 className="title-nobel-prize mb-4">
+                              The Nobel Prize in {prize.namePrize} {item.year}
+                            </h3>
+                            <p className="sub-nobel-prize">
+                              <span>{prize.namePerson.join(", ")}:</span>{" "}
+                              <span className="text-dark">
+                                "{prize.motivation} "
+                              </span>{" "}
+                            </p>
+                          </div>
+                        </Link>
+                      )
+                  )}
+                </React.Fragment>
+              )
           )
-          .map((item, index) => (
-            <React.Fragment key={index}>
-              <div className="year text-light mt-4">
-                <h3>{item.year}</h3>
-              </div>
-              {item.nobelPrize
-                .filter((prize) =>
-                  selectedPrize === "Nobel Prizes"
-                    ? true
-                    : prize.namePrize === selectedPrize
-                )
-                .map((prize, i) => (
-                  <Link
-                    to={`/nobel-prizes/${prize.namePrize}/${item.year}`}
-                    key={`${index}-${i}`} 
-                    
-                  >
-                    <div className="item-nobel-prize col-lg-12 bg-light mt-4 " 
-                    >
-                      <h3 className="title-nobel-prize mb-4">
-                        The Nobel Prize in {prize.namePrize} {item.year}
-                      </h3>
-                      <p className="sub-nobel-prize">
-                        <span>{prize.namePerson.join(", ")}:</span>{" "}
-                        <span className="text-dark">"{prize.motivation}"</span>{" "}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-            </React.Fragment>
-          ))}
+        )}
       </section>
-      {/* Pagination */}
-      {/* <section className="mt-4">
-        <Paginator
-          first={first}
-          rows={rows}
-          totalRecords={totalRecords}
-          onPageChange={onPageChange}
-          className="paginator"
-        />
-      </section> */}
     </div>
   );
 }
