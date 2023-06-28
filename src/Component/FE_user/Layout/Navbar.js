@@ -89,7 +89,7 @@ function Navbar() {
             {onMouseEnterNav &&
               (<ul class="dropdown arrow-top" data-aos='fade-up'>
                 <li><a href="#1">Laureates</a></li>
-                <li><a href="#2"> Nobel Prizes</a></li>
+                <li><Link to='/nobel-prizes'> Nobel Prizes</Link></li>
                 <li><a href="#3">Literature</a></li>
                 <li><a href="#3">Medicine</a></li>
                 <li><a href="#3">Chemistry</a></li>

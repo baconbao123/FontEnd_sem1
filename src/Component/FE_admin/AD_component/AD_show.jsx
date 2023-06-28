@@ -12,8 +12,15 @@ import { Button } from 'primereact/button';
 import axios from 'axios';
 import AD_nav from '../Layout/AD_nav';
 import AD_modal from './AD_show_modal';
-
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 export default function AD_show() {
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(!Cookies.get('login')){
+      navigate('/login')
+    }
+   })
 // Khởi tạo các biến
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true)

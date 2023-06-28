@@ -7,8 +7,15 @@ import { BsDatabaseFillAdd } from "react-icons/bs";
 import AD_life_modal from './AD_life_modal';
 import {RiFilterOffFill  } from "react-icons/ri";
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 export default function AD_life() {
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(!Cookies.get('login')){
+          navigate('/login')
+        }
+       })
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [global, setGlobal] = useState('')

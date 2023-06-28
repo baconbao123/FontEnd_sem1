@@ -2,6 +2,8 @@
     padding-top: 50px;
     background-color: #f7faff;
     width: inherit;
+    min-height: 100vh;
+    max-height: fit-content;
     .padding-0 {
         padding:0;
     }
@@ -40,14 +42,15 @@
         height: 100%;
     }
     .card-body-home {
-        height: 100vh;
+        min-height: 100vh;
+        max-height: fit-content;
     }
     // card header
     .card-header {
-        width: 300px;
+        width: 400px;
         height: 200px;
         background-color: #4158D0;
-        background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+     
         border-radius: 8px;
         color: white;
         overflow: hidden;
@@ -57,14 +60,24 @@
         transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
         cursor: pointer;
       }
+      .card-color1 {
+        background-image: -webkit-linear-gradient(90deg,#3f5efb 0%,#fc466b 100%)
+      }
+     
+      .card-color3 {
+        background-image: -webkit-linear-gradient(90deg,#45b649 0%,#dce35b 100%)
+      }
+      .card-color4 {
+        background-image: -webkit-linear-gradient(90deg,#ee0979 0%,#ff6a00 100%);
+      }
       
       .card-header-content {
-        padding: 20px;
+        
         position: relative;
         z-index: 1;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        
         color: white;
         align-items: center;
         justify-content: center;
@@ -120,6 +133,10 @@
       
       .card-header:hover:after {
         transform: translateX(100%);
+      }
+      // Login
+      .logo-login {
+        width: 300px;
       }
       
 }

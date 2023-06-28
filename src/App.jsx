@@ -15,6 +15,7 @@ import AD_setprize from "./Component/FE_admin/AD_component/AD_setprize";
 import AD_disable_setprize from "./Component/FE_admin/AD_component/AD_disable_setprize";
 import AD_blog from "./Component/FE_admin/AD_component/AD_blog";
 import AD_disable_blog from "./Component/FE_admin/AD_component/AD_disable_blog";
+import AD_login from "./Component/FE_admin/AD_component/AD_login";
 // FE-User
 import Homepage from "./Component/FE_user/Layout/Page/Home/Homepage";
 import NobelPrizes from "./Component/FE_user/Layout/Page/NobelPrizes/NobelPrizes";
@@ -38,8 +39,8 @@ function App() {
     <>
       {/* Admin */}
       <Routes>
-        <Route path="/admin" element={<AD_home />} />
-        <Route path="/admin/show" element={<AD_show />} />
+        <Route exact  path="/admin" element={<AD_home />} />
+        <Route  path="/admin/show" element={<AD_show />} />
         <Route path="/admin/life" element={<AD_life/>} />
         <Route path="/admin/prize" element={<AD_prizes/>} />
         <Route path="/admin/blog" element={< AD_blog/>} />
@@ -48,12 +49,13 @@ function App() {
         <Route path="/admin/disable/prize" element={<AD_disable_prize/>} />
         <Route path="/admin/setprize" element={<AD_setprize/>} />
         <Route path="/admin/disable/setprize" element={< AD_disable_setprize/>} />
-       
+    
         <Route path="/admin/disable/blog" element={< AD_disable_blog/>} />
+        <Route path="/login" element={< AD_login/>} />
       </Routes>
 
       {/* User */}
-      {location.pathname ==="/nobel-prizes" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/chemistry/biography/')  || location.pathname.startsWith('/blog/') || location.pathname === "/chemistry" ? <Navbar /> : null}
+      {location.pathname ==="/nobel-prizes" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/chemistry/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') ? <Navbar /> : null}
       
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -63,7 +65,7 @@ function App() {
         <Route path="/chemistry/biography/:id" element={<BiographyContent />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
-        <Route path="/chemistry" element={<DetailNobelPrize />} />
+        <Route path="/nobel-prizes/:name/:year/:id" element={<DetailNobelPrize />} />
       </Routes>
       <ScollToTop />
     </>

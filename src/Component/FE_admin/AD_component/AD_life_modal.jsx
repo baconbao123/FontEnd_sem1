@@ -8,8 +8,15 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { InputText } from 'primereact/inputtext';
 import axios from 'axios';
-  
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 export default function AD_life_modal({value,title, show,Load,selection}) {
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(!Cookies.get('login')){
+          navigate('/login')
+        }
+       })
     const [showModal, setShowModal] = useState(false);
     const [person,setPerson]=useState([])
     const [storePerson,setStorePerson]=useState([])

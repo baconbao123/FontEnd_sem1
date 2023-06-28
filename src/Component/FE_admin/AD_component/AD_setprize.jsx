@@ -7,7 +7,15 @@ import { RiFilterOffFill } from "react-icons/ri";
 import axios from 'axios';
 import AD_nav from '../Layout/AD_nav'
 import AD_setprize_modal from "../AD_component/AD_setprize_modal"
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 export default function AD_setprize() {
+  const navigate = useNavigate();
+  useEffect(()=>{
+    if(!Cookies.get('login')){
+      navigate('/login')
+    }
+   })
   const [prizes, setPrizes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [global, setGlobal] = useState('');
