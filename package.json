@@ -25,6 +25,7 @@
     "react-scripts": "^5.0.1",
     "sass": "^1.63.4",
     "styled-components": "^5.3.10",
+    "sweetalert": "^2.1.2",
     "web-vitals": "^2.1.4",
     "zlib": "^1.0.5"
   },

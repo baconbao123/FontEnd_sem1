@@ -12,46 +12,38 @@ import nobel from './pictures/nobel.jpg'
 
 
 const Biography = ({personData}) => {
-    const {nobel_name,nobel_year, national, name, birthdate, deathdate, motivation, nobel_share, life, experiment, achievements_detail, time_line, quote, imgper} = personData;
+    const {nobel_name,nobel_year, national, name, birthdate, deathdate, motivation, nobel_share, life, experiment, achievements_detail, time_line, quote, books, img, status, pdf, struggles} = personData;
+console.log('hello')
+    const [pdfUrl, setPdfUrl] = useState(null);
 
     
     useEffect(() => {
         AOS.init();
       }, []);
-     
-    
-    const pdfRef = useRef();
-
-    //this is of the gallery used to group groups of images at once, only 3 images are rendered when looking at
-    const [index, setIndex] = useState(0);
-
-    const handleSelect = (selectedIndex, e) => {
-      setIndex(selectedIndex);
-    };
-
-    if (!imgper || imgper.length < 3) {
-        return <div>No images to display</div>;
-      }
-  
-    const groupImgPer = (imgper) => {
-      const result = [...imgper];
-      while (result.length % 3 !== 0) {
-        result.push({});
-      }
-      const groups = [];
-      for (let i = 0; i < result.length; i += 3) {
-        groups.push(result.slice(i, i + 3));
-      }
-      return groups;
+      
+      const pdfRef = useRef();
+      
+// img
+    let images = [];
+    if (personData && personData.img) {
+      images = personData.img.split(",");
     }
-
-    const groupedImgPer = groupImgPer(imgper);
+    console.log(images);
+    
 
 //  Download PDF file  
-    const downFlie = () => {
-        const pdfURL = 'http://www.istitutolipani.com/wp-content/uploads/2019/09/Marie-Curie.pdf'
-        const pdfName = "Marie Curie"
-        saveAs(pdfURL, pdfName)
+    const downFile = () => {
+        if (pdfUrl) {
+            const filename = `${personData.name}.pdf`;
+            saveAs(pdfUrl, filename);
+        }
+    }
+
+    const getPdfUrl = async () => {
+        const response = await fetch(`http://127.0.0.1:8000/api/pdfs/${personData.pdf}`)
+        const blob = await response.blob()
+        const fileUrl = URL.createObjectURL(blob)
+        setPdfUrl(fileUrl)
     }
 
     
@@ -66,24 +58,26 @@ const Biography = ({personData}) => {
                         <Row>
                             <Col lg={4}>
                                 <div className='img-per-site'>
-                                    <img src={personData.imgper[0]} alt='mc3'/>
+                                    <img src={"http://127.0.0.1:8000/api/images/"+images[0]} alt='mc3'/>
                                 </div>
                             </Col>
                             
                             <Col lg={8}>
                                 <div className='content-des-sum'>
                                     <div style={{ marginBottom: 10 }} className='name-des'>{personData.name}</div>
-                                    <div style={{ marginBottom: 10 }}>{personData.name}, {personData.national} <br/> The Nobel Prize in {personData.nobel_name} {nobel_year}</div>
+                                    <div style={{ marginBottom: 10 }}>{personData.name}, {personData.national} <br/> The Nobel Prize in {personData.nobel_name} {personData.nobel_year}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Born: </strong>{personData.birthdate}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Died: </strong>{personData.deathdate}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Prize motivation: </strong>{personData.motivation}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Prize share: </strong>{personData.nobel_share}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Books</strong></div>
+                                    <div style={{ marginBottom: 10 }}><strong>Books</strong>{personData.books}</div>
                                 </div>
                                 <div className='btn-down-site'>
-                                    <button className="btn-down" onClick={downFlie}>DOWNLOAD BIO <span className='item-icon-down'>&nbsp;<AiOutlineDownload/></span>
-                                    </button>
+                                     <button className="btn-down" onClick={getPdfUrl}>DOWNLOAD BIO <span className='item-icon-down'>&nbsp;<AiOutlineDownload/></span></button>
                                 </div>
+                                    {pdfUrl && (
+                                        <a href={pdfUrl} download={personData.pdf} className="btn-download-link">Detailed biography (.doc)</a>
+                                    )}
                             </Col>
                         </Row>        
                     </section>
@@ -105,7 +99,7 @@ const Biography = ({personData}) => {
                                 </section>
                                 <section>
                                     <div className='title-bio'>
-                                        <strong>Experiment</strong>
+                                        <strong>Work</strong>
                                     </div>
                                     <div className="content-bio-des">{personData.experiment}</div>
                                 </section>
@@ -120,18 +114,23 @@ const Biography = ({personData}) => {
                         <Col lg={4}>
                             <section className='achive-topic-site'
                             data-aos="fade-right" data-aos-duration="1000">
-                                <div className='achive-label'>
-                                    <strong>Achievement</strong>
-                                </div>
                                 <div className='img-achive-site'>
                                     <img src={tn} alt='tn'/>
                                 </div>
                             </section>
                         </Col>
                         <Col lg={8}>
-                            <section className='achive-des-site' data-aos="fade-left" data-aos-duration="1000">
+                            <section className='achive-struggles-site' data-aos="fade-left" data-aos-duration="1000">
+                                <div className='struggles-label'>
+                                    <strong>Struggles</strong>
+                                </div>
+                                <div className="struggles-des">{personData.struggles}</div>
+
                                 <div className='achive-des-content'>
-                                    <div>{achievements_detail}</div>
+                                    <div className='achive-label'>
+                                        <strong>Achievement</strong>
+                                    </div>
+                                    <div>{personData.achievements_detail}</div>
                                 </div>
                             </section>
                         </Col>
@@ -148,15 +147,17 @@ const Biography = ({personData}) => {
                                 </div>
                                 <ul className='tl-list' data-aos="fade-right"
                                 data-aos-duration="1000">
-                                    {personData.time_line && personData.time_line.split(/[,:]/g).map((item, index, arr) => {
-                                        if (index % 2 === 0) {
-                                            return (
-                                            <li key={index}>
-                                                <span className='year'>{item.trim()}</span> <span className='event'>{arr[index + 1].trim()}</span>
+                                    {personData.time_line && personData.time_line.split('\n').map((item, index) => {
+                                        const match = item.match(/^(\d{4})(-?\d{0,2})?(.*)$/);
+                                        if (match) {
+                                        const year = `${match[1]}${match[2] ? `-${match[2]}` : ''}`;
+                                        return (
+                                            <li key={item.id}>
+                                            <span className='year'>{year}:</span> <span className='event'>{match[3].trim()}</span>
                                             </li>
-                                            );
+                                        );
                                         } else {
-                                            return null;
+                                        return null;
                                         }
                                     })}
                                 </ul>
@@ -167,7 +168,7 @@ const Biography = ({personData}) => {
                             data-aos="fade-left"
                             data-aos-duration="1000">
                                 <div className='img-quote'>
-                                    <img src={personData.imgper[2]} alt='mc2'/>
+                                    <img src={"http://127.0.0.1:8000/api/images/"+images[1]} alt='mc2'/>
                                 </div>
                                 <div className='block-quote-black'>
                                     <div className='quote-content'>{personData.quote}</div>
@@ -180,7 +181,7 @@ const Biography = ({personData}) => {
             <section className='outside-block-black'>
                 <section className="block-content-black-2 container">
                     <Row>
-                        <Col lg={5}>
+                        <Col lg={4}>
                             <div className='rhombus-bg'>
                                 <div className='img-nobel'>
                                     <img src={nobel} alt='nobel'></img>
@@ -188,7 +189,7 @@ const Biography = ({personData}) => {
                                 </div>
                             </div>
                         </Col>
-                        <Col lg={7}>
+                        <Col lg={8}>
                             <div className='nbprize-des'
                              data-aos="zoom-in-up"
                              data-aos-duration="1000">
@@ -202,18 +203,14 @@ const Biography = ({personData}) => {
                 <section className='block-content-white-gallery container'>
                     <div className='gallery'>Gallery</div>
                     <div className='block-per-img'>
-                    <Carousel activeIndex={index} onSelect={handleSelect}>
-                        {groupedImgPer.map((group, index) => (
-                        <Carousel.Item key={index}>
+                    <Carousel >
+                        <Carousel.Item>
                             <Row>
-                            {group.map((img, index2) => (
-                                <Col key={index2} md={4}>
-                                <Image src={img} fluid />
-                                </Col>
-                            ))}
+                                <img src={"http://127.0.0.1:8000/api/images/"+images[1]} alt='mc2'/>
+                                <img src={"http://127.0.0.1:8000/api/images/"+images[4]} alt='mc2'/>
+                                <img src={"http://127.0.0.1:8000/api/images/"+images[3]} alt='mc2'/>
                             </Row>
                         </Carousel.Item>
-                        ))}
                     </Carousel>
                     </div>
                 </section>
@@ -224,3 +221,4 @@ const Biography = ({personData}) => {
 }
 
 export default Biography;
+

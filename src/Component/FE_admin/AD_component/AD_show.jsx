@@ -237,6 +237,7 @@ async function disableperson(item) {
     )
    }   }
    const pdfItem=(e)=> {
+    console.log(e.pdf);
     if(e.pdf) {
       return (
         <>
