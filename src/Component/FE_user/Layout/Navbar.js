@@ -115,7 +115,7 @@ function Navbar() {
             {onMouseEnterNav1 &&
               (<ul class="dropdown arrow-top" data-aos='fade-up'>
                 <li><a href="#1">Alfred Nobel</a></li>
-                <li><a href="#3"> Blogs</a></li>
+                <li><Link to="/blog"> Blogs</Link></li>
               </ul>)
             }
           </li>

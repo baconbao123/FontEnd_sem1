@@ -256,6 +256,7 @@ export default function AD_show() {
     }
   }
   const avatarImage=(e)=> {
+    
     if(e.avatar) {
       return(
         <>
