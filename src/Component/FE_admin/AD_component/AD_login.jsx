@@ -29,7 +29,7 @@ export default function AD_login() {
         email:email,
         password:password
       })
-      Cookies.set('login',response.data,{expires:new Date(new Date().getTime() + 60* 60 *3 * 1000)})
+      Cookies.set('login',response.data,{expires:new Date(new Date().getTime() + 60* 60 *24 * 1000)})
       alert('login sucess');
       return  navigate('/admin');
 

@@ -1,11 +1,25 @@
 .AD-nav-content {
   background-color: #f7faff;
   width: 100%;
-  min-height: 100vh;
-  max-height: fit-content;
+  height: 100vh;
+  
   position: sticky;
+  overflow: scroll;
+  
   top: 0;
   left: 0;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+  // .AD-nav-hidden {
+  //   // height: 100vh!important;
+  // }
+  .AD-nav-container {
+    height: 110%;
+    position: relative;
+  
+  }
+
   .AD-nav-logo {
    
     background-color: white;

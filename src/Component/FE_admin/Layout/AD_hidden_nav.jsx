@@ -5,7 +5,7 @@ import AD_nav_item from './AD_nav_item';
 import {AiFillHome} from "react-icons/ai";
 import  {BsFillPersonFill,BsFillTrophyFill,BsTrashFill,BsChatLeftTextFill} from   'react-icons/bs';
 
-export default function AD_nav() {
+export default function AD_hidden_nav() {
   const [nav,setNav]=useState([]);
   useEffect(()=>{
     setNav(
@@ -82,16 +82,14 @@ export default function AD_nav() {
 
 
   return (
-    
-
-    <div className='AD-nav-content '>
+    <div className='AD-nav-content AD-nav-hidden'>
     <section className='AD-nav-container'>
 
     <div className='AD-nav-logo'>
       <img src={logo} alt=""  className='AD-nav-img'/>
 
     </div>
-    <section className='AD-nav-items ' >
+    <section className='AD-nav-items' >
         {
           nav.map((nav,index)=>(
          
@@ -102,6 +100,5 @@ export default function AD_nav() {
     </section>
     </section>
     </div>
-  
   )
 }

@@ -32,8 +32,8 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
 
     const [imgemty, setImgemty] = useState(true);
     const [pdfemty, setpdfemty] = useState(true);
-
-    
+    const [avatarEmty,setAvatarEmty]=useState(true);
+    const [avatar,setAvatar]=useState();
     const [imgName, setImgName] = useState([]);
     const [imgcontain, setImgcontain] = useState([]);
     const [pdf,setPdf]=useState()
@@ -316,6 +316,9 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
     
                 data.append('pdf',pdf)
             }
+            if(avatar) {
+                data.append('avatar',avatar)
+            }
             try {
                 await axios.post('http://127.0.0.1:8000/api/addperson',data);
               
@@ -338,6 +341,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
             }
         }
     }
+
     // ham update 
     async function updateperson(e) {
         e.preventDefault()
@@ -347,8 +351,8 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
     
         let check=0;
         let count=0;
-        console.log(imgName);
-        console.log(storeImg);
+        let condition=0
+        
         if(storeImg.length!==imgName.length) {
             check++
         }
@@ -359,19 +363,144 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 }
             }
         }
-        if(pdf!==storePdf) {
-            count=1;
+        if(pdf) {
+
+            if(pdf!==storePdf) {
+                count=1;
+            }
+        }
+        if(avatar!==value.avatar) {
+            condition=1
         }
         // image and pdf change
-        if(check>0 &&count>0) {
-            console.log(check);
+        if(check>0 &&count>0&&condition>0) {
+       
+           
             const data=new FormData();
             data.append('_method',"PUT")
              imgName.map(item=>data.append('image[]',item));
              data.append('pdf',pdf)
             data.append('name',name);
             data.append('birthdate',birthdate);
-         
+            data.append('avatar',avatar)
+            if(!deathdate) {
+
+                data.append('deathdate','');
+            }
+            else {
+                data.append('deathdate',deathdate);
+
+            }
+            data.append('status',statusName.status);
+            if(!genderName.gender) {
+
+                data.append('gender','')
+
+            }
+            else {
+                data.append('gender',genderName.gender)
+
+
+            }
+            if(!countryName) {
+
+                data.append('national','')
+
+            }
+            else {
+                data.append('national',countryName)
+
+
+            }
+          
+            e.preventDefault();
+            try {
+                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
+                alert('success')
+    
+                setShowModal(!showModal)
+                setName('');
+                setBirthdate('');
+                setDeathdate('');
+                setCountryName('');
+                setGenderName('');
+                setStatusName('')
+                setImgName('')
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
+        }
+        else if(check>0&&condition>0) {
+          
+            const data=new FormData();
+            data.append('_method',"PUT")
+             imgName.map(item=>data.append('image[]',item));
+            data.append('name',name);
+            data.append('birthdate',birthdate);
+            data.append('avatar',avatar);
+            if(!deathdate) {
+
+                data.append('deathdate','');
+            }
+            else {
+                data.append('deathdate',deathdate);
+
+            }
+            data.append('status',statusName.status);
+            if(!genderName.gender) {
+
+                data.append('gender','')
+
+            }
+            else {
+                data.append('gender',genderName.gender)
+
+
+            }
+            if(!countryName) {
+
+                data.append('national','')
+
+            }
+            else {
+                data.append('national',countryName)
+
+
+            }
+          
+            e.preventDefault();
+            try {
+                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
+                alert('success')
+    
+                setShowModal(!showModal)
+                setName('');
+                setBirthdate('');
+                setDeathdate('');
+                setCountryName('');
+                setGenderName('');
+                setStatusName('')
+                setImgName('')
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
+        }
+        else if(count>0&&condition>0) {
+          
+            const data=new FormData();
+            data.append('_method',"PUT")
+           data.append('pdf',pdf)
+            data.append('name',name);
+            data.append('birthdate',birthdate);
+            data.append('avatar',avatar)
             if(!deathdate) {
 
                 data.append('deathdate','');
@@ -425,7 +554,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
         }
         //Img change
         else if(check>0) {
-            
+           
             const data=new FormData();
             data.append('_method',"PUT")
              imgName.map(item=>data.append('image[]',item));
@@ -483,7 +612,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
             }
         }
         else if(count>0) {
-            
+         
             const data=new FormData();
             data.append('_method',"PUT")
            data.append('pdf',pdf)
@@ -540,7 +669,66 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 alert('Update FAILED')
             }
         }
-        // Image and pdf not change
+       
+        else if(condition>0) {
+            
+            const data=new FormData();
+            data.append('_method',"PUT")
+           data.append('avatar',avatar)
+            data.append('name',name);
+            data.append('birthdate',birthdate);
+            if(!deathdate) {
+
+                data.append('deathdate','');
+            }
+            else {
+                data.append('deathdate',deathdate);
+
+            }
+            data.append('status',statusName.status);
+            if(!genderName.gender) {
+
+                data.append('gender','')
+
+            }
+            else {
+                data.append('gender',genderName.gender)
+
+
+            }
+            if(!countryName) {
+
+                data.append('national','')
+
+            }
+            else {
+                data.append('national',countryName)
+
+
+            }
+          
+            e.preventDefault();
+            try {
+                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
+                alert('success')
+    
+                setShowModal(!showModal)
+                setName('');
+                setBirthdate('');
+                setDeathdate('');
+                setCountryName('');
+                setGenderName('');
+                setStatusName('')
+                setImgName('')
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
+        }
+        // Image and pdf not change and avatar
         else {
 
             try {
@@ -630,6 +818,9 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
             if(value.pdf) {
                 setPdf(value.pdf)
             }
+            if(value.avatar) {
+                setAvatar(value.avatar)
+            }
         }
     }, [])
 
@@ -638,16 +829,12 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
         return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={"http://127.0.0.1:8000/api/images/"+e} width='100' />
 
     }
-    const handleShowImgInput=(e,index)=> {
-        console.log('da vao duoc ham');
-       
 
-    }
     
 
 
     const handleImg=(e)=> {
-        console.log(e.target.files);
+      
         setImgemty(false)
         const store=[]
       
@@ -663,10 +850,11 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
         // dua duong dan file vao
         const myDiv=document.getElementById('inputfile')
         myDiv.innerHTML=''
-        let storeImg=[]
+     
         store.map((item,index)=> {
 
             const reader = new FileReader();
+           
             reader.readAsDataURL(item);
             reader.onload = () => {
               const imgPath = reader.result;
@@ -693,6 +881,27 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
         setPdf(e.target.files[0]);
         setpdfemty(false)
     }
+// ham avatar
+    const handleAvatar=(e)=> {
+        setAvatar(e.target.files[0]);
+        const myDiv=document.getElementById('avatar');
+        myDiv.innerHTML=''
+        const reader = new FileReader();
+           
+            reader.readAsDataURL(e.target.files[0]);
+            reader.onload = () => {
+              const imgPath = reader.result;
+              const imageElement = document.createElement("img");
+              imageElement.src = imgPath;
+         
+         
+
+              imageElement.style.maxWidth = "20%";
+              myDiv.appendChild(imageElement);
+            }
+            setAvatarEmty(false);
+    }
+   
     return (
         <>
 
@@ -755,6 +964,14 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                                 </Form.Group>
                             </Col>
                         </Row>
+                        <Row className='mt-4'>
+                            <Form.Group >
+                                <Form.Label>Avatar</Form.Label>
+                                <InputText type='file'  onChange={handleAvatar} accept="image/*"  style={{minWidth:'100% '}} />
+                                {avatarEmty&&value&&avatar&& (<img key={avatar} className='d-inline-flex ms-2 mt-1' alt={avatar} src={"http://127.0.0.1:8000/api/images/"+avatar} width='100' />) }
+                            </Form.Group>
+                        </Row>
+                        <Row className='' id='avatar'></Row>
                         <Row className='mt-4'>
                             <Form.Group >
                                 <Form.Label>PDF</Form.Label>

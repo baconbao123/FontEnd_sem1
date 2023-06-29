@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function AD_card_item({title,content,cardColor,Icon}) {
   return (
-    <section className='d-inline-flex  mt-5 ms-5'>
+    <section className='d-inline-flex  '>
 
 <div class={`card-header ${cardColor} `}  >
  
