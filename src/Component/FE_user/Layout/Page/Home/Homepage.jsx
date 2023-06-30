@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-<<<<<<< HEAD
-import {useCallback, useMemo } from "react";
-=======
 import { useCallback, useMemo } from "react";
 import axios from "axios";
->>>>>>> 80d329cf59c433e0c6a9f44a311ebc8267417966
 import "./Homepage.css";
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
@@ -16,21 +12,6 @@ import "aos/dist/aos.css";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
 const Homepage = React.memo(() => {
-<<<<<<< HEAD
-=======
-  const [persons, setPersons] = useState([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await axios.get("http://127.0.0.1:8000/api/allpersons");
-      if (res && res.data && res.data.persons) {
-        setPersons(res.data.persons);
-      }
-    }
-
-    fetchData();
-  }, []);
->>>>>>> 80d329cf59c433e0c6a9f44a311ebc8267417966
 
   // effect srcoll
   useEffect(() => {
@@ -108,13 +89,6 @@ const Homepage = React.memo(() => {
     // Xử lý sự kiện khi nút được nhấn
   }, []);
 
-<<<<<<< HEAD
-=======
-  const activePersons = persons.filter(
-    (person) =>
-      person.status === "active" || person.nobel_prizes?.status === "active"
-  );
->>>>>>> 80d329cf59c433e0c6a9f44a311ebc8267417966
 
   return (
     <div className="container">
@@ -130,25 +104,6 @@ const Homepage = React.memo(() => {
           </div>
         </header>
 
-<<<<<<< HEAD
-=======
-        <section className="all-nobel-person container">
-          <div>
-            {" "}
-            <h1 style={{ color: "white", fontWeight: 700 }}>
-              ALL NOBEL PRIZES
-            </h1>
-          </div>
-          <Row>
-            {activePersons.map((person) => (
-              <Col md={3} key={person.id}>
-                <PersonCard person={person} />
-              </Col>
-            ))}
-          </Row>
-        </section>
-
->>>>>>> 80d329cf59c433e0c6a9f44a311ebc8267417966
         <section className="container page-container text-light text-center">
           <div className="col-md-10 col-lg-7 m-auto">
             <h6 className="title mb-4">Explore Nobel Prizes</h6>
