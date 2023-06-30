@@ -21,10 +21,10 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
     const [showModal, setShowModal] = useState(false);
     const [country, setCountry] = useState([]);
     const [filterCountry, setFilterCountry] = useState(null);
-    const [countryName, setCountryName] = useState('');
+    const [countryName, setCountryName] = useState({name:''});
     const gender = [{ gender: 'male' }, { gender: 'female' }]
     const status = [{ status: "active" }, { status: "disable" }]
-    const [genderName, setGenderName] = useState('')
+    const [genderName, setGenderName] = useState({gender:''})
     const [statusName, setStatusName] = useState({status:''})
     const [name, setName] = useState('');
     const [birthdate, setBirthdate] = useState('');
@@ -315,6 +315,10 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
         }
         else if(statusName.status==='') {
             showWarn('Status must be chosen')
+        }
+        else if(genderName.gender==='') {
+            showWarn('Gender must be chosen')
+            
         }
         else {
             
@@ -990,7 +994,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group  >
-                                <Form.Label>Images (&gt;=6 Files)</Form.Label>
+                                <Form.Label>Images (&gt;=3 Files)</Form.Label>
                                 <InputText type='file' multiple onChange={handleImg} accept='image/*'  style={{minWidth:'100% '}} />
                                 {imgemty&&value&&imgName&&imgName.length>0 && imgName.map((item,index)=> handleShowImg(item,index))}
 

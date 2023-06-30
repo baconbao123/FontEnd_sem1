@@ -12,7 +12,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { BsFillPersonFill,BsFillTrophyFill,BsChatSquareTextFill,BsFillPersonPlusFill,BsChevronDoubleRight} from "react-icons/bs";
 
-
+import { Toast } from 'primereact/toast';
 import AD_show_modal from '../AD_component/AD_show_modal';
 import AD_life_modal from '../AD_component/AD_life_modal';
 import AD_prize_modal from '../AD_component/AD_prizes_modal';
@@ -23,6 +23,7 @@ import AD_prizes_modal from '../AD_component/AD_prizes_modal'
 import Swal from 'sweetalert2'
 export default function AD_home() {
   const navigate = useNavigate();
+  const toast=useRef()
   const logout = () => {
     Swal.fire({
       title: 'Are you sure?',
@@ -114,6 +115,7 @@ export default function AD_home() {
 
   return (
     <Container fluid className='wrapper'>
+      <Toast ref={toast}/>
       <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
       <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
@@ -163,8 +165,8 @@ export default function AD_home() {
                  </section>
 
 
-                  <AD_show_modal show={showPersonModal} title={'ADD NEW '}  Load={LoadPerson}/>
-                  <AD_life_modal show={showLifeModal}  title={"ADD NEW LIFE"} Load={LoadPerson} />
+                  <AD_show_modal toast={toast} show={showPersonModal} title={'ADD NEW '}  Load={LoadPerson}/>
+                  <AD_life_modal toast={toast} show={showLifeModal}  title={"ADD NEW LIFE"} Load={LoadPerson} />
                 </Col>
                 <Col lg={4} md={4} className="mb-4" >
                   <section onClick={handleOnclickPrize} className='mb-4 d-flex justify-content-center'>
@@ -179,8 +181,8 @@ export default function AD_home() {
                   <PrimeButton ref={showsetPrizeModal} severity="info" label='SET PRIZE'> <BsFillTrophyFill className='ms-1'/> </PrimeButton>
                   </section>
 
-                <AD_setprize_modal show={showsetPrizeModal} title={"SET NEW PRIZE"} Load={LoadPrize}/>
-                  <AD_prizes_modal show={showPrizeModal} Load={LoadPrize} title={"ADD NEW PRIZE "}   />
+                <AD_setprize_modal toast={toast} show={showsetPrizeModal} title={"SET NEW PRIZE"} Load={LoadPrize}/>
+                  <AD_prizes_modal toast={toast} show={showPrizeModal} Load={LoadPrize} title={"ADD NEW PRIZE "}   />
                 </Col>
 
                 <Col lg={4} md={4} className="mb-4" >
@@ -192,7 +194,7 @@ export default function AD_home() {
 
                 <PrimeButton ref={showBlogModal} severity="info" label='ADD BLOG'  > <BsChatSquareTextFill className='ms-1 '/> </PrimeButton>
                 </section>
-                  <AD_blog_modal  show={showBlogModal} title={"ADD NEW BLOG"} Load={LoadBlog}/>
+                  <AD_blog_modal toast={toast} show={showBlogModal} title={"ADD NEW BLOG"} Load={LoadBlog}/>
                 </Col>
 
               </Row>
