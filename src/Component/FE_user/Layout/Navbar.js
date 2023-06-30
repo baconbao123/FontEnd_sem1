@@ -88,14 +88,14 @@ function Navbar() {
             </Link>
             {onMouseEnterNav &&
               (<ul class="dropdown arrow-top" data-aos='fade-up'>
-                <li><a href="#1">Laureates</a></li>
+                <li><Link to="/laureates">Laureates</Link></li>
                 <li><Link to='/nobel-prizes'> Nobel Prizes</Link></li>
-                <li><a href="#3">Literature</a></li>
-                <li><a href="#3">Medicine</a></li>
-                <li><a href="#3">Chemistry</a></li>
-                <li><a href="#3">Peace</a></li>
-                <li><a href="#3">Physics</a></li>
-                <li><a href="#3">Economic Sciences</a></li>
+                <li><Link to="nobel/literature">Literature</Link></li>
+                <li><Link to="nobel/medicine">Medicine</Link></li>
+                <li><Link to="nobel/chemistry">Chemistry</Link></li>
+                <li><Link to="nobel/peace">Peace</Link></li>
+                <li><Link to="nobel/physic">Physics</Link></li>
+                <li><Link to="nobel/economic sciences">Economic Sciences</Link></li>
               </ul>)
             }
 
@@ -113,8 +113,8 @@ function Navbar() {
               Alfred Nobel &  Blog
             </Link>
             {onMouseEnterNav1 &&
-              (<ul class="dropdown arrow-top" data-aos='fade-up'>
-                <li><a href="#1">Alfred Nobel</a></li>
+              (<ul class="dropdown arrow-top" data-aos='fade'>
+                <li><Link to='/alfred-nobel'>Alfred Nobel</Link></li>
                 <li><Link to="/blog"> Blogs</Link></li>
               </ul>)
             }

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -10,13 +11,13 @@ function Footer() {
           <p className="infos">
             &copy; {new Date().getFullYear()}, Made with{' '}
             <i className="ti-heart text-danger"></i> by{' '}
-            <a href="http://www.devcrud.com">Baconbao Team</a>
+            <a>Baconbao Team</a>
           </p>
           <span>|</span>
           <div className="links">
-            <a href="#">About</a>
-            <a href="#">Explore</a>
-            <a href="#">Journal</a>
+            <Link to="/nobel/about">About</Link>
+            <Link to='/nobel-prizes'>Explore</Link>
+            <Link to="/blog">Journal</Link>
           </div>
         </footer>
       </div>
