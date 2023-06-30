@@ -11,7 +11,7 @@ function DetailNobelPrize() {
   const [jsonData, setJsonData] = useState([]); // State để lưu trữ dữ liệu JSON
   const { name, year, id } = useParams();
 
-  useEffect(() => {
+    useEffect(() => {
     async function prizeDetailsData() {
       const res = await axios.get(
         `http://127.0.0.1:8000/api/nobel-prizes/${name}/${year}/${id}`
@@ -51,12 +51,12 @@ function DetailNobelPrize() {
           {jsonData[0]?.nobelPrize[0]?.persons.map((person) => (
             <Card key={person.name} className="col-lg-3">
               <Card.Img
-                src={`http://127.0.0.1:8000/api/images/${person.img[0]}`}
+                src={`http://127.0.0.1:8000/api/images/${person.avatar}`}
                 alt="img"
                 height={275}
               />
               <Card.Body style={{ backgroundColor: "#fff" }}>
-                <Link>
+                <Link to={`/chemistry/biography/${person.id_person}`}>
                   <Card.Title className="card-title-person">
                     {person.name}
                   </Card.Title>

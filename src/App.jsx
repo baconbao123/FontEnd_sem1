@@ -27,8 +27,12 @@ import ScollToTop from "./Component/FE_user/Layout/ScrollToTop";
 import BiographyContent from "./Component/FE_user/Layout/Page/Biography/BiographyContent";
 import Blog from "./Component/FE_user/Layout/Page/Blog/Blog";
 import BlogDetail from "./Component/FE_user/Layout/Page/Blog/BlogDetail";
+<<<<<<< HEAD
 import Laureates from "./Component/FE_user/Layout/Page/Laureates/Laureates";
 
+=======
+import NobelPrizeItem from "./Component/FE_user/Layout/Page/NobelPrizeItem/NobelPrizeItem";
+>>>>>>> 80d329cf59c433e0c6a9f44a311ebc8267417966
 import DetailNobelPrize from "./Component/FE_user/Layout/Page/DetailNobelPrize/DetailNobelPrize";
 
 
@@ -56,7 +60,11 @@ function App() {
       </Routes>
 
       {/* User */}
+<<<<<<< HEAD
       {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') ? <Navbar /> : null}
+=======
+      {location.pathname ==="/nobel-prizes" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/chemistry/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/') ? <Navbar /> : null}
+>>>>>>> 80d329cf59c433e0c6a9f44a311ebc8267417966
       
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -68,6 +76,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/nobel-prizes/:name/:year/:id" element={<DetailNobelPrize />} />
+        <Route path="nobel/:namePrize" element={<NobelPrizeItem/>}/>
       </Routes>
       <ScollToTop />
     </>

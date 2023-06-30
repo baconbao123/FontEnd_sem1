@@ -1,0 +1,46 @@
+
+.header-nobel-prize-item{
+    position: relative;
+    height: 100%;
+    max-height: 450px;
+    text-align: center;
+    color: #fff;
+    background-image: url(../../../../img/NEWS_Nobel-Prize-Banner.jpg);
+    background-size: cover;
+    background-position: center;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+  }
+  .header-nobel-prize-item .header-content {
+    position: absolute;
+    left: 30%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  
+  .header-nobel-prize-item .header-content .header-title {
+    font-size: calc(25px + (50 - 25) * ((100vw - 300px) / (1300 - 300)));
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .header-nobel-prize-item .header-content .header-subtitle {
+    opacity: 1;
+    margin-bottom: 30px;
+  }
+  
+  .info-nobel-about{
+    text-align: right;
+    color: #F1A40E;
+  }
+  .info-nobel-about strong{
+    color: #fff;
+  }
+  .info-nobel-about span{
+    
+  }
