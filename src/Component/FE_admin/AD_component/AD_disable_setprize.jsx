@@ -1,12 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
-import { DataTable, Column, Tag, Button, FilterMatchMode, FilterOperator, InputText, Dropdown } from 'primereact'
-import { BsSearch, BsPersonAdd, BsGear, BsTrashFill, BsTrophyFill,BsPlusLg   } from "react-icons/bs";
+import { DataTable, Column, Tag, Button,  InputText, Dropdown } from 'primereact'
+import { BsSearch, BsPersonAdd, BsGear, BsTrashFill, BsTrophyFill,BsPlusLg ,BsChevronDoubleRight } from "react-icons/bs";
+import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { RiFilterOffFill } from "react-icons/ri";
 import axios from 'axios';
 import AD_nav from '../Layout/AD_nav'
+import AD_hidden_nav from '../Layout/AD_hidden_nav';
 import { useNavigate } from 'react-router-dom'
+import { Toast } from 'primereact/toast';
 import Cookies from 'js-cookie';
 export default function AD_disable_setprize() {
   const navigate = useNavigate();
@@ -19,8 +22,12 @@ export default function AD_disable_setprize() {
   const [loading, setLoading] = useState(true);
   const [global, setGlobal] = useState('');
   const [selection, setSelection] = useState([]);
+  const [showNav,setShowNav]=useState(false)
+  const [person,setPerson]=useState([]);
+  const [allPrize,setAllPrize]=useState([])
   const showModalButoon = useRef()
-  const showModalEdit = useRef()
+  const toast= useRef()
+ 
   const [filters, setFilters] = useState(
     {
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -32,9 +39,20 @@ export default function AD_disable_setprize() {
       status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
     }
   )
+    // Toast
+    const showSuccess = (e) => {
+      toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+     
+    }
+    const showError = (e) => {
+      toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+    }
   useEffect(() => {
     
-    (async()=>await Load())()
+    (async()=>await Load())();
+    (async()=>await LoadPrize())();
+    (async()=>await LoadPerson())();
+
 
     setLoading(false)
   }, [])
@@ -44,6 +62,52 @@ export default function AD_disable_setprize() {
   setPrizes(result.data) 
 }
 
+async function LoadPrize() {
+  const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
+  setAllPrize(result.data)
+}
+async function LoadPerson() {
+  const result = await axios.get('http://127.0.0.1:8000/api/personprize');
+  let data=result.data.filter(item=>{
+      if(item.life_story)return item
+  })
+ 
+  setPerson(data)
+}
+
+// handle body nobel
+const handlePerson=(e)=> {
+ 
+
+    let storePerson=person.filter(item=>item.id===e.person_id)
+    if (storePerson.length>0) {
+      
+      return storePerson[0].name
+    }
+
+}
+
+const handleNobel=(e)=> { 
+ 
+
+    let storeNobel=allPrize.filter(item=>item.id===e.nobel_id)
+    
+    if(storeNobel.length>0) {
+
+      return storeNobel[0].nobel_name;
+    }
+  
+}
+const handleNobelYear=(e)=> {
+
+
+    let storeNobel=allPrize.filter(item=>item.id===e.nobel_id)
+    if(storeNobel.length>0) {
+
+      return storeNobel[0].nobel_year
+    }
+  
+}
  // ham active 
  const handleActive=() => {
   selection.map(item=>{
@@ -57,10 +121,10 @@ async function  activesetprize(item){
           status: 'active',
         })
         Load();
-        alert(item.person_id+ ' ' + item.nobel_id+' sucess active');
+        showSuccess(' sucess active')
     }
     catch(err) {
-      alert(err)
+      showError(err.message)
     }
 }
 // Ham delete setprize
@@ -75,10 +139,10 @@ async function  deletesetprize(item){
     try {
         await axios.delete('http://127.0.0.1:8000/api/deletepn/'+item.person_id +'/'+item.nobel_id)
         Load();
-        alert(item.person_id+ ' ' + item.nobel_id+' sucess delete');
+    showSuccess(' sucess delete')
     }
     catch(err) {
-      alert('err')
+     showError(err.message)
     }
 }
 
@@ -109,17 +173,30 @@ async function  deletesetprize(item){
   }
   const renderHeader = () => {
     return (
-      <div className="d-flex justify-content-around">
-        <span className="p-input-icon-left">
+      <div className="d-flex justify-content-around AD-header">
+        <div  className='d-none show-1000 mb-3 row  '>
+          
+          <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2 show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+      <h1 className='d-inline-block text-center col-10 '> DISABLE SET PRIZE</h1>
+      </div>
+      <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+        <section>
+
+        <span className="p-input-icon-left  mb-3">
           <BsSearch className="pi pi-search" />
           <InputText value={global} onChange={handleGlobalSearch} placeholder="Keyword Search" />
 
-          <Button type="button" label="Clear" outlined onClick={clearFilter} className='AD-clear-filter' >
+        </span>
+
+          <Button type="button" label="Clear" outlined onClick={clearFilter} className=' mb-3 ms-2 AD-clear-filter' >
             <RiFilterOffFill />
           </Button>
-
-        </span>
-        <h1 className='d-flex'>SET PRIZE</h1>
+        </section>
+        <h1 className='hidden-1000 '> DISABLE SET PRIZE</h1>
         <span className='AD-show-dropdown'>
 
 
@@ -164,11 +241,17 @@ async function  deletesetprize(item){
 
   return (
     <Container fluid className='wrapper'>
+      <Toast  ref={toast}/>
+       <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+      <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
+      </Row>
+
       <Row>
-        <Col lg={2}>
+      <Col lg={2} className='padding-0 xs-none  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
           <AD_nav />
         </Col>
-        <Col lg={10}>
+        <Col className='bg-content col-xl-10  col-md-12'>
           <DataTable
             header={header}
             loading={loading}
@@ -182,8 +265,9 @@ async function  deletesetprize(item){
             selection={selection} onSelectionChange={(e) => setSelection(e.value)}
           >
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-            <Column sortable filter field='nobel_id' header='nobel id' />
-            <Column sortable filter field='person_id' header='person id' />
+            <Column sortable filter field='nobel_id' body={handleNobel} header='nobel name' />
+            <Column sortable filter field='nobel_id' body={handleNobelYear} header='nobel year' />
+            <Column sortable filter field='person_id' body={handlePerson} header='person name' />
             <Column sortable filter field='motivation' header='motivation' />
             <Column sortable filter field='nobel_share' header='nobel share' />
 

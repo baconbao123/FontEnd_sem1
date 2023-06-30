@@ -10,7 +10,7 @@ import { InputText } from 'primereact/inputtext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
-export default function AD_life_modal({value,title, show,Load,selection}) {
+export default function AD_life_modal({value,title, show,Load,selection,toast}) {
     const navigate = useNavigate();
     useEffect(()=>{
         if(!Cookies.get('login')){
@@ -31,7 +31,7 @@ export default function AD_life_modal({value,title, show,Load,selection}) {
     const [qoute,setQoute]=useState('')
     const [book,setBook]=useState('')
     const [life,setLife]=useState('')
-    const [statusName,setStatusName]=useState('');
+    const [statusName,setStatusName]=useState({status:''});
     
     const status = [{ status: "active" }, { status: "disable" }]
 // set EDIT 
@@ -68,9 +68,22 @@ export default function AD_life_modal({value,title, show,Load,selection}) {
             setExperiment(value.experiment);
             setStruggles(value.struggles);
             setBook(value.book)
-            
+            setStatusName({status:value.status})
         }
       }, [])
+        // Toast
+    const showError = (e) => {
+        toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+      }
+      const showSuccess = (e) => {
+        toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+        
+      }
+    
+      
+      const showWarn = (e) => {
+          toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
+      }
 //    ham  get data 
       async function Loadperson() {
        const result= await axios.get('http://127.0.0.1:8000/api/personlife');
@@ -80,66 +93,99 @@ export default function AD_life_modal({value,title, show,Load,selection}) {
  
 //  Ham add life
       async function addlife(e) {
-        e.preventDefault()
-        try {
-        await  axios.post('http://127.0.0.1:8000/api/addlife',{
-
-            person_id: personSelected.id,
-            life:life,
-            childhood: childhood,
-            education: education ,
-            experiment:  experiment,
-            struggles: struggles ,
-            time_line: time_line ,
-            personalities:  personalities,
-            achievements_detail: achivements ,
-            quote:  qoute,
-            books: book ,
-            status : statusName.status
-        })
-        alert('sucess');
-        setShowModal(false);
-        setChildhood('');
-        setAchivements('');
-        setQoute('');
-        setLife('');
-        setPersonalities('');
-        setTime_line('');
-        setEducation('');
-        setExperiment('');
-        setStruggles('');
-        setBook('')
-        return Load()
+        if(statusName.status==='') {
+            showWarn('Status must be chosen')
         }
-        catch(err) {
-            alert(err)
+        else if(!personSelected)  {
+            showWarn('Person must be chosen')
         }
+        else {
+            e.preventDefault()
+            try {
+            await  axios.post('http://127.0.0.1:8000/api/addlife',{
+    
+                person_id: personSelected.id,
+                life:life,
+                childhood: childhood,
+                education: education ,
+                experiment:  experiment,
+                struggles: struggles ,
+                time_line: time_line ,
+                personalities:  personalities,
+                achievements_detail: achivements ,
+                quote:  qoute,
+                books: book ,
+                status : statusName.status
+            })
+           showSuccess('Add success')
+            setShowModal(false);
+            setChildhood('');
+            setAchivements('');
+            setQoute('');
+            setLife('');
+            setPersonalities('');
+            setTime_line('');
+            setEducation('');
+            setExperiment('');
+            setStruggles('');
+            setBook('')
+            setStatusName({status:''})
+            return Load()
+            }
+            catch(err) {
+               showError(err.message)
+            }
+        }
+       
       }
 // Ham update life
       async function updatelife() {
-        try{
-            await axios.put('http://127.0.0.1:8000/api/updatelife/'+value.id,{
-            
-            person_id: personSelected.id,
-            life:life,
-            childhood: childhood,
-            education: education ,
-            experiment:  experiment,
-            struggles: struggles ,
-            time_line: time_line ,
-            personalities:  personalities,
-            achievements_detail: achivements ,
-            quote:  qoute,
-            books: book ,
-            status : statusName.status
-            })
-            alert('sucess updated');
-            setShowModal(false);
-            selection()
-            return Load()
+        if(statusName.name==='') {
+            showWarn('Status must be chosen')
         }
-        catch(err) {
-           alert("PERSON  IS DISABLED, UPDATED FAIL ")
+        else if(!personSelected) {
+            showWarn('Person is disable')
+        }
+        else {
+
+            try{
+                await axios.put('http://127.0.0.1:8000/api/updatelife/'+value.id,{
+                
+                person_id: personSelected.id,
+                life:life,
+                childhood: childhood,
+                education: education ,
+                experiment:  experiment,
+                struggles: struggles ,
+                time_line: time_line ,
+                personalities:  personalities,
+                achievements_detail: achivements ,
+                quote:  qoute,
+                books: book ,
+                status : statusName.status
+                })
+                showSuccess('success updated')
+                setTimeout(()=> {
+                    setShowModal(false);
+                    selection()
+                     Load()
+
+                },1000)
+                setChildhood('');
+                setAchivements('');
+                setQoute('');
+                setLife('');
+                setPersonalities('');
+                setTime_line('');
+                setEducation('');
+                setExperiment('');
+                setStruggles('');
+                setBook('')
+               
+            }
+            catch(err) {
+                showError(err.message)
+            }
         }
       }
 
@@ -157,12 +203,12 @@ export default function AD_life_modal({value,title, show,Load,selection}) {
   
         }
     },[person])
-
+   
     return (
         <>
             <Modal show={showModal} centered={true} size='lg' onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title><h1>ADD NEW LIFE</h1></Modal.Title>
+                    <Modal.Title><h1>{title}</h1></Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>

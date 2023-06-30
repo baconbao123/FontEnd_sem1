@@ -6,13 +6,15 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Container, Col, Row } from 'react-bootstrap';
 import { Tag } from 'primereact/tag';
-import { BsSearch,BsTrashFill,BsPlusLg} from "react-icons/bs";
+import { BsSearch,BsTrashFill,BsPlusLg,BsChevronDoubleRight} from "react-icons/bs";
 import {RiFilterOffFill  } from "react-icons/ri";
 import { Button } from 'primereact/button';
 import axios from 'axios';
 import AD_nav from '../Layout/AD_nav';
+import AD_hidden_nav from '../Layout/AD_hidden_nav';
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import { Toast } from 'primereact/toast';
 export default function AD_disbale_show() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -23,6 +25,7 @@ export default function AD_disbale_show() {
 // Khởi tạo các biến
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true)
+  const [showNav,setShowNav]=useState(false);
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       id: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
@@ -40,10 +43,20 @@ export default function AD_disbale_show() {
   const [selection,setSelection]=useState([]);
   const [show,setShow]=useState(10);
   const [showRow]=useState([5,10,15,20,30]);
-
+  const toast = useRef(null);
 
   const showModalButoon=useRef(null)
   const showModalEdit=useRef('')
+
+  // Toast
+  const showSuccess = (e) => {
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+   
+  }
+  const showError = (e) => {
+    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+  }
+
   useEffect(() => {
     (async()=>await Load())();
     setLoading(false);
@@ -57,12 +70,18 @@ export default function AD_disbale_show() {
 
    // Ham active
    const handleActive=()=> {
+    let time=5000
     if (selection.length>=1) {
-     
+      if(selection.length>10) {
+        
+        time=10000
+      }
+      
+      
         selection.map((item=> {
         
-          
-             activeperson(item);
+          setTimeout(()=>{  activeperson(item)},time);
+           
              setSelection(selection.filter(item=>item !== item))
         }))
 
@@ -78,12 +97,12 @@ async function activeperson(item) {
         status: 'active',
       
       }) 
-      alert(item.id + ' Active success')
+    showSuccess(' active success')
       Load();
     }
     catch (err) {
-      alert(err)
-      alert('Active failed')
+     
+    showError(err.message)
     }
 }
 // ham delete
@@ -98,12 +117,11 @@ async function activeperson(item) {
   async function deleteperson(item) {
     try {
       await axios.delete('http://127.0.0.1:8000/api/deleteperson/' +item.id)
-      alert("Deleted !")
+      showSuccess(' delete success')
       Load()
     }
     catch (err) {
-      alert(err)
-      alert('Delete failed')
+    showError(err.message)
     }
   }
 // Hàm search Golbal
@@ -137,22 +155,31 @@ async function activeperson(item) {
 // render header
   const renderHeader = () => {
     return (
-      <div className="d-flex justify-content-around">
-        <span className="p-input-icon-left">
+      <div className="d-flex justify-content-around AD-header">
+         <div  className='d-none show-1000 mb-3 row  '>
+          
+          <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2 show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+      <h1 className='d-inline-block text-center col-10 '>PERSON DISABLE</h1>
+      </div>
+      <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+        <section>
+          
+        <span className="p-input-icon-left mb-3">
           <BsSearch className="pi pi-search" />
           <InputText value={global} onChange={hanldeGlobalSearch} placeholder="Keyword Search" />
        
-          <Button  type="button"  label="Clear" outlined onClick={clearFilter} className='AD-clear-filter' >
-            <RiFilterOffFill  />
-             </Button>
          
         </span>
-        <h1 className='d-flex'>PERSON DISABLE</h1>
-        <span className='AD-show-dropdown'>
-
-        show
-        <Dropdown  value={show} options={showRow} onChange={e=>setShow(e.value)} />
-        </span>
+          <Button  type="button"  label="Clear" outlined onClick={clearFilter} className='mb-3 ms-3' >
+            <RiFilterOffFill  />
+             </Button>
+        </section>
+        <h1 className=' hidden-1000'>PERSON DISABLE</h1>
+    
         <section style={{minWidth:'24rem'}}>
       
 
@@ -264,11 +291,16 @@ async function activeperson(item) {
  
   return (
     <Container fluid className='wrapper'>
+        <Toast ref={toast} /> 
+      <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+      <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
+      </Row>
       <Row>
-        <Col lg={2} md={2} className='padding-0'>
+      <Col lg={2} className='padding-0 xs-none  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
           <AD_nav />
         </Col>
-        <Col lg={10} md={10} className='bg-content'>
+        <Col  className='bg-content col-xl-10  col-md-12'>
         
           <section className='card'>
 
@@ -278,7 +310,8 @@ async function activeperson(item) {
             selection={selection} onSelectionChange={(e)=>setSelection(e.value)}
               header={header}
               showGridlines
-              paginator rows={show}
+              paginator rows={5}
+              rowsPerPageOptions={[2, 5, 10, 25, 50]}
               removableSort
               tableStyle={{ minWidth: '100%' }}
               globalFilterFields={['id', 'name', 'birthdate', 'deathdate', 'gender', 'national', 'status']}
@@ -287,7 +320,7 @@ async function activeperson(item) {
             > 
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
          
-              <Column field='id' header='id'filter sortable  style={{ minWidth: '7rem' }}   />
+          
               <Column field='name' header='name' sortable filterPlaceholder="Search"  filter style={{ minWidth:'12rem', maxWidth: '24rem' }} />
               <Column field='birthdate' header='birthdate' sortable filter  dataType='date'  style={{ minWidth: '12rem' }}   />
               <Column field='deathdate' header='deathdate' sortable filter  dataType='date' style={{ minWidth: '12rem' }} />

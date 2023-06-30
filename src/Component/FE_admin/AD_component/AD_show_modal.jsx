@@ -10,7 +10,7 @@ import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
-export default function AD_modal({ title, show, value, Load,setSelection }) {
+export default function AD_modal({ title, show, value, Load,setSelection,toast }) {
     const navigate = useNavigate();
     useEffect(()=>{
         if(!Cookies.get('login')){
@@ -37,7 +37,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
     const [imgName, setImgName] = useState([]);
     const [imgcontain, setImgcontain] = useState([]);
     const [pdf,setPdf]=useState()
-    const toast = useRef(null);
+   
     useEffect(() => {
         setCountry(
             [
@@ -287,17 +287,34 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
 
             ])
     }, []);
+    // Toast
+    const showError = (e) => {
+        toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+      }
+      const showSuccess = (e) => {
+        toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+        
+      }
+    
+      
+      const showWarn = (e) => {
+          toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
+      }
     // ham add new person
-    const showToast = () => {
-        return toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
-    };
+ 
   
     async function addperson(e) {
        
         e.preventDefault();
-        if(imgName.length<6){
-            alert('At least 6 images')
+        if(imgName.length<3){
+          showWarn('At least 3 images')
             
+        }
+        else if(!avatar) {
+            showWarn('Avatar must be chosen')
+        }
+        else if(statusName.status==='') {
+            showWarn('Status must be chosen')
         }
         else {
             
@@ -321,10 +338,13 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
             }
             try {
                 await axios.post('http://127.0.0.1:8000/api/addperson',data);
-              
-                alert('success')
-    
-                setShowModal(!showModal)
+                   showSuccess("added success")
+           
+                setTimeout(()=> {
+
+                    setShowModal(!showModal)
+                    Load()
+                },1000)
                 setName('');
                 setBirthdate('');
                 setDeathdate('');
@@ -333,12 +353,15 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setStatusName('')
                 setImgName('')
                 setAvatar('')
-                Load()
+               
+               
+             
     
             }
             catch (err) {
-                alert(err)
-                alert('ADD FAILED')
+              
+             showError(err.message)
+          
             }
         }
     }
@@ -373,398 +396,367 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
         if(avatar!==value.avatar) {
             condition=1
         }
-        // image and pdf change
-        if(check>0 &&count>0&&condition>0) {
-       
-           
-            const data=new FormData();
-            data.append('_method',"PUT")
-             imgName.map(item=>data.append('image[]',item));
-             data.append('pdf',pdf)
-            data.append('name',name);
-            data.append('birthdate',birthdate);
-            data.append('avatar',avatar)
-            if(!deathdate) {
-
-                data.append('deathdate','');
-            }
-            else {
-                data.append('deathdate',deathdate);
-
-            }
-            data.append('status',statusName.status);
-            if(!genderName.gender) {
-
-                data.append('gender','')
-
-            }
-            else {
-                data.append('gender',genderName.gender)
-
-
-            }
-            if(!countryName) {
-
-                data.append('national','')
-
-            }
-            else {
-                data.append('national',countryName)
-
-
-            }
-          
-            e.preventDefault();
-            try {
-                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
-                alert('success')
-    
-                setShowModal(!showModal)
-                setName('');
-                setBirthdate('');
-                setDeathdate('');
-                setCountryName('');
-                setGenderName('');
-                setStatusName('')
-                setImgName('')
-                setAvatar('')
-                Load()
-                setSelection()
-            }
-            catch (err) {
-                alert(err)
-                alert('Update FAILED')
-            }
+        if(imgName.length<3) {
+            showWarn('At least 3 images');
         }
-        else if(check>0&&condition>0) {
-          
-            const data=new FormData();
-            data.append('_method',"PUT")
-             imgName.map(item=>data.append('image[]',item));
-            data.append('name',name);
-            data.append('birthdate',birthdate);
-            data.append('avatar',avatar);
-            if(!deathdate) {
-
-                data.append('deathdate','');
-            }
-            else {
-                data.append('deathdate',deathdate);
-
-            }
-            data.append('status',statusName.status);
-            if(!genderName.gender) {
-
-                data.append('gender','')
-
-            }
-            else {
-                data.append('gender',genderName.gender)
-
-
-            }
-            if(!countryName) {
-
-                data.append('national','')
-
-            }
-            else {
-                data.append('national',countryName)
-
-
-            }
-          
-            e.preventDefault();
-            try {
-                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
-                alert('success')
-    
-                setShowModal(!showModal)
-                setName('');
-                setBirthdate('');
-                setDeathdate('');
-                setCountryName('');
-                setGenderName('');
-                setStatusName('')
-                setImgName('')
-                setAvatar('')
-                Load()
-                setSelection()
-            }
-            catch (err) {
-                alert(err)
-                alert('Update FAILED')
-            }
+        else if(!avatar) {
+            showWarn('Avatar must be chosen')
         }
-        else if(count>0&&condition>0) {
-          
-            const data=new FormData();
-            data.append('_method',"PUT")
-           data.append('pdf',pdf)
-            data.append('name',name);
-            data.append('birthdate',birthdate);
-            data.append('avatar',avatar)
-            if(!deathdate) {
-
-                data.append('deathdate','');
-            }
-            else {
-                data.append('deathdate',deathdate);
-
-            }
-            data.append('status',statusName.status);
-            if(!genderName.gender) {
-
-                data.append('gender','')
-
-            }
-            else {
-                data.append('gender',genderName.gender)
-
-
-            }
-            if(!countryName) {
-
-                data.append('national','')
-
-            }
-            else {
-                data.append('national',countryName)
-
-
-            }
-          
-            e.preventDefault();
-            try {
-                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
-                alert('success')
-    
-                setShowModal(!showModal)
-                setName('');
-                setBirthdate('');
-                setDeathdate('');
-                setCountryName('');
-                setGenderName('');
-                setStatusName('')
-                setImgName('')
-                setAvatar('')
-                Load()
-                setSelection()
-            }
-            catch (err) {
-                alert(err)
-                alert('Update FAILED')
-            }
-        }
-        //Img change
-        else if(check>0) {
-           
-            const data=new FormData();
-            data.append('_method',"PUT")
-             imgName.map(item=>data.append('image[]',item));
-            data.append('name',name);
-            data.append('birthdate',birthdate);
-            if(!deathdate) {
-
-                data.append('deathdate','');
-            }
-            else {
-                data.append('deathdate',deathdate);
-
-            }
-            data.append('status',statusName.status);
-            if(!genderName.gender) {
-
-                data.append('gender','')
-
-            }
-            else {
-                data.append('gender',genderName.gender)
-
-
-            }
-            if(!countryName) {
-
-                data.append('national','')
-
-            }
-            else {
-                data.append('national',countryName)
-
-
-            }
-          
-            e.preventDefault();
-            try {
-                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
-                alert('success')
-    
-                setShowModal(!showModal)
-                setName('');
-                setBirthdate('');
-                setDeathdate('');
-                setCountryName('');
-                setGenderName('');
-                setStatusName('')
-                setImgName('')
-                setAvatar('')
-                Load()
-                setSelection()
-            }
-            catch (err) {
-                alert(err)
-                alert('Update FAILED')
-            }
-        }
-        else if(count>0) {
-         
-            const data=new FormData();
-            data.append('_method',"PUT")
-           data.append('pdf',pdf)
-            data.append('name',name);
-            data.append('birthdate',birthdate);
-            if(!deathdate) {
-
-                data.append('deathdate','');
-            }
-            else {
-                data.append('deathdate',deathdate);
-
-            }
-            data.append('status',statusName.status);
-            if(!genderName.gender) {
-
-                data.append('gender','')
-
-            }
-            else {
-                data.append('gender',genderName.gender)
-
-
-            }
-            if(!countryName) {
-
-                data.append('national','')
-
-            }
-            else {
-                data.append('national',countryName)
-
-
-            }
-          
-            e.preventDefault();
-            try {
-                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
-                alert('success')
-    
-                setShowModal(!showModal)
-                setName('');
-                setBirthdate('');
-                setDeathdate('');
-                setCountryName('');
-                setGenderName('');
-                setStatusName('')
-                setImgName('')
-                setAvatar('')
-                Load()
-                setSelection()
-            }
-            catch (err) {
-                alert(err)
-                alert('Update FAILED')
-            }
-        }
-       
-        else if(condition>0) {
-            
-            const data=new FormData();
-            data.append('_method',"PUT")
-           data.append('avatar',avatar)
-            data.append('name',name);
-            data.append('birthdate',birthdate);
-            if(!deathdate) {
-
-                data.append('deathdate','');
-            }
-            else {
-                data.append('deathdate',deathdate);
-
-            }
-            data.append('status',statusName.status);
-            if(!genderName.gender) {
-
-                data.append('gender','')
-
-            }
-            else {
-                data.append('gender',genderName.gender)
-
-
-            }
-            if(!countryName) {
-
-                data.append('national','')
-
-            }
-            else {
-                data.append('national',countryName)
-
-
-            }
-          
-            e.preventDefault();
-            try {
-                await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data)
-                alert('success')
-    
-                setShowModal(!showModal)
-                setName('');
-                setBirthdate('');
-                setDeathdate('');
-                setCountryName('');
-                setGenderName('');
-                setStatusName('')
-                setImgName('')
-                setAvatar('')
-                Load()
-                setSelection()
-            }
-            catch (err) {
-                alert(err)
-                alert('Update FAILED')
-            }
-        }
-        // Image and pdf not change and avatar
         else {
 
-            try {
-                await axios.put('http://127.0.0.1:8000/api/updateperson/' + value.id, {
-                    name: name,
-                    birthdate: birthdate,
-                    deathdate: deathdate,
-                    status: statusName.status,
-                    gender: genderName.gender,
-                    img: imgName.toString(),
-                    national: countryName.name,
-                })
-                alert('success')
+            // image and pdf change
+            if(check>0 &&count>0&&condition>0) {
+           
+               
+                const data=new FormData();
+                data.append('_method',"PUT")
+                 imgName.map(item=>data.append('image[]',item));
+                 data.append('pdf',pdf)
+                data.append('name',name);
+                data.append('birthdate',birthdate);
+                data.append('avatar',avatar)
+                if(!deathdate) {
     
-                setShowModal(!showModal)
-                setName('');
-                setBirthdate('');
-                setDeathdate('');
-                setCountryName('');
-                setGenderName('');
-                setStatusName('')
-                setImgName('')
-                setAvatar('')
-                Load()
-                setSelection()
+                    data.append('deathdate','');
+                }
+                else {
+                    data.append('deathdate',deathdate);
+    
+                }
+                data.append('status',statusName.status);
+                if(!genderName.gender) {
+    
+                    data.append('gender','')
+    
+                }
+                else {
+                    data.append('gender',genderName.gender)
+    
+    
+                }
+                if(!countryName) {
+    
+                    data.append('national','')
+    
+                }
+                else {
+                    data.append('national',countryName)
+    
+    
+                }
+              
+                e.preventDefault();
+                try {
+                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    
+                    showSuccess('Update success')
+                    setTimeout(()=> {
+                        setSelection()
+                        setShowModal(!showModal)
+                        Load()
+                    },1000)
+                    setName('');
+                    setBirthdate('');
+                    setDeathdate('');
+                    setCountryName('');
+                    setGenderName('');
+                    setStatusName('')
+                    setImgName('')
+                    setAvatar('')
+                
+                  
+                }
+                catch (err) {
+                   showError(err.message)
+                }
             }
-            catch (err) {
-                alert(err)
-                alert('Update FAILED')
+            else if(check>0&&condition>0) {
+              
+                const data=new FormData();
+                data.append('_method',"PUT")
+                 imgName.map(item=>data.append('image[]',item));
+                data.append('name',name);
+                data.append('birthdate',birthdate);
+                data.append('avatar',avatar);
+                if(!deathdate) {
+    
+                    data.append('deathdate','');
+                }
+                else {
+                    data.append('deathdate',deathdate);
+    
+                }
+                data.append('status',statusName.status);
+                if(!genderName.gender) {
+    
+                    data.append('gender','')
+    
+                }
+                else {
+                    data.append('gender',genderName.gender)
+    
+    
+                }
+                if(!countryName) {
+    
+                    data.append('national','')
+    
+                }
+                else {
+                    data.append('national',countryName)
+    
+    
+                }
+              
+                e.preventDefault();
+                try {
+                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    showSuccess('Update success')
+                    setTimeout(()=> {
+                        setSelection()
+                        setShowModal(!showModal)
+                        Load()
+                    },1000)
+                    setName('');
+                    setBirthdate('');
+                    setDeathdate('');
+                    setCountryName('');
+                    setGenderName('');
+                    setStatusName('')
+                    setImgName('')
+                    setAvatar('')
+               
+                  
+                }
+                catch (err) {
+                  
+                    showError(err.message)
+                }
+            }
+            else if(count>0&&condition>0) {
+              
+                const data=new FormData();
+                data.append('_method',"PUT")
+               data.append('pdf',pdf)
+                data.append('name',name);
+                data.append('birthdate',birthdate);
+                data.append('avatar',avatar)
+                if(!deathdate) {
+    
+                    data.append('deathdate','');
+                }
+                else {
+                    data.append('deathdate',deathdate);
+    
+                }
+                data.append('status',statusName.status);
+                if(!genderName.gender) {
+    
+                    data.append('gender','')
+    
+                }
+                else {
+                    data.append('gender',genderName.gender)
+    
+    
+                }
+                if(!countryName) {
+    
+                    data.append('national','')
+    
+                }
+                else {
+                    data.append('national',countryName)
+    
+    
+                }
+              
+                e.preventDefault();
+                try {
+                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    showSuccess('Update success')
+        
+                    setTimeout(()=> {
+                        setSelection()
+                        setShowModal(!showModal)
+                        Load()
+                    },1000)
+                    setName('');
+                    setBirthdate('');
+                    setDeathdate('');
+                    setCountryName('');
+                    setGenderName('');
+                    setStatusName('')
+                    setImgName('')
+                    setAvatar('')
+                 
+                  
+                }
+                catch (err) {
+                 
+                    showError(err.message)
+                }
+            }
+            //Img change
+            else if(check>0) {
+               
+                const data=new FormData();
+                data.append('_method',"PUT")
+                 imgName.map(item=>data.append('image[]',item));
+                data.append('name',name);
+                data.append('birthdate',birthdate);
+                if(!deathdate) {
+    
+                    data.append('deathdate','');
+                }
+                else {
+                    data.append('deathdate',deathdate);
+    
+                }
+                data.append('status',statusName.status);
+                if(!genderName.gender) {
+    
+                    data.append('gender','')
+    
+                }
+                else {
+                    data.append('gender',genderName.gender)
+    
+    
+                }
+                if(!countryName) {
+    
+                    data.append('national','')
+    
+                }
+                else {
+                    data.append('national',countryName)
+    
+    
+                }
+              
+                e.preventDefault();
+                try {
+                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    showSuccess('Update success')
+        
+                    setTimeout(()=> {
+                        setSelection()
+                        setShowModal(!showModal);
+                        Load()
+                    },1000)
+                    setName('');
+                    setBirthdate('');
+                    setDeathdate('');
+                    setCountryName('');
+                    setGenderName('');
+                    setStatusName('')
+                    setImgName('')
+                    setAvatar('')
+                  
+                 
+                }
+                catch (err) {
+                    showError(err.message)
+                }
+            }
+            else if(count>0) {
+             
+                const data=new FormData();
+                data.append('_method',"PUT")
+               data.append('pdf',pdf)
+                data.append('name',name);
+                data.append('birthdate',birthdate);
+                if(!deathdate) {
+    
+                    data.append('deathdate','');
+                }
+                else {
+                    data.append('deathdate',deathdate);
+    
+                }
+                data.append('status',statusName.status);
+                if(!genderName.gender) {
+    
+                    data.append('gender','')
+    
+                }
+                else {
+                    data.append('gender',genderName.gender)
+    
+    
+                }
+                if(!countryName) {
+    
+                    data.append('national','')
+    
+                }
+                else {
+                    data.append('national',countryName)
+    
+    
+                }
+              
+                e.preventDefault();
+                try {
+                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    showSuccess('Update success')
+        
+                    setTimeout(()=> {
+                        setSelection()
+                        setShowModal(!showModal);
+                        Load()
+                    },1000)
+                    setName('');
+                    setBirthdate('');
+                    setDeathdate('');
+                    setCountryName('');
+                    setGenderName('');
+                    setStatusName('')
+                    setImgName('')
+                    setAvatar('')
+                 
+                   
+                }
+                catch (err) {
+                    showError(err.message)
+                }
+            }
+          
+            // Image and pdf not change and avatar
+            else {
+    
+                try {
+                    await axios.put('http://127.0.0.1:8000/api/updateperson/' + value.id, {
+                        name: name,
+                        birthdate: birthdate,
+                        deathdate: deathdate,
+                        status: statusName.status,
+                        gender: genderName.gender,
+                        img: imgName.toString(),
+                        national: countryName.name,
+                    });
+                    showSuccess('Update success');
+        
+                     setTimeout(()=> {
+                        setShowModal(!showModal);
+                        setSelection()  
+                        Load()
+                    },1000)
+                    setName('');
+                    setBirthdate('');
+                    setDeathdate('');
+                    setCountryName('');
+                    setGenderName('');
+                    setStatusName('')
+                    setImgName('')
+                    setAvatar('')
+                  
+                   
+                }
+                catch (err) {
+                    showError(err.message)
+                }
             }
         }
         }
@@ -891,25 +883,32 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
     }
 // ham avatar
     const handleAvatar=(e)=> {
+        
         setAvatar(e.target.files[0]);
+        
         const myDiv=document.getElementById('avatar');
         myDiv.innerHTML=''
-        const reader = new FileReader();
-           
-            reader.readAsDataURL(e.target.files[0]);
-            reader.onload = () => {
-              const imgPath = reader.result;
-              const imageElement = document.createElement("img");
-              imageElement.src = imgPath;
-         
-         
-
-              imageElement.style.maxWidth = "20%";
-              myDiv.appendChild(imageElement);
+        if(e.target.files[0]!==undefined){
+            const reader = new FileReader();
+                reader.readAsDataURL(e.target.files[0]);
+                reader.onload = () => {
+                  const imgPath = reader.result;
+                  const imageElement = document.createElement("img");
+                  imageElement.src = imgPath;
+             
+             
+    
+                  imageElement.style.maxWidth = "20%";
+                  myDiv.appendChild(imageElement);
+                }
+              
+                setAvatarEmty(false);
             }
-            setAvatarEmty(false);
+            else if(avatar===undefined) {
+              
+            }
     }
-   
+
     return (
         <>
 

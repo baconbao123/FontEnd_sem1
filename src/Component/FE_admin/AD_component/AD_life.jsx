@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
 import AD_nav from '../Layout/AD_nav'
+import AD_hidden_nav from '../Layout/AD_hidden_nav'
 import { DataTable,Button, Column ,Dropdown,InputText,FilterMatchMode, FilterOperator,Tag } from 'primereact'
-import { BsSearch, BsGear, BsTrashFill } from "react-icons/bs";
+import { BsSearch, BsGear, BsTrashFill ,BsChevronDoubleRight} from "react-icons/bs";
 import { BsDatabaseFillAdd } from "react-icons/bs";
 import AD_life_modal from './AD_life_modal';
 import {RiFilterOffFill  } from "react-icons/ri";
 import axios from 'axios';
+import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 export default function AD_life() {
@@ -16,12 +18,15 @@ export default function AD_life() {
           navigate('/login')
         }
        })
+       const toast = useRef(null);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [global, setGlobal] = useState('')
     const [selection, setSelection] = useState([]);
     const showModal = useRef()
     const showModalEdit = useRef()
+    const [showNav,setShowNav]=useState(false)
+    const [person,setPerson]=useState([])
     const [filters, setFilters] = useState(
         {
             global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -40,7 +45,8 @@ export default function AD_life() {
         }
     )
     useEffect(() => {
-      (async()=>await Load())()
+      (async()=>await Load())();
+      (async()=>await LoadPerson())()
         setLoading(false)
 
     }, [])
@@ -48,6 +54,10 @@ export default function AD_life() {
     async function Load() {
         const result= await axios.get('http://127.0.0.1:8000/api/life');
         setData(result.data)
+    }
+    async function LoadPerson() {
+        const result= await axios.get('http://127.0.0.1:8000/api/person');
+        setPerson(result.data)
     }
     
    // Ham disable
@@ -62,11 +72,11 @@ export default function AD_life() {
         await axios.put('http://127.0.0.1:8000/api/updatelife/'+item.id,{
             status: 'disable'
         })
-        alert(item.id+' disable success')
+     showSuccess('disable success')
         Load()
     }
     catch(err) {
-        alert(err)
+        showError(err.message)
     }
    } 
     // hàm set Init FIlter
@@ -96,6 +106,14 @@ export default function AD_life() {
         setFilters(_filter);
         setGlobal(value);
     }
+     // Toast
+  const showSuccess = (e) => {
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+   
+  }
+  const showError = (e) => {
+    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+  }
 //  handle selection
 const handelSelection= ()=> {
     setSelection('')
@@ -103,22 +121,32 @@ const handelSelection= ()=> {
 
     const renderHeader = () => {
         return (
-            <div className='d-flex justify-content-around'>
+            <div className='d-flex justify-content-around  AD-header mt-3'>
+                 <div  className='d-none show-1000 mb-3 row  '>
+          
+          <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2 show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+      <h1 className='d-inline-block text-center col-10 '>LIFE STORY</h1>
+      </div>
+      <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
+            <BsChevronDoubleRight />
+          </section>
                 <section className='jutify-content-center'>
-                    <span className="p-input-icon-left d-inline-flex" >
+                    <span className="p-input-icon-left  mb-3 d-inline-flex" >
+                        <InputText className='me-1 ' value={global} placeholder='search keyword' onChange={handleGlobalSearch} />
                         <BsSearch className="pi pi-search" />
-                        <InputText value={global} placeholder='search keyword' onChange={handleGlobalSearch} />
-                        <Button type="button" label="Clear" outlined onClick={clearFilter} className='AD-clear-filter' >
+                     
+                    </span>
+                    
+                <Button type="button" label="Clear" outlined onClick={clearFilter} className='mb-3' >
                             <RiFilterOffFill />
                         </Button>
-                           
-                    </span>
                 </section>
-              
 
 
                             
-                <h1 className='d-inline-flex jutify-content-center'>LIFE STORY</h1>
+                <h1 className='hidden-1000'>LIFE STORY</h1>
                 <section style={{ minWidth: '25rem' }}>
 
                     <Button className='me-3' label="ADD LIFE" severity='info' ref={showModal}>
@@ -131,7 +159,7 @@ const handelSelection= ()=> {
                                 <BsGear className='ms-2' />
 
                             </Button>
-                            <AD_life_modal selection={handelSelection} Load={Load} value={selection[0]} title={'EDIT'} show={showModalEdit} />
+                            <AD_life_modal toast={toast} selection={handelSelection} Load={Load} value={selection[0]} title={'EDIT LIFE'} show={showModalEdit} />
                         </>
                     )}
 
@@ -162,15 +190,29 @@ const handelSelection= ()=> {
         return <Tag value={value} severity={status}/>
       }
 
-
+      const handlePerson=(e)=> {
+            let storePerson=person.filter(item=>item.id===e.person_id);
+       
+            if(storePerson.length>0) {
+                return storePerson[0].name
+            }
+       
+      }
+  
 
     return (
         <Container fluid className='wrapper' >
+            <Toast ref={toast} />
+               <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+      <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
+      </Row>
+
             <Row>
-                <Col lg={2} className='padding-0'>
-                    <AD_nav />
-                </Col>
-                <Col lg={10}>
+            <Col lg={2}   className='padding-0 d-xl-flex d-lg-none d-xs-none d-sm-none xs-none'>
+          <AD_nav />
+        </Col>
+                <Col className='bg-content col-xl-10  col-md-12'>
                     <div>
                         {}
                     </div>
@@ -188,8 +230,8 @@ const handelSelection= ()=> {
                             selectionMode={'checkbox'} selection={selection} onSelectionChange={e => setSelection(e.value)}
                         >
                             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-                            <Column field='id' filter sortable header='id' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-                            <Column field='person_id' filter sortable header='person_id' style={{ minWidth: '12rem' }} />
+                                
+                            <Column field='person_id' body={handlePerson} filter sortable header='person name' style={{ minWidth: '12rem' }} />
                             <Column field='life' filter header='life' style={{ minWidth: '70rem' }} />
                             <Column field='childhood' filter header='childhood' style={{ minWidth: '24rem' }} />
                             <Column field='education' filter header='education' style={{ minWidth: '70rem' }} />
@@ -199,7 +241,7 @@ const handelSelection= ()=> {
                             <Column field='personalities' filter header='personalities' style={{ minWidth: '70rem' }} />
                             <Column field='achievements_detail' filter header='achievements_detail' style={{ minWidth: '70rem' }} />
                             <Column field='quote' filter header='quote' style={{ minWidth: '12rem' }} />
-                            <Column field='book' filter header='book' style={{ minWidth: '12rem' }} />
+                            <Column field='book'  filter header='book' style={{ minWidth: '12rem' }} />
                           
                             <Column field='status' header='status'  body={itemStatus}/>
                         </DataTable>
@@ -207,7 +249,7 @@ const handelSelection= ()=> {
 
                 </Col>
             </Row>
-            <AD_life_modal title="ADD NEW" Load={Load} show={showModal} />
+            <AD_life_modal toast={toast} title="ADD NEW LIFE" Load={Load} show={showModal} />
         </Container>
     )
 }

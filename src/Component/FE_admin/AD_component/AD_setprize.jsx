@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
-import { DataTable, Column, Tag, Button, FilterMatchMode, FilterOperator, InputText, Dropdown } from 'primereact'
-import { BsSearch, BsPersonAdd, BsGear, BsTrashFill, BsTrophyFill } from "react-icons/bs";
+import { DataTable, Column, Tag, Button,  InputText, Dropdown } from 'primereact'
+import { FilterMatchMode, FilterOperator } from 'primereact/api';
+import { BsSearch, BsPersonAdd, BsGear, BsTrashFill, BsTrophyFill,BsChevronDoubleRight } from "react-icons/bs";
 import { RiFilterOffFill } from "react-icons/ri";
 import axios from 'axios';
 import AD_nav from '../Layout/AD_nav'
+import AD_hidden_nav from '../Layout/AD_hidden_nav';
 import AD_setprize_modal from "../AD_component/AD_setprize_modal"
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import { Toast } from 'primereact/toast';
 export default function AD_setprize() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -19,9 +22,13 @@ export default function AD_setprize() {
   const [prizes, setPrizes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [global, setGlobal] = useState('');
+  const [showNav,setShowNav]=useState(false);
   const [selection, setSelection] = useState([]);
+  const [allPrize,setAllPrize]=useState([]);
+  const [person,setPerson]=useState([]);
   const showModalButoon = useRef()
   const showModalEdit = useRef()
+  const toast=useRef()
   const [filters, setFilters] = useState(
     {
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -33,9 +40,12 @@ export default function AD_setprize() {
       status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
     }
   )
+ 
   useEffect(() => {
    
-    (async()=>await Load())()
+    (async()=>await Load())();
+    (async()=>await LoadPrize())();
+    (async()=>await LoadPerson())();
     setLoading(false)
   }, [])
   // get data
@@ -43,6 +53,28 @@ export default function AD_setprize() {
     const result= await axios.get('http://127.0.0.1:8000/api/pn');
     setPrizes(result.data) 
   }
+  async function LoadPrize() {
+    const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
+    setAllPrize(result.data)
+}
+async function LoadPerson() {
+    const result = await axios.get('http://127.0.0.1:8000/api/personprize');
+    let data=result.data.filter(item=>{
+        if(item.life_story)return item
+    })
+   
+    setPerson(data)
+}
+
+ 
+    // Toast
+    const showSuccess = (e) => {
+      toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+     
+    }
+    const showError = (e) => {
+      toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+    }
       // ham disable 
       const handleDisable=() => {
         selection.map(item=>{
@@ -56,11 +88,37 @@ export default function AD_setprize() {
                 status: 'disable',
               })
               Load();
-              alert(item.person_id+ ' ' + item.nobel_id+' sucess disable');
+       showSuccess(item.person_id+ ' ' + item.nobel_id+' sucess disable')
           }
           catch(err) {
-             alert("DISABLE FAIL")
+            showError(err.message)
           }
+      }
+      
+      const handlePerson=(e)=> {
+      
+
+          let storePerson=person.filter(item=>item.id===e.person_id)
+         if(storePerson.length>0) {
+
+           return storePerson[0].name
+         }
+      
+        }
+      const handleNobel=(e)=> {
+        let storeNobel=allPrize.filter(item=>item.id===e.nobel_id)
+      
+        if(storeNobel.length>0) {
+
+          return storeNobel[0].nobel_name
+        }
+      }
+      const handleNobelYear=(e)=> {
+        let storeNobel=allPrize.filter(item=>item.id===e.nobel_id)
+        if(storeNobel.length>0) {
+
+          return storeNobel[0].nobel_year
+        }
       }
   
   // hàm set Init FIlter
@@ -94,23 +152,36 @@ export default function AD_setprize() {
   }
   const renderHeader = () => {
     return (
-      <div className="d-flex justify-content-around">
-        <span className="p-input-icon-left">
-          <BsSearch className="pi pi-search" />
-          <InputText value={global} onChange={handleGlobalSearch} placeholder="Keyword Search" />
+      <div className="d-flex justify-content-around AD-header">
+          <div  className='d-none show-1000 mb-3 row  '>
+          
+          <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2 show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+      <h1 className='d-inline-block text-center col-10 '>SET PRIZE</h1>
+      </div>
+      <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+        <section>
 
-          <Button type="button" label="Clear" outlined onClick={clearFilter} className='AD-clear-filter' >
+        <span className="p-input-icon-left  mb-2">
+          <BsSearch className="pi pi-search" />
+          <InputText className='' value={global} onChange={handleGlobalSearch} placeholder="Keyword Search" />
+        </span>
+
+          <Button type="button" label="Clear" outlined onClick={clearFilter} className=' ms-2 mb-2' >
             <RiFilterOffFill />
           </Button>
-
-        </span>
-        <h1 className='d-flex'>SET PRIZE</h1>
+        </section>
+        <h1 className='hidden-1000'>SET PRIZE</h1>
         <span className='AD-show-dropdown'>
 
 
 
         </span>
         <section style={{ minWidth: '24rem' }}>
+
           <Button
             ref={showModalButoon}
             className='d-inline-flex justify-content-end' type='button' label="ADD" severity='info'>
@@ -121,7 +192,7 @@ export default function AD_setprize() {
                 ref={showModalEdit}
                 className='ms-3' type='button' label="edit" severity='warning' >
                 <BsGear className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-              <AD_setprize_modal Load={Load} setSelection={handleSelection} title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
+              <AD_setprize_modal  toast={toast} Load={Load} setSelection={handleSelection} title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
 
 
             </>
@@ -154,14 +225,19 @@ export default function AD_setprize() {
     }
     return <Tag value={value} severity={status} />
   }
-
+  
   return (
     <Container fluid className='wrapper'>
+      <Toast       ref={toast}  />
+       <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+      <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
+      </Row>
       <Row>
-        <Col lg={2}>
+      <Col lg={2} className='padding-0 xs-none  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
           <AD_nav />
         </Col>
-        <Col lg={10}>
+        <Col className='bg-content col-xl-10  col-md-12'>
           <DataTable
             header={header}
             loading={loading}
@@ -172,13 +248,15 @@ export default function AD_setprize() {
             showGridlines
             removableSort
             filters={filters}
+            globalFilterFields={['id_person','id_nobel','motivation','nobel_share']}
             selection={selection} onSelectionChange={(e) => setSelection(e.value)}
           >
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-            <Column sortable filter field='nobel_id' header='nobel id' />
-            <Column sortable filter field='person_id' header='person id' />
-            <Column sortable filter field='motivation' header='motivation' />
-            <Column sortable filter field='nobel_share' header='nobel share' />
+            <Column sortable   field='nobel_id' body={handleNobel} header='nobel name' />
+            <Column sortable  field='nobel_id' body={handleNobelYear} header='nobel year' />
+            <Column sortable  field='person_id' body={handlePerson  } header='person name' />
+            <Column sortable  field='motivation' header='motivation' />
+            <Column sortable field='nobel_share' header='nobel share' />
 
             <Column field='status' header='status' body={itemStatus} />
 
@@ -187,7 +265,7 @@ export default function AD_setprize() {
           </DataTable>
         </Col>
       </Row>
-      <AD_setprize_modal Load={Load} title={"ADD NEW NOBEL PERSON"} show={showModalButoon} />
+      <AD_setprize_modal toast={toast} Load={Load} title={"ADD NEW NOBEL PERSON"} show={showModalButoon} />
     </Container>
   )
 }

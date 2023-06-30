@@ -27,6 +27,7 @@
     "sass": "^1.63.4",
     "styled-components": "^5.3.10",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.7.12",
     "web-vitals": "^2.1.4",
     "zlib": "^1.0.5"
   },

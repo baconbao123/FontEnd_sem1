@@ -6,19 +6,33 @@ import { Row, Col } from 'react-bootstrap'
 import { AutoComplete } from 'primereact/autocomplete';
 import { Dropdown } from 'primereact/dropdown';
 import { FileUpload } from 'primereact/fileupload';
-
+import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
-import { Toast } from 'primereact/toast';
+
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
-export default function AD_prizes_modal({ title, show, value, Load }) {
+export default function AD_prizes_modal({ title, show, value, Load,toast,setSelection }) {
     const navigate = useNavigate();
     useEffect(()=>{
         if(!Cookies.get('login')){
           navigate('/login')
         }
        })
+          // Toast
+    const showError = (e) => {
+        toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+      }
+      const showSuccess = (e) => {
+        toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+        
+      }
+    
+      
+      const showWarn = (e) => {
+          toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
+      }
+    // ham
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
     const [prizes, setPrizes] = useState([]);
@@ -26,8 +40,8 @@ export default function AD_prizes_modal({ title, show, value, Load }) {
 
     const [year, setYear] = useState('')
     const category = [{ category: 'Physic Prize' }, { category: 'Chemistry Prize' }, { category: 'Medicine Prize' }, { category: 'Literature Prize' }, { category: 'Peace Prize' }, { category: 'Prize in Economic Sciences' }]
-    const [categoryName, setCategoryName] = useState('');
-    const [statusName, setStatusName] = useState('');
+    const [categoryName, setCategoryName] = useState({category:''});
+    const [statusName, setStatusName] = useState({status:''});
 
     const status = [{ status: "active" }, { status: "disable" }]
 
@@ -47,40 +61,69 @@ export default function AD_prizes_modal({ title, show, value, Load }) {
     }, [show]);
 
     async function addprize() {
-        try {
-            await axios.post('http://127.0.0.1:8000/api/addprize', {
-                nobel_year: year,
-                nobel_name: categoryName.category,
-                status: statusName.status
-            })
-            alert('success')
-            Load()
-            setYear('')
-            setCategoryName('')
-            setStatusName('')
-            setShowModal(false)
+        if(statusName.status==='') {
+            showWarn('Status must be chosen')
         }
-        catch (err) {
-            alert(err)
+         else  if(!year) {
+            showWarn('Year must be chosen')
+        }
+        else if(categoryName.category==='') {
+            showWarn('Category must be chosen')
+        }
+        else {
+
+            try {
+                await axios.post('http://127.0.0.1:8000/api/addprize', {
+                    nobel_year: year,
+                    nobel_name: categoryName.category,
+                    status: statusName.status
+                })
+              showSuccess('Add success')
+                Load()
+                setYear('')
+                setCategoryName('')
+                setStatusName('')
+                setShowModal(false)
+            }
+            catch (err) {
+            showError('The prize is already exist')
+            }
         }
     }
     // ham update prize
     async function updateprize () {
-        try {
-            await  axios.put('http://127.0.0.1:8000/api/updateprize/'+value.id,{
-                nobel_year: year,
-                nobel_name: categoryName.category,
-                status: statusName.status
-            })
-            alert('success')
-            Load()
-            setYear('')
-            setCategoryName('')
-            setStatusName('')
-            setShowModal(false)
+        if(statusName.status==='') {
+            showWarn('Status must be chosen')
         }
-        catch(err) {
-            alert(err)
+         else  if(!year) {
+            showWarn('Year must be chosen')
+        }
+        else if(categoryName.category==='') {
+            showWarn('Category must be chosen')
+        }
+        else {
+
+            try {
+                await  axios.put('http://127.0.0.1:8000/api/updateprize/'+value.id,{
+                    nobel_year: year,
+                    nobel_name: categoryName.category,
+                    status: statusName.status
+                })
+              
+                showSuccess('updated success')
+                setTimeout(()=> {
+    
+                    Load()
+                    setSelection()
+                },1000)
+                setYear('')
+                setCategoryName('')
+                setStatusName('')
+                setShowModal(false)
+            }
+            catch(err) {
+                showError('The prize is already exist')
+            }
         }
     }
     //    ham set edit 
@@ -88,7 +131,7 @@ export default function AD_prizes_modal({ title, show, value, Load }) {
         if (value) {
             setYear(value.nobel_year);
             setCategoryName({ category: value.nobel_name })
-            setStatusName({staus:value.status})
+            setStatusName({status:value.status})
         }
     }, [])
 
@@ -112,7 +155,7 @@ export default function AD_prizes_modal({ title, show, value, Load }) {
                                 <Form.Group>
                                     <Form.Label>Year</Form.Label>
 
-                                    <InputText placeholder='enter year' value={year} onChange={e => setYear(e.target.value)} type='text' name='year' style={{ minWidth: '100%' }} />
+                                    <InputText maxLength={4}  keyfilter="num" placeholder='enter year' value={year} onChange={e => setYear(e.target.value)} type='text' name='year' style={{ minWidth: '100%' }} />
                                 </Form.Group>
                             </Col>
                             <Col lg={6}>

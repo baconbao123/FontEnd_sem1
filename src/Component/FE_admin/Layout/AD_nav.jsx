@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import logo from '../AD_img/logo-admin.png';
 import './AD_nav.scss'
+import { Button } from 'react-bootstrap';
 import AD_nav_item from './AD_nav_item';
 import {AiFillHome} from "react-icons/ai";
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 import  {BsFillPersonFill,BsFillTrophyFill,BsTrashFill,BsChatLeftTextFill} from   'react-icons/bs';
-
+import Swal from 'sweetalert2'
 export default function AD_nav() {
+  const navigate = useNavigate();
   const [nav,setNav]=useState([]);
   useEffect(()=>{
     setNav(
@@ -80,7 +84,22 @@ export default function AD_nav() {
     )
   },[])
 
-
+  const logout = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, log out!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Cookies.remove('login');
+        navigate('/login');
+      }
+    }) }
+  
   return (
     
 
@@ -98,6 +117,10 @@ export default function AD_nav() {
             <AD_nav_item  key={index}  content={nav.content} Item_icon={nav.item_icon} child={nav.child}/>
           ))
         }  
+        <div className='d-flex justify-content-center'>
+
+        <Button className='mt-5' onClick={logout} >LOG OUT </Button>
+        </div>
 
     </section>
     </section>

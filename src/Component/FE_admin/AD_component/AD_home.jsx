@@ -20,13 +20,24 @@ import AD_prize_modal from '../AD_component/AD_prizes_modal';
 import AD_blog_modal from '../AD_component/AD_blog_modal';
 import AD_setprize_modal from '../AD_component/AD_setprize_modal';
 import AD_prizes_modal from '../AD_component/AD_prizes_modal'
-
+import Swal from 'sweetalert2'
 export default function AD_home() {
   const navigate = useNavigate();
   const logout = () => {
-    Cookies.remove('login');
-    navigate('/login')
-  }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, log out!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Cookies.remove('login');
+        navigate('/login');
+      }
+    }) }
   useEffect(() => {
     if (!Cookies.get('login')) {
       navigate('/login')
@@ -104,15 +115,15 @@ export default function AD_home() {
   return (
     <Container fluid className='wrapper'>
       <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
-       <Col   md={4} xs={6} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
-      <Col md={8} xs={6} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+      <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
       </Row>
 
-      <Row>
-        <Col lg={2}   className='padding-0 d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
+      <Row> 
+        <Col lg={2}   className='padding-0 d-xl-flex d-lg-none d-xs-none d-sm-none xs-none'>
           <AD_nav />
         </Col>
-        <Col   className='bg-content d-xl-10 d-md-12'>
+        <Col   className='bg-content d-xl-10 d-md-12 d-xs-12 '>
           <Row>
             <Container>
               <Card className='bg-white card-ad-home ' style={{ width: '100%' }}>

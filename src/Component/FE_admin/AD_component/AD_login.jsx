@@ -1,21 +1,35 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect,useRef} from 'react'
 import { Container,Card,Row,Button,Form } from 'react-bootstrap'
 import logo from '../AD_img/logo-admin.png'
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Link,useNavigate } from 'react-router-dom';
-
+import {Toast} from 'primereact'
 
 export default function AD_login() {
   
   const [email,setEmail]=useState();
   const [password,setPassword]=useState();
   const navigate = useNavigate();
+  const toast=useRef()
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       document.getElementById('myButton').click();
     }
   };
+    // Toast
+    const showError = (e) => {
+      toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+    }
+    const showSuccess = (e) => {
+      toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+      
+    }
+  
+    
+    const showWarn = (e) => {
+        toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
+    }
   useEffect(()=>{
     if(Cookies.get('login')){
       navigate('/admin')
@@ -30,19 +44,23 @@ export default function AD_login() {
         password:password
       })
       Cookies.set('login',response.data,{expires:new Date(new Date().getTime() + 60* 60 *24 * 1000)})
-      alert('login sucess');
-      return  navigate('/admin');
+      showSuccess('LOGIN SUCCESS')
+      setTimeout(()=> {
+
+        return  navigate('/admin');
+      },1000)
 
     }
     catch(err) {
   
-      alert('email or password invalid  ')
+      showError('email or password invalid ')
 
     }
   }
 
   return (
     <Container className='wrapper ' fluid>
+        <Toast  ref={toast}/>
         <Row className=' d-flex justify-content-center'>
             <img className=' logo-login' src={logo} alt="Img" width='300'/>
         </Row>
