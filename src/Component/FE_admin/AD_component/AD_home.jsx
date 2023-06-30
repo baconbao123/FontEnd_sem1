@@ -48,7 +48,7 @@ export default function AD_home() {
    const handleClickOutSide=(e)=>{
  
       if(showNavRef.current&&!showNavRef.current.contains(e.target)){
-        console.log('da vao trong ham',showNav);
+     
         setShowNav(false)
       } 
     }

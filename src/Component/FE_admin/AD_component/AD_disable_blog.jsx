@@ -62,7 +62,7 @@ export default function AD_disable_blog() {
    // Ham active
    const handleActive=()=> {
     if (selection.length>=1) {
-      console.log(selection);
+
         selection.map((item=> {
        
 
@@ -94,7 +94,7 @@ async function activeperson(item) {
    // Ham delete
    const handleDelete=()=> {
     if (selection.length>=1) {
-      console.log(selection);
+
         selection.map((item=> {
        
 
@@ -235,17 +235,20 @@ async function deleteperson(item) {
  
     )
    }   }
-   const pdfItem=(e)=> {
-    if(e.pdf) {
-      return (
+
+   const avatarImage=(e)=> {
+    
+    if(e.avatar) {
+      return(
         <>
-        <a target="_blank" href={"http://127.0.0.1:8000/api/pdfs/"+e.pdf}>{e.pdf}</a>
+          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={"http://127.0.0.1:8000/api/images/" + e.avatar} width='100' />
+
         </>
       )
     }
-   }
+  }
 
- console.log(blog);
+
   return (
     <Container fluid className='wrapper'>
       <Row>
@@ -274,10 +277,12 @@ async function deleteperson(item) {
               <Column field='id' header='id'filter sortable  style={{ minWidth: '7rem' }}   />
               <Column field='title' header='title' sortable filterPlaceholder="Search"  filter style={{ minWidth:'12rem', maxWidth: '24rem' }} />
               <Column field='created_at' header='post date' sortable filter  dataType='date'  style={{ minWidth: '12rem' }}   />
-              <Column field='content' header='content' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
+              <Column field='content' header='content' sortable filterPlaceholder="Search" filter style={{ minWidth: '70rem' }} />
               <Column field='author' header='author' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
 
               <Column field='status' header='status'  filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
+              <Column field='avatar' header='avatar' body={avatarImage} style={{ minWidth: '12rem' }}   />
+              
               <Column field='img' header='img' 
               
               body={itemImage} 

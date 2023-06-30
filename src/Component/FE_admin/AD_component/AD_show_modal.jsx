@@ -332,6 +332,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setGenderName('');
                 setStatusName('')
                 setImgName('')
+                setAvatar('')
                 Load()
     
             }
@@ -426,6 +427,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setGenderName('');
                 setStatusName('')
                 setImgName('')
+                setAvatar('')
                 Load()
                 setSelection()
             }
@@ -485,6 +487,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setGenderName('');
                 setStatusName('')
                 setImgName('')
+                setAvatar('')
                 Load()
                 setSelection()
             }
@@ -544,6 +547,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setGenderName('');
                 setStatusName('')
                 setImgName('')
+                setAvatar('')
                 Load()
                 setSelection()
             }
@@ -603,6 +607,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setGenderName('');
                 setStatusName('')
                 setImgName('')
+                setAvatar('')
                 Load()
                 setSelection()
             }
@@ -661,6 +666,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setGenderName('');
                 setStatusName('')
                 setImgName('')
+                setAvatar('')
                 Load()
                 setSelection()
             }
@@ -720,6 +726,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setGenderName('');
                 setStatusName('')
                 setImgName('')
+                setAvatar('')
                 Load()
                 setSelection()
             }
@@ -751,6 +758,7 @@ export default function AD_modal({ title, show, value, Load,setSelection }) {
                 setGenderName('');
                 setStatusName('')
                 setImgName('')
+                setAvatar('')
                 Load()
                 setSelection()
             }

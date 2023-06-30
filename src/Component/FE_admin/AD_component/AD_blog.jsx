@@ -62,7 +62,7 @@ export default function AD_blog() {
    // Ham disable
    const handleDisable=()=> {
     if (selection.length>=1) {
-      console.log(selection);
+     
         selection.map((item=> {
        
 
@@ -236,8 +236,19 @@ async function disableperson(item) {
       )
     }
    }
+   const avatarImage=(e)=> {
+    
+    if(e.avatar) {
+      return(
+        <>
+          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={"http://127.0.0.1:8000/api/images/" + e.avatar} width='100' />
 
- console.log(blog);
+        </>
+      )
+    }
+  }
+
+
   return (
     <Container fluid className='wrapper'>
       <Row>
@@ -266,10 +277,12 @@ async function disableperson(item) {
               <Column field='id' header='id'filter sortable  style={{ minWidth: '7rem' }}   />
               <Column field='title' header='title' sortable filterPlaceholder="Search"  filter style={{ minWidth:'12rem', maxWidth: '24rem' }} />
               <Column field='created_at' header='post date' sortable filter  dataType='date'  style={{ minWidth: '12rem' }}   />
-              <Column field='content' header='content' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
+              <Column field='content' header='content' sortable filterPlaceholder="Search" filter style={{ minWidth: '70rem' }} />
               <Column field='author' header='author' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
 
               <Column field='status' header='status'  filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
+              <Column field='avatar' header='avatar' body={avatarImage} style={{ minWidth: '12rem' }}   />
+              
               <Column field='img' header='img' 
               
               body={itemImage} 

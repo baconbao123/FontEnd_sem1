@@ -152,7 +152,7 @@ export default function AD_life_modal({value,title, show,Load,selection}) {
         if(value) {
         
             const id=person.filter((item)=>item.id===value.person_id);
-            console.log(id[0]);
+        
             setPersonSelected(id[0] );
   
         }

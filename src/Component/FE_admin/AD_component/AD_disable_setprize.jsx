@@ -60,7 +60,7 @@ async function  activesetprize(item){
         alert(item.person_id+ ' ' + item.nobel_id+' sucess active');
     }
     catch(err) {
-        console.log(err);
+      alert(err)
     }
 }
 // Ham delete setprize
@@ -78,7 +78,7 @@ async function  deletesetprize(item){
         alert(item.person_id+ ' ' + item.nobel_id+' sucess delete');
     }
     catch(err) {
-        console.log(err);
+      alert('err')
     }
 }
 

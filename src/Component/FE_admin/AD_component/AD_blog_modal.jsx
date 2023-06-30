@@ -10,143 +10,153 @@ import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
-export default function AD_blog_modal({ title, show, value, Load,setSelection }) {
+export default function AD_blog_modal({ title, show, value, Load, setSelection }) {
     const navigate = useNavigate();
-    useEffect(()=>{
-        if(!Cookies.get('login')){
-          navigate('/login')
+    useEffect(() => {
+        if (!Cookies.get('login')) {
+            navigate('/login')
         }
-       })
+    })
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
 
-  
-    
- 
+
+
+
     const status = [{ status: "active" }, { status: "disable" }]
 
-    const [statusName, setStatusName] = useState({status:''})
+    const [statusName, setStatusName] = useState({ status: '' })
     const [titlePost, setTitlePost] = useState('');
-   
-    const [author,setAuthor]=useState('');
-    const [content,setContent]=useState('');
+
+    const [author, setAuthor] = useState('');
+    const [content, setContent] = useState('');
     const [imgemty, setImgemty] = useState(true);
     const [imgName, setImgName] = useState([]);
-    
-   
+    const [avatar, setAvatar] = useState();
+    const [emtyAvatar, setEmtyAvatar] = useState(true)
     const toast = useRef(null);
-  
+
     // ham add new person
     const showToast = () => {
         return toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
     };
-  
+
     async function addBlog(e) {
-       
+        
         e.preventDefault();
-        if(imgName.length<3){
+        if (imgName.length < 3) {
             alert('At least 3 images')
-            
+
+        }
+        else if (!avatar) {
+            alert('pls chose avatar')
         }
         else {
-            
-            const data=new FormData();
-            if(imgName) {
-    
-                imgName.map(item=>data.append('img[]',item));
+
+            const data = new FormData();
+            if (imgName) {
+
+                imgName.map(item => data.append('img[]', item));
             }
-            data.append('title',titlePost);
-          
-            data.append('author',author);
-            data.append('status',statusName.status);
-            data.append('content',content)
-          
-           
-    
-               
-          
+            if (avatar) {
+                data.append('avatar', avatar);
+            }
+            data.append('title', titlePost);
+
+            data.append('author', author);
+            data.append('status', statusName.status);
+            data.append('content', content)
+
+
+
+
+
             try {
-                await axios.post('http://127.0.0.1:8000/api/addblog',data);
-              
+                await axios.post('http://127.0.0.1:8000/api/addblog', data);
+
                 alert('success')
-    
+
                 setShowModal(!showModal)
                 setTitlePost('');
                 setAuthor('');
-              
+                setAvatar('')
                 setContent('')
                 setStatusName('');
                 Load()
-    
+
             }
             catch (err) {
                 alert(err)
                 alert('ADD FAILED')
-            
+
+            }
         }
-    }
     }
 
 
     // ham update 
     async function updateblog(e) {
         e.preventDefault()
-          
-        let check=0;
-       if(value.img&&imgName) {
-        
-           const storeImg=value.img.split(',');
-        
-          
-          
-           if(storeImg.length!==imgName.length) {
-               check++
-           }
-           else {
-               for(let i=0;i<storeImg.length;i++) {
-                   if(imgName[i]!==storeImg[i]) {
-                       check++
-                   }
-               }
-           }
-       }
-       else {
-        if(!value.img&&imgName) {
-            check++
+        let count = 0
+        let check = 0;
+        if (value.img && imgName) {
+
+            const storeImg = value.img.split(',');
+
+
+
+            if (storeImg.length !== imgName.length) {
+                check++
+            }
+            else {
+                for (let i = 0; i < storeImg.length; i++) {
+                    if (imgName[i] !== storeImg[i]) {
+                        check++
+                    }
+                }
+            }
         }
-        if(value.img&&!imgName) {
+        else {
+            if (!value.img && imgName) {
+                check++
+            }
+            if (value.img && !imgName) {
+
+            }
+        }
+        if (avatar !== value.avatar) {
+            count = 1;
+        }
+        // image and pdf change
+
+        //Img change
+        if (imgName.length < 3) {
+            alert('At least 3 images')
 
         }
-       }
-      console.log(check);
-        // image and pdf change
-     
-        //Img change
-        if(imgName.length<3){
-            alert('At least 3 images')
-            
+        else if (!avatar) {
+            alert('pls chose avatar')
         }
-        else if(check>0) {
-            
-            const data=new FormData();
-            data.append('_method',"PUT")
-                 imgName.map(item=>data.append('img[]',item));
-                data.append('name',titlePost);
-         
-            data.append('status',statusName.status);
-            data.append('author',author)
-          data.append('content',content)
-            
-          
+        else if (check > 0 && count > 0) {
+            const data = new FormData();
+            data.append('_method', "PUT")
+            imgName.map(item => data.append('img[]', item));
+            data.append('name', titlePost);
+
+            data.append('status', statusName.status);
+            data.append('author', author)
+            data.append('content', content)
+            data.append('avatar', avatar)
+
             e.preventDefault();
             try {
-                await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id,data)
+                await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
                 alert('success')
-    
+
                 setShowModal(!showModal)
                 setTitlePost('');
                 setAuthor('');
-              
+
                 setContent('')
                 setStatusName('');
                 Load()
@@ -157,25 +167,86 @@ export default function AD_blog_modal({ title, show, value, Load,setSelection })
                 alert('Update FAILED')
             }
         }
-       
-        // Image and pdf not change
+        else if (count > 0) {
+            const data = new FormData();
+            data.append('_method', "PUT")
+            data.append('avatar', avatar)
+            data.append('name', titlePost);
+
+            data.append('status', statusName.status);
+            data.append('author', author)
+            data.append('content', content)
+
+
+            e.preventDefault();
+            try {
+                await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
+                alert('success')
+
+                setShowModal(!showModal)
+                setTitlePost('');
+                setAuthor('');
+
+                setContent('')
+                setStatusName('');
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
+        }
+        else if (check > 0) {
+
+            const data = new FormData();
+            data.append('_method', "PUT")
+            imgName.map(item => data.append('img[]', item));
+            data.append('name', titlePost);
+
+            data.append('status', statusName.status);
+            data.append('author', author)
+            data.append('content', content)
+
+
+            e.preventDefault();
+            try {
+                await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
+                alert('success')
+
+                setShowModal(!showModal)
+                setTitlePost('');
+                setAuthor('');
+
+                setContent('')
+                setStatusName('');
+                Load()
+                setSelection()
+            }
+            catch (err) {
+                alert(err)
+                alert('Update FAILED')
+            }
+        }
+
+
         else {
 
             try {
                 await axios.put('http://127.0.0.1:8000/api/updateblog/' + value.id, {
-                    title:titlePost,
-                    content:content,
-                    author:author,
-                    status:statusName.status,
-                    
-                   
+                    title: titlePost,
+                    content: content,
+                    author: author,
+                    status: statusName.status,
+
+
                 })
                 alert('success')
-    
+
                 setShowModal(!showModal)
                 setTitlePost('');
                 setAuthor('');
-              
+
                 setContent('')
                 setStatusName('');
                 Load()
@@ -186,9 +257,9 @@ export default function AD_blog_modal({ title, show, value, Load,setSelection })
                 alert('Update FAILED')
             }
         }
-        }
+    }
 
- 
+
     // Ham show modal   
     useEffect(() => {
         if (show) {
@@ -204,7 +275,7 @@ export default function AD_blog_modal({ title, show, value, Load,setSelection })
     }, [show]);
 
 
-  
+
 
     //    ham set edit
     useEffect(() => {
@@ -213,65 +284,76 @@ export default function AD_blog_modal({ title, show, value, Load,setSelection })
             setContent(value.content);
             setStatusName({ status: value.status })
             setAuthor(value.author)
-            if(value.img) {
-                
+            if (value.img) {
+
                 setImgName(value.img.split(','))
             }
-          
+            if (value.avatar) {
+                setAvatar(value.avatar)
+            }
+
         }
     }, [])
 
     // ham img 
-    const handleShowImg = (e,index) => {
-        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={"http://127.0.0.1:8000/api/images/"+e} width='100' />
+    const handleShowImg = (e, index) => {
+        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={"http://127.0.0.1:8000/api/images/" + e} width='100' />
 
     }
-  
-    
 
 
-    const handleImg=(e)=> {
-        console.log(e.target.files);
-        setImgemty(false)
-        const store=[]
+
+
+    const handleImg = (e) => {
       
-        for(let i=0;i<e.target.files.length;i++) {
+        setImgemty(false)
+        const store = []
+
+        for (let i = 0; i < e.target.files.length; i++) {
             store.push(e.target.files[i])
-           
-           
-         
+
+
+
 
         }
-      
+
         setImgName(store)
         // dua duong dan file vao
-        const myDiv=document.getElementById('inputfile')
-        myDiv.innerHTML=''
-      
-        store.map((item,index)=> {
+        const myDiv = document.getElementById('inputfile')
+        myDiv.innerHTML = ''
+
+        store.map((item, index) => {
 
             const reader = new FileReader();
             reader.readAsDataURL(item);
             reader.onload = () => {
-              const imgPath = reader.result;
-              const imageElement = document.createElement("img");
-              imageElement.src = imgPath;
-          
-         
+                const imgPath = reader.result;
+                const imageElement = document.createElement("img");
+                imageElement.src = imgPath;
 
-              imageElement.style.maxWidth = "20%";
-              myDiv.appendChild(imageElement);
+
+
+                imageElement.style.maxWidth = "20%";
+                myDiv.appendChild(imageElement);
             };
         })
-      
-       
-     
-    
-   
-   
-       
     }
-  
+    const handleAvatar = (e) => {
+        
+        setAvatar(e.target.files[0]);
+        setEmtyAvatar(false);
+        const myDiv = document.getElementById('avatar')
+        myDiv.innerHTML = ''
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = () => {
+            const imgPath = reader.result;
+            const imageElement = document.createElement("img");
+            imageElement.src = imgPath;
+            imageElement.style.maxWidth = "20%";
+            myDiv.appendChild(imageElement);
+        };
+    }
 
     return (
         <>
@@ -285,17 +367,17 @@ export default function AD_blog_modal({ title, show, value, Load,setSelection })
                         <h1>{title} </h1>
                     </Modal.Title>
                 </Modal.Header>
-                    <Form  onSubmit={value?updateblog:addBlog}   encType='multipart/form-data' >
-                <Modal.Body>
+                <Form onSubmit={value ? updateblog : addBlog} encType='multipart/form-data' >
+                    <Modal.Body>
 
                         <Form.Group className="mb-3" >
                             <Form.Label>Title</Form.Label>
-                            <InputText value={titlePost} onChange={e => setTitlePost(e.target.value)} placeholder="Enter title"  style={{ minWidth: '100%' }} />
+                            <InputText value={titlePost} onChange={e => setTitlePost(e.target.value)} placeholder="Enter title" style={{ minWidth: '100%' }} />
 
                         </Form.Group>
                         <Row>
-                            
-                            
+
+
                             <Col lg={6}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Status</Form.Label>
@@ -304,45 +386,56 @@ export default function AD_blog_modal({ title, show, value, Load,setSelection })
                                 </Form.Group>
                             </Col>
                             <Col lg={6}>
-                            <Form.Group className="mb-3" >
-                            <Form.Label>Author</Form.Label>
-                            <InputText value={author} onChange={e => setAuthor(e.target.value)} placeholder="Enter Author Name" name='name' style={{ minWidth: '100%' }} />
+                                <Form.Group className="mb-3" >
+                                    <Form.Label>Author</Form.Label>
+                                    <InputText value={author} onChange={e => setAuthor(e.target.value)} placeholder="Enter Author Name" name='name' style={{ minWidth: '100%' }} />
 
-                        </Form.Group>
-                            </Col> 
+                                </Form.Group>
+                            </Col>
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>Content</Form.Label>
-                                <InputTextarea placeholder='enter personalities' style={{minWidth:'100%',minHeight:'12rem'}}  value={content} onChange={e=>setContent(e.target.value)} />
+                                <InputTextarea placeholder='enter personalities' style={{ minWidth: '100%', minHeight: '12rem' }} value={content} onChange={e => setContent(e.target.value)} />
                             </Form.Group>
-                        </Row>    
+                        </Row>
+
                         <Row className='mt-4'>
                             <Form.Group  >
-                                <Form.Label>Images (&gt;=3 Files)</Form.Label>
-                                <InputText type='file' multiple onChange={handleImg} accept='image/*'  style={{minWidth:'100% '}} />
-                                {imgemty&&value&&imgName&&imgName.length>0 && imgName.map((item,index)=> handleShowImg(item,index))}
+                                <Form.Label>Avatar</Form.Label>
+                                <InputText type='file' onChange={handleAvatar} accept='image/*' style={{ minWidth: '100% ' }} />
+                                {emtyAvatar&&value&&avatar&&(<img className='d-inline-flex ms-2 mt-1' alt={avatar} src={"http://127.0.0.1:8000/api/images/" + avatar} width='100' />
+)}
 
                             </Form.Group>
                         </Row>
-                        <Row className='mt-4'  id='inputfile'></Row>
-                
-                </Modal.Body>
-                <Modal.Footer>
+                        <Row id="avatar"></Row>
+                        <Row className='mt-4'>
+                            <Form.Group  >
+                                <Form.Label>Images (&gt;=3 Files)</Form.Label>
+                                <InputText type='file' multiple onChange={handleImg} accept='image/*' style={{ minWidth: '100% ' }} />
+                                {imgemty && value && imgName && imgName.length > 0 && imgName.map((item, index) => handleShowImg(item, index))}
 
-                    {value && (
+                            </Form.Group>
+                        </Row>
+                        <Row className='mt-4' id='inputfile'></Row>
 
-                        <Button variant="primary" type='submit' >
-                            SAVE
-                        </Button>
-                    )}
-                    {!value && (
+                    </Modal.Body>
+                    <Modal.Footer>
 
-                        <Button variant="primary" type='submit' >
-                            SUBMIT
-                        </Button>
-                    )}
-                </Modal.Footer>
+                        {value && (
+
+                            <Button variant="primary" type='submit' >
+                                SAVE
+                            </Button>
+                        )}
+                        {!value && (
+
+                            <Button variant="primary" type='submit' >
+                                SUBMIT
+                            </Button>
+                        )}
+                    </Modal.Footer>
                 </Form>
             </Modal>
 

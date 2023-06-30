@@ -88,7 +88,7 @@ async function activeperson(item) {
 }
 // ham delete
   const handelDelete =( )=> {
-    console.log(selection);
+    
     selection.map(item=>{
       deleteperson(item);
       setSelection(selection.filter(item=>item !== item))
@@ -245,15 +245,22 @@ async function activeperson(item) {
      <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={"http://127.0.0.1:8000/api/images/"+store[3]}  width='100'/>
      <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={"http://127.0.0.1:8000/api/images/"+store[4]}  width='100'/>
      <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={"http://127.0.0.1:8000/api/images/"+store[5]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[6]} src={"http://127.0.0.1:8000/api/images/"+store[6]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[7]} src={"http://127.0.0.1:8000/api/images/"+store[7]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[8]} src={"http://127.0.0.1:8000/api/images/"+store[8]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[9]} src={"http://127.0.0.1:8000/api/images/"+store[9]}  width='100'/>
       </>
   
      )
     }
   } 
+  const avatarImage=(e)=> {
+    
+    if(e.avatar) {
+      return(
+        <>
+          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={"http://127.0.0.1:8000/api/images/" + e.avatar} width='100' />
+
+        </>
+      )
+    }
+  }
  
   return (
     <Container fluid className='wrapper'>
@@ -287,6 +294,8 @@ async function activeperson(item) {
               <Column field='national' header='national' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
               <Column field='gender' header='gender' filter  sortable filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }}/>
               <Column field='status' header='status' filter sortable filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />
+              <Column field='avatar' header='avatar' body={avatarImage}  style={{ minWidth: '12rem' }} />
+              
               <Column field='img' header='img' body={itemImage}    style={{ minWidth: '40rem' }}   />
               
             </DataTable>

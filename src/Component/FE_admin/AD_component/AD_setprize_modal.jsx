@@ -186,7 +186,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
        
      
     },[person])
-    // console.log('prizes',prizes);
+  
     async function LoadPrize() {
         const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
         setAllPrize(result.data)
@@ -204,17 +204,13 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
     useEffect(() => {
         if (value) {
             let _filterPerson = person.filter(item => item.id === value.person_id);
-            // console.log(_filterPerson);
+ 
             setPersonName(_filterPerson[0]);
 
             let _filterPrize = allPrize.filter(item => item.id === value.nobel_id);
-            // console.log('all prize',prizes);
-            // console.log('value',value);
-            // console.log('filre',_filterPrize[0]);
+  
             setPrizeName(_filterPrize[0]);
-            // setAvailablePrize(prizeName)
-            // console.log('prize name',prizeName);
-            // console.log('available',availabePrize);
+           
             if (_filterPrize.length >0) {
 
 
@@ -222,7 +218,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
             }
         }
     }, [person,prizes])
-//    console.log(allPrize);
+
 
     return (
         <>

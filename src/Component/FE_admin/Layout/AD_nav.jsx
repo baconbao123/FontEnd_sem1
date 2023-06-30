@@ -92,7 +92,7 @@ export default function AD_nav() {
 
     </div>
     <section className='AD-nav-items ' >
-        {
+        { 
           nav.map((nav,index)=>(
          
             <AD_nav_item  key={index}  content={nav.content} Item_icon={nav.item_icon} child={nav.child}/>
