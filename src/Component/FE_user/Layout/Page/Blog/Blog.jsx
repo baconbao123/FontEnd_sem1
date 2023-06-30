@@ -7,7 +7,7 @@ import 'aos/dist/aos.css';
 
 const TruncatedContent = ({content}) => {
     if(content.length > 100) {
-        return <Card.Text>{content.slice(0,200)}...</Card.Text>
+        return <Card.Text>{content.slice(0,150)}...</Card.Text>
     }
     else {
         return <Card.Text>{content}</Card.Text>
@@ -15,15 +15,15 @@ const TruncatedContent = ({content}) => {
 }
 
 function Blog() {
-    const [blogData, setBlogData] = useState(null)
-    const [selectedYear, setSelectedYear] = useState(null)
+    const [blogData, setBlogData] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
     const {id} = useParams()
 
     useEffect(() => {
         async function fetchData() {
             const res = await axios.get(`http://127.0.0.1:8000/api/allblogs`)
             if (res && res.data && Array.isArray(res.data.blogs)) {
-              setBlogData(res.data.blogs)
+              setBlogData(res.data.blogs);
             }
         }
 
@@ -35,13 +35,14 @@ function Blog() {
     const handleChange = (e) => {
         setSelectedYear(e.target.value)
     }
-    
-    let images = [];
-    if (blogData && blogData.length > 0 && blogData[0] && blogData[0].img) {
-        images = blogData[0].img.split(',');
-    }
 
     const uniqueYears = [...new Set(blogData?.map(item => new Date(item.created_at).getFullYear()))];
+    uniqueYears.sort((a, b) => b - a);
+
+    const sortedYears = uniqueYears.map((year, index) => (
+        <option key={index}>{year}</option>
+      ));
+
 
     return (
         <section className="container blog-page">
@@ -57,9 +58,7 @@ function Blog() {
                     <section className="select">
                         <Form.Select onChange={handleChange}>
                             <option value="" selected> All Years </option>
-                            {uniqueYears.map((year, index) => (
-                                <option key={index}>{year}</option>
-                            ))}
+                            {sortedYears}
                         </Form.Select>
                     </section>
                 </Row>
@@ -71,9 +70,9 @@ function Blog() {
                           .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                           .filter(item => selectedYear ? new Date(item.created_at).getFullYear() == selectedYear : true)
                           .map((item, index) => (
-                            <Col lg={4} key={index}>
+                            <Col lg={4} md={6} key={index}>
                                 <Card key={index} style={{width: '23rem'}}>
-                                    <Card.Img className="c-img" variant="top" src={"http://127.0.0.1:8000/api/images/"+images[0]}></Card.Img>
+                                    <Card.Img className="c-img" variant="top" src={"http://127.0.0.1:8000/api/images/" + item.avatar}></Card.Img>
                                     <Card.Body className="c-body" style={{ backgroundColor: '#fff',  borderRadius: '5px'}}>
                                         <Card.Subtitle style={{ color: 'gray', marginTop: '10px'}}>Topic: {new Date(item.created_at).getFullYear()}</Card.Subtitle>
                                         <Link className="card-link c-title" to={`${item.id}`}>{item.title}</Link>

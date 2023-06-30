@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Biography from "./Biography";
-import './content_style.scss'
 import axios from 'axios'
 import swal from 'sweetalert';
 
@@ -35,7 +34,7 @@ function BiographyContent () {
       {personData && (
         <Biography personData={personData} />
         )}
-      {!personData && <h1 className="mt-5" style={{color: 'white'}}>Loading.......</h1> }
+      {!personData && <h1 className="mt-5" style={{color: 'white'}}>Not find a person....</h1> }
     </section>
   )
 }
