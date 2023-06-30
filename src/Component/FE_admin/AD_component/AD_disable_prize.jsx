@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Container,Row,Col } from 'react-bootstrap'
 import AD_nav from '../Layout/AD_nav'
+import AD_hidden_nav from '../Layout/AD_hidden_nav'
 import AD_prizes_modal from "../AD_component/AD_prizes_modal"
 import { DataTable,Column,Tag, Button,FilterMatchMode, FilterOperator, InputText,Dropdown } from 'primereact'
-import { BsSearch,BsPersonAdd,BsGear,BsTrashFill,BsTrophyFill,BsPlusLg} from "react-icons/bs";
+import { BsSearch,BsPersonAdd,BsGear,BsTrashFill,BsTrophyFill,BsPlusLg,BsChevronDoubleRight} from "react-icons/bs";
 import {RiFilterOffFill  } from "react-icons/ri";
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { Toast } from 'primereact/toast';
 import Cookies from 'js-cookie';
 export default function AD_disable_prize() {
   const navigate = useNavigate();
@@ -19,6 +21,8 @@ export default function AD_disable_prize() {
     const [loading, setLoading] = useState(true);
     const [global, setGlobal] = useState('');
     const [selection,setSelection]=useState([]);
+    const [showNav,setShowNav]=useState(false);
+    const toast=useRef(null)
     const  showModalButoon=useRef()
     const showModalEdit=useRef()
     const [filters,setFilters]=useState(
@@ -30,6 +34,14 @@ export default function AD_disable_prize() {
 
         }
     )
+      // Toast
+  const showSuccess = (e) => {
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+   
+  }
+  const showError = (e) => {
+    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+  }
     useEffect(()=>{
       (async()=>await Load())()
         setLoading(false)
@@ -52,11 +64,11 @@ export default function AD_disable_prize() {
           
             status: 'active'
         })
-        alert(item.id+' success active')
+        showSuccess(' success active')
         Load()
     }
     catch(err) {
-        alert(err)
+      showError(err.message)
     }
     }
     // ham delete prize
@@ -71,11 +83,11 @@ export default function AD_disable_prize() {
         await  axios.delete('http://127.0.0.1:8000/api/deleteprize/'+item.id)
           
     
-        alert(item.id+' success deleted !')
+    showSuccess(' success deleted !')
         Load()
     }
     catch(err) {
-        alert(err)
+       showError(err.message)
     }
     }
     // hàm set Init FIlter
@@ -106,17 +118,30 @@ export default function AD_disable_prize() {
     }
     const renderHeader = () => {
         return (
-          <div className="d-flex justify-content-around">
-            <span className="p-input-icon-left">
+          <div className="d-flex justify-content-around AD-header">
+              <div  className='d-none show-1000 mb-3 row  '>
+          
+          <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2 show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+      <h1 className='d-inline-block text-center col-10 '>DISABLE PRIZE</h1>
+      </div>
+      <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+        <section>
+
+            <span className="p-input-icon-left mb-3">
               <BsSearch className="pi pi-search" />
-              <InputText value={global} onChange={handleGlobalSearch} placeholder="Keyword Search" />
+              <InputText  className='' value={global} onChange={handleGlobalSearch} placeholder="Keyword Search" />
            
-              <Button  type="button"  label="Clear" outlined onClick={clearFilter} className='AD-clear-filter' >
-                <RiFilterOffFill  />
-                 </Button>
              
             </span>
-            <h1 className='d-flex'> DISABLE PRIZE</h1>
+              <Button  type="button"  label="Clear" outlined onClick={clearFilter} className='AD-clear-filter mb-3 ms-3' >
+                <RiFilterOffFill  />
+                 </Button>
+        </section>
+            <h1 className='hidden-1000'> DISABLE PRIZE</h1>
       
             <section style={{minWidth:'24rem'}}>
           
@@ -158,11 +183,17 @@ export default function AD_disable_prize() {
 
   return (
     <Container fluid className='wrapper'>
+         <Toast ref={toast} />
+        <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+      <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
+      </Row>
+
         <Row>
-            <Col lg={2}>
-                <AD_nav/>
-            </Col>
-            <Col lg={10}>
+        <Col lg={2} className='padding-0 xs-none  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
+          <AD_nav />
+        </Col>
+            <Col className='bg-content col-xl-10  col-md-12'>
                 <DataTable
                 header={header}
                 loading={loading}
@@ -176,7 +207,7 @@ export default function AD_disable_prize() {
                  selection={selection} onSelectionChange={(e)=>setSelection(e.value)}
                 >
                       <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-                   <Column sortable filter field='id' header='id' />
+                
                    <Column sortable filter field='nobel_year' header='nobel year' />
                    <Column sortable filter field='nobel_name' header='nobel name' />
                    <Column field='status' header='status' body={itemStatus} />

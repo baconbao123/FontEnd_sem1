@@ -10,7 +10,7 @@ import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
-export default function AD_blog_modal({ title, show, value, Load, setSelection }) {
+export default function AD_blog_modal({ title, show, value, Load, setSelection,toast }) {
     const navigate = useNavigate();
     useEffect(() => {
         if (!Cookies.get('login')) {
@@ -34,22 +34,37 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
     const [imgName, setImgName] = useState([]);
     const [avatar, setAvatar] = useState();
     const [emtyAvatar, setEmtyAvatar] = useState(true)
-    const toast = useRef(null);
+   
 
     // ham add new person
     const showToast = () => {
         return toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
     };
-
+      // Toast
+      const showError = (e) => {
+        toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+      }
+      const showSuccess = (e) => {
+        toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+        
+      }
+    
+      
+      const showWarn = (e) => {
+          toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
+      }
     async function addBlog(e) {
         
         e.preventDefault();
         if (imgName.length < 3) {
-            alert('At least 3 images')
+          showWarn('At least 3 images')
 
         }
+        else if(statusName.status==='') {
+            showWarn('Status must be chosen')
+        }
         else if (!avatar) {
-            alert('pls chose avatar')
+            showWarn('Avatar must be chosen')
         }
         else {
 
@@ -74,7 +89,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
             try {
                 await axios.post('http://127.0.0.1:8000/api/addblog', data);
 
-                alert('success')
+             showSuccess("Add success")
 
                 setShowModal(!showModal)
                 setTitlePost('');
@@ -86,8 +101,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
 
             }
             catch (err) {
-                alert(err)
-                alert('ADD FAILED')
+               showError(err.message)
 
             }
         }
@@ -131,11 +145,14 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
 
         //Img change
         if (imgName.length < 3) {
-            alert('At least 3 images')
+         showWarn('At least 3 images')
 
         }
+        else if(statusName.status==='') {
+            showWarn('Status must be chosen')
+        }
         else if (!avatar) {
-            alert('pls chose avatar')
+            showWarn('Avatar must be chosen')
         }
         else if (check > 0 && count > 0) {
             const data = new FormData();
@@ -151,7 +168,11 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
             e.preventDefault();
             try {
                 await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
-                alert('success')
+                setTimeout(()=>{
+                    Load()
+                    setSelection()
+                },[])
+                showSuccess('Updated success')
 
                 setShowModal(!showModal)
                 setTitlePost('');
@@ -159,12 +180,11 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
 
                 setContent('')
                 setStatusName('');
-                Load()
-                setSelection()
+               
+          
             }
             catch (err) {
-                alert(err)
-                alert('Update FAILED')
+               showError(err.message)
             }
         }
         else if (count > 0) {
@@ -181,7 +201,11 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
             e.preventDefault();
             try {
                 await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
-                alert('success')
+                setTimeout(()=>{
+                    Load()
+                    setSelection()
+                },[])
+                showSuccess('Updated success')
 
                 setShowModal(!showModal)
                 setTitlePost('');
@@ -189,12 +213,10 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
 
                 setContent('')
                 setStatusName('');
-                Load()
-                setSelection()
+              
             }
             catch (err) {
-                alert(err)
-                alert('Update FAILED')
+                showError(err.message)
             }
         }
         else if (check > 0) {
@@ -212,7 +234,11 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
             e.preventDefault();
             try {
                 await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
-                alert('success')
+                setTimeout(()=>{
+                    Load()
+                    setSelection()
+                },[])
+                showSuccess('Updated success')
 
                 setShowModal(!showModal)
                 setTitlePost('');
@@ -220,12 +246,10 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
 
                 setContent('')
                 setStatusName('');
-                Load()
-                setSelection()
+               
             }
             catch (err) {
-                alert(err)
-                alert('Update FAILED')
+               showError(err.message)
             }
         }
 
@@ -241,7 +265,11 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
 
 
                 })
-                alert('success')
+                setTimeout(()=>{
+                    Load()
+                    setSelection()
+                },[])
+                showSuccess('Updated success')
 
                 setShowModal(!showModal)
                 setTitlePost('');
@@ -253,8 +281,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
                 setSelection()
             }
             catch (err) {
-                alert(err)
-                alert('Update FAILED')
+               showError(err.message)
             }
         }
     }
@@ -341,18 +368,25 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
     const handleAvatar = (e) => {
         
         setAvatar(e.target.files[0]);
-        setEmtyAvatar(false);
         const myDiv = document.getElementById('avatar')
         myDiv.innerHTML = ''
-        const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onload = () => {
-            const imgPath = reader.result;
-            const imageElement = document.createElement("img");
-            imageElement.src = imgPath;
-            imageElement.style.maxWidth = "20%";
-            myDiv.appendChild(imageElement);
-        };
+        if(e.target.files[0]!==undefined) {
+
+            setEmtyAvatar(false);
+          
+            const reader = new FileReader();
+            reader.readAsDataURL(e.target.files[0]);
+            reader.onload = () => {
+                const imgPath = reader.result;
+                const imageElement = document.createElement("img");
+                imageElement.src = imgPath;
+                imageElement.style.maxWidth = "20%";
+                myDiv.appendChild(imageElement);
+            };
+        }
+        else {
+            setEmtyAvatar(true)
+        }
     }
 
     return (
@@ -362,8 +396,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection }
             <Modal show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <Toast ref={toast} />
-                        {/* <Button  label="click" onClick={showToast}/> */}
+                      
                         <h1>{title} </h1>
                     </Modal.Title>
                 </Modal.Header>

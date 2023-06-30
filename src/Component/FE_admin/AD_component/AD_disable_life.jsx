@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
 import AD_nav from '../Layout/AD_nav'
+import AD_hidden_nav from '../Layout/AD_hidden_nav'
 import { DataTable } from 'primereact'
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact'
 import { Dropdown } from 'primereact/dropdown';
-import { BsSearch, BsTrashFill,BsPlusLg } from "react-icons/bs";
+import { BsSearch, BsTrashFill,BsPlusLg,BsChevronDoubleRight } from "react-icons/bs";
 import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
-import AD_life_modal from './AD_life_modal';
+import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 export default function AD_disable_life() {
@@ -23,8 +24,11 @@ export default function AD_disable_life() {
   const [loading, setLoading] = useState(true);
   const [global, setGlobal] = useState('')
   const [selection, setSelection] = useState([]);
+  const [showNav,setShowNav]=useState(false)
   const showModal = useRef()
+  const [person,setPerson]=useState([])
   const showModalEdit = useRef()
+  const toast =useRef()
   const [filters, setFilters] = useState(
     {
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -43,7 +47,8 @@ export default function AD_disable_life() {
     }
   )
   useEffect(() => {
-    (async()=>await Load())()
+    (async()=>await Load())();
+    (async()=>await LoadPerson())()
 
     
     setLoading(false)
@@ -54,6 +59,19 @@ export default function AD_disable_life() {
       const result= await axios.get('http://127.0.0.1:8000/api/lifedisable')
       setData(result.data)
     }
+    async function LoadPerson() {
+      const result= await axios.get('http://127.0.0.1:8000/api/person');
+      setPerson(result.data)
+  }
+  
+      // Toast
+  const showSuccess = (e) => {
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+   
+  }
+  const showError = (e) => {
+    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+  }
 // Ham active
     const handleActive=()=> {
       selection.map(item=> {
@@ -66,11 +84,11 @@ export default function AD_disable_life() {
         await axios.put('http://127.0.0.1:8000/api/updatelife/'+item.id,{
             status: 'active'
         })
-        alert(item.id+' active success')
+        showSuccess(' active success')
         Load()
     }
     catch(err) {
-        alert(err)
+     showError(err.message)
     }}
 
     // Ham active
@@ -85,13 +103,23 @@ export default function AD_disable_life() {
         await axios.put('http://127.0.0.1:8000/api/deletelife/'+item.id,{
             status: 'active'
         })
-        alert(item.id+' delete success')
+        showSuccess(' delete success')
         Load()
     }
     catch(err) {
-        alert(err)
+      showError(err.message)
     }}
     
+    // handle person
+    const handlePerson=(e)=> {
+      let storePerson=person.filter(item=>item.id===e.person_id);
+ 
+      if(storePerson.length>0) {
+          return storePerson[0].name
+      }
+ 
+}
+
     
   // global search
   const handleGlobalSearch = (e) => {
@@ -103,14 +131,25 @@ export default function AD_disable_life() {
   }
   const renderHeader = () => {
     return (
-      <div className='d-flex justify-content-around'>
+      <div className='d-flex justify-content-around AD-header'>
+           <Toast ref={toast} />
+          <div  className='d-none show-1000 mb-3 row  '>
+          
+          <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2 show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
+      <h1 className='d-inline-block text-center col-10 '>LIFE STORY DISABLE</h1>
+      </div>
+      <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
+          <BsChevronDoubleRight />
+        </section>
         <section className='jutify-content-center'>
           <span className="p-input-icon-left d-inline-flex" >
             <BsSearch className="pi pi-search" />
             <InputText value={global} placeholder='search keyword' onChange={handleGlobalSearch} />
           </span>
         </section>
-        <h1 className='d-inline-flex jutify-content-center'>LIFE STORY DISABLE</h1>
+        <h1 className=' jutify-content-center hidden-1000'>LIFE STORY DISABLE</h1>
         <section style={{ minWidth: '24rem' }}>
 
 
@@ -138,11 +177,15 @@ export default function AD_disable_life() {
 
   return (
     <Container fluid className='wrapper' >
+        <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+      <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
+      </Row>
       <Row>
-        <Col lg={2} className='padding-0'>
+      <Col lg={2} className='padding-0 xs-none  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
           <AD_nav />
         </Col>
-        <Col lg={10}>
+        <Col className='bg-content col-xl-10  col-md-12'>
 
           <section className='card'>
             <DataTable value={data} data-key='id' loading={loading}
@@ -158,8 +201,8 @@ export default function AD_disable_life() {
               selectionMode={'checkbox'} selection={selection} onSelectionChange={e => setSelection(e.value)}
             >
               <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-              <Column field='id' filter sortable header='id' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='person_id' filter sortable header='person_id' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
+           
+              <Column field='person_id' filter sortable header='person name' body={handlePerson} style={{ minWidth: '12rem', maxWidth: '24rem' }} />
               <Column field='life' filter header='life' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
               <Column field='childhood' filter header='childhood' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
               <Column field='education' filter header='education' style={{ minWidth: '12rem', maxWidth: '24rem' }} />

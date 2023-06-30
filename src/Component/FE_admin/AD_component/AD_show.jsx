@@ -9,6 +9,7 @@ import { Tag } from 'primereact/tag';
 import { BsSearch, BsPersonAdd, BsGear, BsTrashFill, BsChevronDoubleRight } from "react-icons/bs";
 import { RiFilterOffFill } from "react-icons/ri";
 import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import AD_nav from '../Layout/AD_nav';
 import AD_modal from './AD_show_modal';
@@ -35,12 +36,20 @@ export default function AD_show() {
     national: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
     status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
   })
+  // Toast
+  const showSuccess = (e) => {
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+   
+  }
+  const showError = (e) => {
+    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+  }
 
   const [global, SetGlobal] = useState('');
   const [statusName] = useState(['success', 'sucess', 'danger']);
   const [genderName] = useState(['male', 'female']);
   const [selection, setSelection] = useState([]);
-
+  const toast = useRef(null);
  const [showNav,setShowNav]=useState(false)
   const [storeImg, setStoreImg] = useState([])
 
@@ -61,33 +70,44 @@ export default function AD_show() {
   }
   // Ham disable
   const handleDisable = () => {
+    let time=1000
     if (selection.length >= 1) {
-   
+      if(selection.length>10) {
+        
+        time=time+selection.length*1000
+      }
+      else if(selection.length>20) {
+        time=1000+selection.length*1000
+      }
+     
+    
+    console.log(time);
       selection.map((item => {
 
-
-        disableperson(item)
+        setTimeout(()=>{ disableperson(item)},time)
+       
         setSelection(selection.filter(item => item !== item))
       }))
 
     }
+ 
   }
   async function disableperson(item) {
 
 
     try {
-
+     
       await axios.put('http://127.0.0.1:8000/api/updateperson/' + item.id, {
 
         status: 'disable',
 
       })
-      alert(item.id + ' disable success')
+      showSuccess(' sucess disable')
       Load();
     }
     catch (err) {
-      alert(err)
-      alert('disable failed')
+      showError(err.message)
+     
     }
   }
 
@@ -130,27 +150,27 @@ export default function AD_show() {
       <div className="d-flex justify-content-around AD-header mt-3">
         <div  className='d-none show-1000 mb-3 row  '>
           
-            <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2'>
+            <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2 show-menu' onClick={e=>setShowNav(true)}>
             <BsChevronDoubleRight />
           </section>
         <h1 className='d-inline-block text-center col-10 '>PERSON</h1>
         </div>
-        <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none d-xs-none d-sm-none'>
+        <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
             <BsChevronDoubleRight />
           </section>
         <span className="p-input-icon-left mb-3">
        
 
-          <InputText className='' value={global} onChange={hanldeGlobalSearch} placeholder="Keyword Search" />
+          <InputText className=' me-1 ' value={global} onChange={hanldeGlobalSearch} placeholder="Keyword Search" />
           <BsSearch className=" ms-2 " />
 
 
 
-          <Button type="button" label="Clear" outlined onClick={clearFilter} className='AD-clear-filter' >
+        </span>
+
+          <Button type="button" label="Clear" outlined onClick={clearFilter} className='mb-3 ' >
             <RiFilterOffFill className='ms-1' />
           </Button>
-
-        </span>
         <h1 className='hidden-1000'>PERSON</h1>
 
         <section className=' ' style={{ minWidth: '24rem' }}>
@@ -161,7 +181,7 @@ export default function AD_show() {
             <>
               <Button ref={showModalEdit} className='ms-3' type='button' label="edit" severity='warning' >
                 <BsGear className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-              <AD_modal setSelection={handleSelection} Load={Load} title="EDIT" show={showModalEdit} value={selection[0]} />
+              <AD_modal  toast={toast} setSelection={handleSelection} Load={Load} title="EDIT" show={showModalEdit} value={selection[0]} />
 
             </>
           )}
@@ -233,27 +253,34 @@ export default function AD_show() {
     )
 
   }
+// Toast
+
+
+
 
 
   const itemImage = (e) => {
-    if (e.img) {
+  
 
-      let store = e.img.split(',')
+      if (e.img) {
+      
 
-      return (
-        <>
-
-          <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={"http://127.0.0.1:8000/api/images/" + store[0]} width='100' />
-          <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={"http://127.0.0.1:8000/api/images/" + store[1]} width='100' />
-          <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={"http://127.0.0.1:8000/api/images/" + store[2]} width='100' />
-          <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={"http://127.0.0.1:8000/api/images/" + store[3]} width='100' />
-          <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={"http://127.0.0.1:8000/api/images/" + store[4]} width='100' />
-          <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={"http://127.0.0.1:8000/api/images/" + store[5]} width='100' />
-
-        </>
-
-      )
-    }
+          let store = e.img.split(',')
+    
+          return (
+            <>
+    
+              <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={"http://127.0.0.1:8000/api/images/" + store[0]} width='100' />
+              <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={"http://127.0.0.1:8000/api/images/" + store[1]} width='100' />
+              <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={"http://127.0.0.1:8000/api/images/" + store[2]} width='100' />
+            
+    
+            </>
+    
+          )
+      
+      }
+  
   }
   const avatarImage=(e)=> {
     
@@ -276,16 +303,19 @@ export default function AD_show() {
     }
   }
 
+  // Toast
+ 
 
   return (
     <Container fluid className='wrapper'>
+        <Toast ref={toast} />
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
-       <Col   md={4} xs={6} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
-      <Col md={8} xs={6} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+      <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
       </Row>
 
       <Row>
-        <Col lg={2} className='padding-0  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
+        <Col lg={2} className='padding-0 xs-none  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
           <AD_nav />
         </Col>
         <Col className='bg-content col-xl-10  col-md-12'>
@@ -308,7 +338,7 @@ export default function AD_show() {
             >
               <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
 
-              <Column field='id' header='id' filter sortable style={{ minWidth: '7rem' }} />
+          
               <Column field='name' header='name' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem', maxWidth: '24rem' }} />
               <Column field='birthdate' header='birthdate' sortable filter dataType='date' style={{ minWidth: '12rem' }} />
               <Column field='deathdate' header='deathdate' sortable filter dataType='date' style={{ minWidth: '12rem' }} />
@@ -329,7 +359,7 @@ export default function AD_show() {
 
         </Col>
 
-        <AD_modal title={"ADD NEW"} show={showModalButoon} Load={Load} />
+        <AD_modal  toast={toast}  title={"ADD NEW"} show={showModalButoon} Load={Load} />
 
       </Row>
     </Container>

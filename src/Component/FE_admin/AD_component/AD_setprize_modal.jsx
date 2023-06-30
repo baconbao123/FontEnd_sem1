@@ -11,7 +11,7 @@ import { InputText, InputTextarea } from 'primereact'
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
-export default function AD_setprize_modal({ title, show, value, Load,setSelection }) {
+export default function AD_setprize_modal({ title, show, value, Load,setSelection,toast }) {
     const navigate = useNavigate();
     useEffect(()=>{
         if(!Cookies.get('login')){
@@ -24,7 +24,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
     const [person, setPerson] = useState([])
     const [availabePrize, setAvailablePrize] = useState([]);
     const status = [{ status: 'active' }, { status: 'disable' }]
-    const [statusName, setStatusName] = useState('')
+    const [statusName, setStatusName] = useState({status:''})
     const [personName, setPersonName] = useState('')
     const [prizeName, setPrizeName] = useState('')
     const [nobelShare, setNobelShare] = useState('')
@@ -34,32 +34,60 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
     const [categoryName, setCategoryName] = useState('');
     const [motivation, setMotivation] = useState('')
     const [prizeContent, setPrizeContent] = useState()
+   
     // ham add set prize
     async function addprize() {
-        try {
-            await axios.post('http://127.0.0.1:8000/api/addpn', {
-                person_id: personName.id,
-                nobel_id: prizeName.id,
-                motivation: motivation,
-                status: statusName.status,
-                nobel_share: nobelShare
-            })
-            alert('ADD SUCCESS')
-            Load()
-            LoadPrize();
-            LoadPerson();
-            setPersonName('');
-            setPrizeName('');
-            setMotivation('');
-            setStatusName('');
-            setNobelShare('');
-            setShowModal(false)
+        if(statusName.status==='') {
+            showWarn('Status must be chosen')
         }
-        catch (err) {
-            alert("ADD FAILED")
+        else if (!personName) {
+            showWarn('Person must be chosen')
+        }
+        else if (!prizeName) {
+            showWarn('Prize must be chosen')
+        }
+        else if(!nobelShare) {
+            showWarn('Nobel share can not be emty')
+
+        }
+        else {
+
+            try {
+                await axios.post('http://127.0.0.1:8000/api/addpn', {
+                    person_id: personName.id,
+                    nobel_id: prizeName.id,
+                    motivation: motivation,
+                    status: statusName.status,
+                    nobel_share: nobelShare
+                })
+                showSuccess('ADD SUCCESS')
+                Load()
+                LoadPrize();
+                LoadPerson();
+                setPersonName('');
+                setPrizeName('');
+                setMotivation('');
+                setStatusName('');
+                setNobelShare('');
+                setShowModal(false)
+            }
+            catch (err) {
+                showError(err.message)
+            }
         }
     }
     
+      // Toast
+  const showSuccess = (e) => {
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+   
+  }
+  const showError = (e) => {
+    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+  }
+  const showWarn = (e) => {
+    toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
+}
     // ham update
     async function updateprize() {
         try {
@@ -70,9 +98,12 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                 status: statusName.status,
                 nobel_share: nobelShare
             })
-            alert('UPDATE SUCCESS')
-            Load();
-            setSelection()
+            setTimeout(()=> {
+                Load();
+                setSelection()
+            },1000)
+         showSuccess('UPDATE SUCCESS')
+           
             LoadPrize();
             LoadPerson();
 
@@ -84,7 +115,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
             setShowModal(false)
         }
         catch (err) {
-            alert("UPDATE FAILED")
+          showError(err.message)
         }
     }
 // set availabe  prize
@@ -282,7 +313,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>motivation</Form.Label>
-                                <InputTextarea placeholder='enter experiment' style={{ minWidth: '100%', minHeight: '12rem' }} value={motivation} onChange={e => setMotivation(e.target.value)} />
+                                <InputTextarea placeholder='enter motivation' style={{ minWidth: '100%', minHeight: '12rem' }} value={motivation} onChange={e => setMotivation(e.target.value)} />
                             </Form.Group>
                         </Row>
                         <Row className='mt-4'>
@@ -291,7 +322,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                                     <Form.Label>
                                         Nobel Share
                                     </Form.Label>
-                                    <InputText value={nobelShare} onChange={e => setNobelShare(e.target.value)} placeholder='1/n' style={{ minWidth: '100%' }} />
+                                    <InputText  keyfilter="num" maxLength={2}  value={nobelShare} onChange={e => setNobelShare(e.target.value)} placeholder='Enter number share' style={{ minWidth: '100%' }} />
                                 </Form.Group>
                             </Col>
                             <Col lg={6}>
