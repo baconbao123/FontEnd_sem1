@@ -71,7 +71,7 @@ function Blog() {
                           .filter(item => selectedYear ? new Date(item.created_at).getFullYear() == selectedYear : true)
                           .map((item, index) => (
                             <Col lg={4} md={6} key={index}>
-                                <Card key={index} style={{width: '23rem'}}>
+                                <Card className='card-1' key={index} style={{width: '23rem'}}>
                                     <Card.Img className="c-img" variant="top" src={"http://127.0.0.1:8000/api/images/" + item.avatar}></Card.Img>
                                     <Card.Body className="c-body" style={{ backgroundColor: '#fff',  borderRadius: '5px'}}>
                                         <Card.Subtitle style={{ color: 'gray', marginTop: '10px'}}>Topic: {new Date(item.created_at).getFullYear()}</Card.Subtitle>
