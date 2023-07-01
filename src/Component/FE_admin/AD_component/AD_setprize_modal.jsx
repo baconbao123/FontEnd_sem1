@@ -50,6 +50,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
             showWarn('Nobel share can not be emty')
 
         }
+ 
         else {
 
             try {
@@ -67,7 +68,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                 setPersonName('');
                 setPrizeName('');
                 setMotivation('');
-                setStatusName('');
+                setStatusName({status:''});
                 setNobelShare('');
                 setShowModal(false)
             }
@@ -83,39 +84,59 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
    
   }
   const showError = (e) => {
-    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+    toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
   }
   const showWarn = (e) => {
     toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
 }
     // ham update
     async function updateprize() {
-        try {
-            await axios.put('http://127.0.0.1:8000/api/updatepn/'+value.person_id +'/'+value.nobel_id, {
-                person_id: personName.id,
-                nobel_id: prizeName.id,
-                motivation: motivation,
-                status: statusName.status,
-                nobel_share: nobelShare
-            })
-            setTimeout(()=> {
-                Load();
-                setSelection()
-            },1000)
-         showSuccess('UPDATE SUCCESS')
-           
-            LoadPrize();
-            LoadPerson();
-
-            setPersonName('');
-            setPrizeName('');
-            setMotivation('');
-            setStatusName('');
-            setNobelShare('');
-            setShowModal(false)
+        if(statusName.status==='') {
+            showWarn('Status must be chosen')
         }
-        catch (err) {
-          showError(err.message)
+        else if (!personName) {
+            showWarn('Person must be chosen')
+        }
+        else if (!prizeName) {
+            showWarn('Prize must be chosen')
+        }
+        else if(!nobelShare) {
+            showWarn('Nobel share can not be emty')
+
+        }
+        else if(nobelShare!==value.nobel_share) {
+            showWarn('Nobel is not matched')
+
+        }
+        else {
+
+            try {
+                await axios.put('http://127.0.0.1:8000/api/updatepn/'+value.person_id +'/'+value.nobel_id, {
+                    person_id: personName.id,
+                    nobel_id: prizeName.id,
+                    motivation: motivation,
+                    status: statusName.status,
+                    nobel_share: nobelShare
+                })
+                setTimeout(()=> {
+                    Load();
+                    setSelection()
+                },1000)
+             showSuccess('UPDATE SUCCESS')
+               
+                LoadPrize();
+                LoadPerson();
+    
+                setPersonName('');
+                setPrizeName('');
+                setMotivation('');
+                setStatusName({status:''});
+                setNobelShare('');
+                setShowModal(false)
+            }
+            catch (err) {
+              showError('The Price is already set')
+            }
         }
     }
 // set availabe  prize

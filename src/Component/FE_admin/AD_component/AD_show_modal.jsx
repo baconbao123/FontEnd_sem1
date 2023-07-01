@@ -289,7 +289,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
     }, []);
     // Toast
     const showError = (e) => {
-        toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+        toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
       }
       const showSuccess = (e) => {
         toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
@@ -302,7 +302,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
       }
     // ham add new person
  
-  
+     
     async function addperson(e) {
        
         e.preventDefault();
@@ -319,6 +319,12 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
         else if(genderName.gender==='') {
             showWarn('Gender must be chosen')
             
+        }
+        else if(!birthdate) {
+            showWarn('Birthday must be chosen')
+        }
+        else if(!name) {
+            showWarn('Name must be chosen')
         }
         else {
             
@@ -353,8 +359,8 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                 setBirthdate('');
                 setDeathdate('');
                 setCountryName('');
-                setGenderName('');
-                setStatusName('')
+                setGenderName({gender:''});
+                setStatusName({status:''})
                 setImgName('')
                 setAvatar('')
                
@@ -405,6 +411,16 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
         }
         else if(!avatar) {
             showWarn('Avatar must be chosen')
+        }
+        else if(genderName.gender==='') {
+            showWarn('Gender must be chosen')
+            
+        }
+        else if(!name) {
+            showWarn('Name must be chosen')
+        }
+        else if(!birthdate) {
+            showWarn('Birthday must be chosen')
         }
         else {
 
@@ -463,8 +479,8 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                     setBirthdate('');
                     setDeathdate('');
                     setCountryName('');
-                    setGenderName('');
-                    setStatusName('')
+                    setGenderName({gender:''});
+                    setStatusName({status:''})
                     setImgName('')
                     setAvatar('')
                 
@@ -525,8 +541,8 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                     setBirthdate('');
                     setDeathdate('');
                     setCountryName('');
-                    setGenderName('');
-                    setStatusName('')
+                    setGenderName({gender:''});
+                    setStatusName({status:''})
                     setImgName('')
                     setAvatar('')
                
@@ -589,8 +605,8 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                     setBirthdate('');
                     setDeathdate('');
                     setCountryName('');
-                    setGenderName('');
-                    setStatusName('')
+                    setGenderName({gender:''});
+                    setStatusName({status:''})
                     setImgName('')
                     setAvatar('')
                  
@@ -653,8 +669,8 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                     setBirthdate('');
                     setDeathdate('');
                     setCountryName('');
-                    setGenderName('');
-                    setStatusName('')
+                    setGenderName({gender:''});
+                    setStatusName({status:''})
                     setImgName('')
                     setAvatar('')
                   
@@ -715,8 +731,70 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                     setBirthdate('');
                     setDeathdate('');
                     setCountryName('');
-                    setGenderName('');
-                    setStatusName('')
+                    setGenderName({gender:''});
+                    setStatusName({status:''})
+                    setImgName('')
+                    setAvatar('')
+                 
+                   
+                }
+                catch (err) {
+                    showError(err.message)
+                }
+            }
+            else if(condition>0) {
+             
+                const data=new FormData();
+                data.append('_method',"PUT")
+               data.append('avatar',avatar)
+                data.append('name',name);
+                data.append('birthdate',birthdate);
+                if(!deathdate) {
+    
+                    data.append('deathdate','');
+                }
+                else {
+                    data.append('deathdate',deathdate);
+    
+                }
+                data.append('status',statusName.status);
+                if(!genderName.gender) {
+    
+                    data.append('gender','')
+    
+                }
+                else {
+                    data.append('gender',genderName.gender)
+    
+    
+                }
+                if(!countryName) {
+    
+                    data.append('national','')
+    
+                }
+                else {
+                    data.append('national',countryName)
+    
+    
+                }
+              
+                e.preventDefault();
+                try {
+                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    showSuccess('Update success')
+        
+                    setTimeout(()=> {
+                        setSelection()
+                        setShowModal(!showModal);
+                        Load()
+                    },1000)
+                    setName('');
+                    setBirthdate('');
+                    setDeathdate('');
+                    setCountryName('');
+                    setGenderName({gender:''});
+                    setStatusName({status:''})
                     setImgName('')
                     setAvatar('')
                  
@@ -751,8 +829,8 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                     setBirthdate('');
                     setDeathdate('');
                     setCountryName('');
-                    setGenderName('');
-                    setStatusName('')
+                    setGenderName({gender:''});
+                    setStatusName({status:''})
                     setImgName('')
                     setAvatar('')
                   

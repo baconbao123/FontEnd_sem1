@@ -127,7 +127,7 @@ export default function AD_home() {
         </Col>
         <Col   className='bg-content d-xl-10 d-md-12 d-xs-12 '>
           <Row>
-            <Container>
+            <Container >
               <Card className='bg-white card-ad-home ' style={{ width: '100%' }}>
                 <section className='header-ad-containt d-flex justify-content-between align-items-center' >
                   <section>
@@ -145,12 +145,12 @@ export default function AD_home() {
                   </section>
                 </section>
               </Card>
-            </Container>
+            </Container >
           </Row>
-          <Row >
-            <Card className=' bg-white card-ad-body'>
+          <Row  >
+            <Card className=' bg-white card-ad-body mb-5'>
               <Row>
-                <Col lg={4} md={4} className="mb-4"  >
+                <Col lg={4} md={4} className="mb-4 mt-5"  >
                   <section onClick={handleOnclickPerson} className='mb-4 d-flex justify-content-center'>
 
                   <AD_card_item  title={'PERSON'} Icon={BsFillPersonFill} content={person?person.length+' persons': '0 perons'} cardColor={'card-color1'} />
@@ -168,7 +168,7 @@ export default function AD_home() {
                   <AD_show_modal toast={toast} show={showPersonModal} title={'ADD NEW '}  Load={LoadPerson}/>
                   <AD_life_modal toast={toast} show={showLifeModal}  title={"ADD NEW LIFE"} Load={LoadPerson} />
                 </Col>
-                <Col lg={4} md={4} className="mb-4" >
+                <Col lg={4} md={4} className="mb-4 mt-5" >
                   <section onClick={handleOnclickPrize} className='mb-4 d-flex justify-content-center'>
 
                   <AD_card_item  title={'PRIZE'} Icon={BsFillTrophyFill} content={prize?prize.length +' prizes':' 0 prizes'} cardColor={'card-color3'} />
@@ -185,7 +185,7 @@ export default function AD_home() {
                   <AD_prizes_modal toast={toast} show={showPrizeModal} Load={LoadPrize} title={"ADD NEW PRIZE "}   />
                 </Col>
 
-                <Col lg={4} md={4} className="mb-4" >
+                <Col lg={4} md={4} className="mb-4 mt-5 " >
                 <section onClick={handleOnclickBLog} className='mb-4 d-flex justify-content-center'>
 
                   <AD_card_item  title={'BLOG'} Icon={BsChatSquareTextFill} content={blog?blog.length +' posts':'0 blogs'} cardColor={'card-color4'} />

@@ -17,6 +17,7 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
           navigate('/login')
         }
        })
+    const [reLoad,setReLoad]=useState(0);
     const [showModal, setShowModal] = useState(false);
     const [person,setPerson]=useState([])
     const [storePerson,setStorePerson]=useState([])
@@ -32,7 +33,7 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
     const [book,setBook]=useState('')
     const [life,setLife]=useState('')
     const [statusName,setStatusName]=useState({status:''});
-    
+   
     const status = [{ status: "active" }, { status: "disable" }]
 // set EDIT 
 
@@ -50,13 +51,16 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
     }, [show]);
     
     useEffect(() => {
-       (async()=>await Loadperson())()
-        
+       
+       (async()=>await Loadperson())();
+    
+     
         if(value) {
         
           
             if(value.id) {
                 setPersonSelected(person.filter(item=>item.id===value.id))
+              
             }
             setChildhood(value.childhood);
             setAchivements(value.achievements_detail);
@@ -69,11 +73,13 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
             setStruggles(value.struggles);
             setBook(value.book)
             setStatusName({status:value.status})
+            
         }
+       
       }, [])
         // Toast
     const showError = (e) => {
-        toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+        toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
       }
       const showSuccess = (e) => {
         toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
@@ -85,11 +91,17 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
           toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
       }
 //    ham  get data 
-      async function Loadperson() {
-       const result= await axios.get('http://127.0.0.1:8000/api/personlife');
-       setPerson(result.data)
-      }
+async function Loadperson() {
   
+       const response = await axios.get('http://127.0.0.1:8000/api/personlife')
+       setPerson(response.data);
+     
+  }
+
+
+
+
+
  
 //  Ham add life
       async function addlife(e) {
@@ -129,8 +141,13 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
             setExperiment('');
             setStruggles('');
             setBook('')
+            setPersonSelected('');
             setStatusName({status:''})
-            return Load()
+            setTimeout(()=>{
+                Load()
+            },1000)
+            Loadperson()
+          
             }
             catch(err) {
                showError(err.message)
@@ -164,43 +181,55 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
                 books: book ,
                 status : statusName.status
                 })
+                
                 showSuccess('success updated')
                 setTimeout(()=> {
                     setShowModal(false);
                     selection()
                      Load()
-
+                window.location.reload();
+                    
                 },1000)
+               
+               
+                setPersonSelected('');
                 setChildhood('');
                 setAchivements('');
                 setQoute('');
                 setLife('');
+           
                 setPersonalities('');
                 setTime_line('');
                 setEducation('');
                 setExperiment('');
                 setStruggles('');
                 setBook('')
+                
+           
                
             }
             catch(err) {
                 showError(err.message)
             }
         }
+      
       }
-
 
 
     useEffect(()=> {
      const   store= person.filter((item)=>item.life_story===null);
-    
-   setStorePerson(store)
         if(value) {
         
             const id=person.filter((item)=>item.id===value.person_id);
-        
+         
+         setStorePerson([id[0],...store])
             setPersonSelected(id[0] );
   
+        }
+        else if (!value) {
+            
+            setStorePerson(store)
+
         }
     },[person])
    

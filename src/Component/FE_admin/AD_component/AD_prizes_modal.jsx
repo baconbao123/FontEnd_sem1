@@ -21,7 +21,7 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
        })
           // Toast
     const showError = (e) => {
-        toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+        toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
       }
       const showSuccess = (e) => {
         toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
@@ -59,7 +59,7 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
             }
         }
     }, [show]);
-
+    console.log(statusName);
     async function addprize() {
         if(statusName.status==='') {
             showWarn('Status must be chosen')
@@ -81,8 +81,8 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
               showSuccess('Add success')
                 Load()
                 setYear('')
-                setCategoryName('')
-                setStatusName('')
+                setCategoryName({category:''})
+                setStatusName({status:''})
                 setShowModal(false)
             }
             catch (err) {
@@ -117,8 +117,8 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
                     setSelection()
                 },1000)
                 setYear('')
-                setCategoryName('')
-                setStatusName('')
+                setCategoryName({status:''})
+                setStatusName({status:''})
                 setShowModal(false)
             }
             catch(err) {

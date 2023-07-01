@@ -44,7 +44,7 @@ export default function AD_prizes() {
    
   }
   const showError = (e) => {
-    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+    toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
   }
   // get data
    async function Load() {

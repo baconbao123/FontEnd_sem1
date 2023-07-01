@@ -42,7 +42,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
     };
       // Toast
       const showError = (e) => {
-        toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+        toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
       }
       const showSuccess = (e) => {
         toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
@@ -96,7 +96,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                 setAuthor('');
                 setAvatar('')
                 setContent('')
-                setStatusName('');
+                setStatusName({status:''});
                 Load()
 
             }
@@ -179,7 +179,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                 setAuthor('');
 
                 setContent('')
-                setStatusName('');
+                setStatusName({status:''});
                
           
             }
@@ -212,7 +212,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                 setAuthor('');
 
                 setContent('')
-                setStatusName('');
+                setStatusName({status:''});
               
             }
             catch (err) {
@@ -245,7 +245,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                 setAuthor('');
 
                 setContent('')
-                setStatusName('');
+                setStatusName({status:''});
                
             }
             catch (err) {
@@ -276,7 +276,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                 setAuthor('');
 
                 setContent('')
-                setStatusName('');
+                setStatusName({status:''});
                 Load()
                 setSelection()
             }

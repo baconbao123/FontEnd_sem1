@@ -45,7 +45,7 @@ export default function AD_disable_setprize() {
      
     }
     const showError = (e) => {
-      toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
+      toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
     }
   useEffect(() => {
     
@@ -265,9 +265,9 @@ async function  deletesetprize(item){
             selection={selection} onSelectionChange={(e) => setSelection(e.value)}
           >
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-            <Column sortable filter field='nobel_id' body={handleNobel} header='nobel name' />
-            <Column sortable filter field='nobel_id' body={handleNobelYear} header='nobel year' />
-            <Column sortable filter field='person_id' body={handlePerson} header='person name' />
+            <Column sortable  field='nobel_id' body={handleNobel} header='nobel name' />
+            <Column sortable  field='nobel_id' body={handleNobelYear} header='nobel year' />
+            <Column sortable  field='person_id' body={handlePerson} header='person name' />
             <Column sortable filter field='motivation' header='motivation' />
             <Column sortable filter field='nobel_share' header='nobel share' />
 

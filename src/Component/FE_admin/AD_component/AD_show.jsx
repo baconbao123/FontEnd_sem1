@@ -36,14 +36,7 @@ export default function AD_show() {
     national: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
     status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
   })
-  // Toast
-  const showSuccess = (e) => {
-    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
-   
-  }
-  const showError = (e) => {
-    toast.current.show({severity:'error', summary: 'ADD FAILED', detail:e, life: 1000});
-  }
+ 
 
   const [global, SetGlobal] = useState('');
   const [statusName] = useState(['success', 'sucess', 'danger']);
@@ -55,6 +48,14 @@ export default function AD_show() {
 
   const showModalButoon = useRef(null)
   const showModalEdit = useRef('')
+   // Toast
+   const showSuccess = (e) => {
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+   
+  }
+  const showError = (e) => {
+    toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
+  }
   // fectch data
 
   useEffect(() => {
