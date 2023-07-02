@@ -55,8 +55,8 @@ function DetailNobelPrize() {
                 alt="img"
                 height={275}
               />
-              <Card.Body style={{ backgroundColor: "#fff" }}>
-                <Link to={`/chemistry/biography/${person.id_person}`}>
+              <Card.Body style={{ backgroundColor: "#gainsboro" }}>
+                <Link to={`/biography/${person.id_person}`}>
                   <Card.Title className="card-title-person">
                     {person.name}
                   </Card.Title>

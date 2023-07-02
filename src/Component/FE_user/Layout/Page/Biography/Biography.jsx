@@ -13,10 +13,13 @@ import nobel from './pictures/nobel.jpg'
 const Biography = ({personData}) => {
     const [pdfUrl, setPdfUrl] = useState(null);
     
+    
     useEffect(() => {
         AOS.init();
-      }, []);
-      
+    }, []);
+    
+    
+
 // img
     let images = [];
     if (personData && personData.img) {
@@ -32,6 +35,16 @@ const Biography = ({personData}) => {
         setPdfUrl(fileUrl)
     }
 
+
+    const avatar = personData.avatar;
+
+    const sortedNobels = personData.nobel.sort((a, b) => b.nobel_year - a.nobel_year);
+
+    const latestNobelYear = sortedNobels[0].nobel_year;
+
+    const latestNobel = sortedNobels.find(nobel => nobel.nobel_year === latestNobelYear);
+
+
     return (
         <div>
             <section className='block-content-white-1 '>
@@ -39,27 +52,27 @@ const Biography = ({personData}) => {
                 <h1 className='heading-page text-center'>Biography</h1>
                     <section>
                         <Row>
-                            <Col lg={4} md={5}>
+                            <Col lg={4} md={5} className='col-avatar'>
                                 <div className='img-per-site'>
-                                    <img src={"http://127.0.0.1:8000/api/images/"+images[0]} alt='mc3'/>
+                                    <img src={"http://127.0.0.1:8000/api/images/"+avatar} alt='mc3'/>
                                 </div>
                             </Col>
                             
                             <Col lg={8} md={7}>
                                 <div className='content-des-sum'>
                                     <div style={{ marginBottom: 10 }} className='name-des'>{personData.name}</div>
-                                    <div style={{ marginBottom: 10 }}>{personData.name}, {personData.national} <br/> The Nobel Prize in {personData.nobel_name} {personData.nobel_year}</div>
+                                    <div style={{ marginBottom: 10 }}>{personData.name}, {personData.national} <br/> The Nobel Prize in {latestNobel.nobel_name} {latestNobel.nobel_year}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Born: </strong>{personData.birthdate}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Died: </strong>{personData.deathdate}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Prize motivation: </strong>{personData.motivation}</div>
-                                    <div style={{ marginBottom: 10 }}><strong>Prize share: </strong>{personData.nobel_share}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Prize motivation: </strong>{latestNobel.pivot.motivation}</div>
+                                    <div style={{ marginBottom: 10 }}><strong>Prize share: </strong>{latestNobel.pivot.nobel_share}</div>
                                     <div style={{ marginBottom: 10 }}><strong>Books: </strong>{personData.books}</div>
                                 </div>
                                 <div className='btn-down-site'>
                                      <button className="btn-down" onClick={getPdfUrl}>DOWNLOAD BIO <span className='item-icon-down'>&nbsp;<AiOutlineDownload/></span></button>
                                 </div>
                                     {pdfUrl && (
-                                        <a href={pdfUrl} download={personData.pdf} className="btn-download-link">Detailed biography (.doc)</a>
+                                        <a href={pdfUrl} download={personData.pdf} className="btn-download-link">Detailed biography (.pdf)</a>
                                     )}
                             </Col>
                         </Row>        
@@ -106,7 +119,7 @@ const Biography = ({personData}) => {
             <section className='outside-block-black'>
                 <section className="block-content-black-1 container">
                     <Row>
-                        <Col lg={4} className='d-lg-block d-md-none d-xs-none'>
+                        <Col lg={4} className='d-lg-block d-md-none d-xs-none col-achive'>
                             <section className='achive-topic-site' data-aos="fade-right" data-aos-duration="1000">
                                 <div className='achive-label'>
                                     <strong>Achievement</strong>
@@ -116,10 +129,12 @@ const Biography = ({personData}) => {
                                 </div>
                             </section>
                         </Col>
-                        <Col lg={8} md={12}>
+                        <Col lg={8} md={12} className='col-ahive-detail'>
                             <section className='achive-site' data-aos="fade-left" data-aos-duration="1000">
                                 <div className='achive-des-content'>
-                                    <div>{personData.achievements_detail}</div>
+                                {personData.achievements_detail && personData.achievements_detail.split('\n').map((achievement, index) => (
+                                    <p key={index}>{achievement}</p>
+                                ))}
                                 </div>
                             </section>
                         </Col>
@@ -168,7 +183,7 @@ const Biography = ({personData}) => {
             <section className='outside-block-black'>
                 <section className="block-content-black-2 container">
                     <Row>
-                        <Col lg={4} md={12} >
+                        <Col lg={4} md={12} className='col-nbprize'>
                             <div className='rhombus-bg'>
                                 <div className='img-nobel'>
                                     <img src={nobel} alt='nobel'></img>
@@ -176,9 +191,11 @@ const Biography = ({personData}) => {
                                 </div>
                             </div>
                         </Col>
-                        <Col lg={8} md={12}>
+                        <Col lg={8} md={12} className='col-nbprize-des'>
                             <div className='nbprize-des' data-aos="zoom-in-up" data-aos-duration="1000">
-                                {personData.nobel_year} &nbsp; {personData.motivation}
+                                {personData.nobelYears.map((year, index) => (
+                                    <div key={index}>{year} &nbsp; {personData.motivations[index]}</div>
+                                ))}
                             </div>
                         </Col>
                     </Row>
@@ -191,9 +208,9 @@ const Biography = ({personData}) => {
                     <Carousel>
                         <Carousel.Item>
                             <Row>
+                                <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[0]} alt='mc2'/>
                                 <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[1]} alt='mc2'/>
-                                <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[4]} alt='mc2'/>
-                                <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[3]} alt='mc2'/>
+                                <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[2]} alt='mc2'/>
                             </Row>
                         </Carousel.Item>
                     </Carousel>
