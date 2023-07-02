@@ -97,7 +97,7 @@ async function LoadPerson() {
                 status: 'disable',
               })
               Load();
-       showSuccess(item.person_id+ ' ' + item.nobel_id+' sucess disable')
+       showSuccess(' sucess disable')
           }
           catch(err) {
        

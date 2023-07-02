@@ -89,8 +89,16 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
   const showWarn = (e) => {
     toast.current.show({severity:'warn', summary: 'Warning', detail:e?e:"To many request", life: 3000});
 }
+
     // ham update
     async function updateprize() {
+     let    store= allPrize.filter(item=>item.id===value.nobel_id)
+     let storeNobelShare
+    
+     if(store) {
+        storeNobelShare=store[0].person.length
+      
+     }
         if(statusName.status==='') {
             showWarn('Status must be chosen')
         }
@@ -104,7 +112,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
             showWarn('Nobel share can not be emty')
 
         }
-        else if(nobelShare!==value.nobel_share) {
+        else if(nobelShare!==value.nobel_share && storeNobelShare!==1 ) {
             showWarn('Nobel is not matched')
 
         }

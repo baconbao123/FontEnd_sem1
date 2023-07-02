@@ -62,7 +62,7 @@ export default function AD_life() {
         const instance = axios.create({
             timeout: 3000 
           });
-        const result= await instance.get('http://127.0.0.1:8000/api/person');
+        const result= await instance.get('http://127.0.0.1:8000/api/allperson');
         setPerson(result.data)
     }
     
