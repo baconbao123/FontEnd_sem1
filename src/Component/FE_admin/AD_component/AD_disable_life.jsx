@@ -56,11 +56,17 @@ export default function AD_disable_life() {
   }, [])
 // ham get data
     async function Load() {
-      const result= await axios.get('http://127.0.0.1:8000/api/lifedisable')
+      const instance = axios.create({
+        timeout: 3000 
+      });
+      const result= await instance.get('http://127.0.0.1:8000/api/lifedisable')
       setData(result.data)
     }
     async function LoadPerson() {
-      const result= await axios.get('http://127.0.0.1:8000/api/person');
+      const instance = axios.create({
+        timeout: 3000 
+      });
+      const result= await instance.get('http://127.0.0.1:8000/api/person');
       setPerson(result.data)
   }
   
@@ -184,12 +190,12 @@ export default function AD_disable_life() {
   return (
     <Container fluid className='wrapper' >
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
-       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Disable life'}/></Col>
       <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
       </Row>
       <Row>
       <Col lg={2} className='padding-0 xs-none  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
-          <AD_nav />
+          <AD_nav page={'Disable life'} />
         </Col>
         <Col className='bg-content col-xl-10  col-md-12'>
 

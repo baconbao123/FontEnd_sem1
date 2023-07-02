@@ -5,7 +5,7 @@ import AD_nav_item from './AD_nav_item';
 import {AiFillHome} from "react-icons/ai";
 import  {BsFillPersonFill,BsFillTrophyFill,BsTrashFill,BsChatLeftTextFill} from   'react-icons/bs';
 
-export default function AD_hidden_nav() {
+export default function AD_hidden_nav({page}) {
   const [nav,setNav]=useState([]);
   useEffect(()=>{
     setNav(
@@ -17,8 +17,8 @@ export default function AD_hidden_nav() {
           item_icon: AiFillHome,
           child: 
           [
+            {child_id:'2',child_content:'Admin',child_link:'/admin'},
             {child_id:'1',child_content:'Home',child_link:'/'},
-            {child_id:'2',child_content:'Admin',child_link:'/admin'}
           ],
           link: ''
           
@@ -93,7 +93,7 @@ export default function AD_hidden_nav() {
         {
           nav.map((nav,index)=>(
          
-            <AD_nav_item  key={index}  content={nav.content} Item_icon={nav.item_icon} child={nav.child}/>
+            <AD_nav_item page={page} key={index}  content={nav.content} Item_icon={nav.item_icon} child={nav.child}/>
           ))
         }  
 

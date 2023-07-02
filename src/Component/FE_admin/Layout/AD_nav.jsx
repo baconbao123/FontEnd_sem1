@@ -5,10 +5,10 @@ import { Button } from 'react-bootstrap';
 import AD_nav_item from './AD_nav_item';
 import {AiFillHome} from "react-icons/ai";
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import  {BsFillPersonFill,BsFillTrophyFill,BsTrashFill,BsChatLeftTextFill} from   'react-icons/bs';
 import Swal from 'sweetalert2'
-export default function AD_nav() {
+export default function AD_nav({page}) {
   const navigate = useNavigate();
   const [nav,setNav]=useState([]);
   useEffect(()=>{
@@ -21,8 +21,8 @@ export default function AD_nav() {
           item_icon: AiFillHome,
           child: 
           [
-            {child_id:'1',child_content:'Home',child_link:'/'},
-            {child_id:'2',child_content:'Admin',child_link:'/admin'}
+            {child_id:'1',child_content:'Admin',child_link:'/admin'},
+            {child_id:'2',child_content:'Home',child_link:'/'},
           ],
           link: ''
           
@@ -107,14 +107,17 @@ export default function AD_nav() {
     <section className='AD-nav-container'>
 
     <div className='AD-nav-logo'>
+      <Link to='/admin'>
+
       <img src={logo} alt=""  className='AD-nav-img'/>
+      </Link>
 
     </div>
     <section className='AD-nav-items ' >
         { 
           nav.map((nav,index)=>(
          
-            <AD_nav_item  key={index}  content={nav.content} Item_icon={nav.item_icon} child={nav.child}/>
+            <AD_nav_item page={page}  key={index}  content={nav.content} Item_icon={nav.item_icon} child={nav.child}/>
           ))
         }  
         <div className='d-flex justify-content-center'>

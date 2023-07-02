@@ -369,8 +369,14 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
     
             }
             catch (err) {
-              
-             showError(err.message)
+              console.log(err);
+              if(err.response.status===400) {
+                showError("Birthdate or Deathdate is invalid")
+              }
+              else {
+
+                  showError(err.response)
+              }
           
             }
         }

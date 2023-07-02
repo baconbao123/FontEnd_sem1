@@ -120,13 +120,13 @@ export default function AD_home() {
     <Container fluid className='wrapper'>
       <Toast ref={toast}/>
       <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
-       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Admin'}/></Col>
       <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
       </Row>
 
       <Row> 
         <Col lg={2}   className='padding-0 d-xl-flex d-lg-none d-xs-none d-sm-none xs-none'>
-          <AD_nav />
+          <AD_nav page={'Admin'} />
         </Col>
         <Col   className='bg-content d-xl-10 d-md-12 d-xs-12 '>
           <Row>

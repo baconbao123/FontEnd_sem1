@@ -63,7 +63,10 @@ export default function AD_disbale_show() {
   }, [])
 
   async function  Load() {
-    const result=await axios.get('http://127.0.0.1:8000/api/persondisable');
+    const instance = axios.create({
+      timeout: 3000 
+    });
+    const result=await instance.get('http://127.0.0.1:8000/api/persondisable');
     setPerson(result.data);
   }
 
@@ -274,9 +277,7 @@ async function activeperson(item) {
       <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={"http://127.0.0.1:8000/api/images/"+store[0]}  width='100'/>
      <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={"http://127.0.0.1:8000/api/images/"+store[1]}  width='100'/>
      <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={"http://127.0.0.1:8000/api/images/"+store[2]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[3]} src={"http://127.0.0.1:8000/api/images/"+store[3]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[4]} src={"http://127.0.0.1:8000/api/images/"+store[4]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[5]} src={"http://127.0.0.1:8000/api/images/"+store[5]}  width='100'/>
+     
       </>
   
      )
@@ -298,12 +299,12 @@ async function activeperson(item) {
     <Container fluid className='wrapper'>
         <Toast ref={toast} /> 
       <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
-       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
+       <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Disable show'} /></Col>
       <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
       </Row>
       <Row>
       <Col lg={2} className='padding-0 xs-none  d-xl-inline-flex d-lg-none d-xs-none d-sm-none'>
-          <AD_nav />
+          <AD_nav page={'Disable show'} />
         </Col>
         <Col  className='bg-content col-xl-10  col-md-12'>
         

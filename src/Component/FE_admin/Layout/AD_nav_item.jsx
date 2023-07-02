@@ -2,7 +2,8 @@ import React,{useEffect, useState} from 'react'
 import {BsChevronCompactDown,BsChevronCompactUp} from 'react-icons/bs';
 import { Link,Navigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 const SpanDown=styled.span`
   ${props=>props.show===true&&`{
     display:none!important;
@@ -13,8 +14,11 @@ ${props=>props.show===false&&`{
   display:none!important;
 }`}
 `
-export default function AD_nav_item({content,Item_icon,child, navContaint}) {
+export default function AD_nav_item({content,Item_icon,child, navContaint,page}) {
     const [showChild,setShowChild]=useState(false);
+    useEffect(() => {
+      AOS.init();
+    }, []);
  
   return (
      
@@ -31,11 +35,11 @@ export default function AD_nav_item({content,Item_icon,child, navContaint}) {
         <BsChevronCompactUp className='AD-item-down_up'/>
         </SpanUp>
         {child&&showChild&&(
-        <section className='AD-nav-children'>
+        <section  className='AD-nav-children '>
       {child&&showChild&&(
         child.map((child,index)=>(
-            <section key={index} className='AD-nav-child' >
-                <Link className='link-default max-width' to={child.child_link}>{child.child_content}
+            <section  key={index} className={`AD-nav-child`} >
+                <Link   className={`link-default max-width  ${child.child_content===page?'text-primary':''}`} to={child.child_link}>{child.child_content}
                 </Link>
             </section>
         ))
