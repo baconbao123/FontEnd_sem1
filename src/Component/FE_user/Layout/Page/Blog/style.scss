@@ -36,15 +36,13 @@
             .c-img {
                 height: 250px;
                 padding: 10px 10px 0 10px;
-                background-color: #fff;
+                background-color: #e9ecef;
                 object-fit: cover !important;
             }
 
             .c-body {
-                height: 16rem;
+                height: 17.5rem;
                 margin-top: -5px;
-
-
 
 
                 .card-link {
@@ -56,7 +54,7 @@
                 .c-title {
                     text-decoration: none;
                     color: black;
-                    font-size: 25px;
+                    font-size: 23px;
                     font-weight: 700;
 
                     &:hover {
@@ -100,10 +98,10 @@
 
 // -------------------Blog details ----------------
 .bd-page {
-    margin-top: 90px;
+    margin-top: 110px;
     background-color: #f0f0f0;
     font-family: 'Barlow', sans-serif;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     font-size: 22px;
     color: #6b3f2e;
 
@@ -111,7 +109,7 @@
         .bd-title-content {
             font-family: 'Cardo', serif;
             color: #6b3f2e;
-            font-size: 55px;
+            font-size: 50px;
             display: flex;
 
             &::after {
@@ -119,7 +117,7 @@
                 flex-grow: 1;
                 height: 5px;
                 margin-left: 10px;
-                margin-top: 45px;
+                margin-top: 40px;
                 background-color: #6b3f2e;
             }
         }

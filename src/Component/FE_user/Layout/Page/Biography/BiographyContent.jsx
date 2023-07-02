@@ -1,44 +1,54 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Biography from "./Biography";
-import axios from 'axios'
+import axios from 'axios';
 import swal from 'sweetalert';
 
+function BiographyContent() {
+  const [personData, setPersonData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
 
-function BiographyContent () {
-  const [personData, setPersonData] = useState(null)
-  const {id} =  useParams();
-  
   useEffect(() => {
-    (async () => await fetchData())()
-  }, [id])
+    fetchData();
+  }, [id]);
 
-    async function fetchData() {
+  async function fetchData() {
+    try {
       const res = await axios.get(`http://127.0.0.1:8000/api/persons/${id}`);
-      if (res && res.data && res.data.persons ) {
-        
-          console.log('hello')
-         if(
-          res.data.persons ?.personsstatus === 'active' &&
-          res.data.persons ?.lifestatus === 'active' &&
-          res.data.persons ?.nobelprizesstatus === 'active'
-         )
-       
-        setPersonData(res.data.persons );
-      } 
-
+      if (res.data && res.data.persons) {
+        if (
+          res.data.persons.personsstatus === 'active' &&
+          res.data.persons.lifestatus === 'active' &&
+          res.data.persons.nobelprizesstatus === 'active'
+        ) {
+          setPersonData(res.data.persons);
+        } else {
+          swal("Error", "Person is not active.", "error");
+        }
+      } else {
+        swal("Error", "Person not found.", "error");
+      }
+    } catch (error) {
+      swal("Error", "Person not found.", "error");
+    } finally {
+      setLoading(false);
     }
- 
-  return(
+  }
+
+  return (
     <section className="content">
-      {personData && (
-        <Biography personData={personData} />
-        )}
-      {!personData && <h1 className="mt-5" style={{color: 'white'}}>Not find a person....</h1> }
+      {loading ? (
+        <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px' }}>Loading...</h1>
+      ) : (
+        personData ? (
+          <Biography personData={personData} />
+        ) : (
+          <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px' }}>Cannot find a person</h1>
+        )
+      )}
     </section>
-  )
+  );
 }
 
 export default BiographyContent;
-
-
