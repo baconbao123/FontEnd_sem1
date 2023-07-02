@@ -79,16 +79,16 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
       }, [])
         // Toast
     const showError = (e) => {
-        toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
+        toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});
       }
       const showSuccess = (e) => {
-        toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+        toast.current.show({severity:'success', summary: ' SUCCESS', detail:e?e:"To many request", life: 1000});
         
       }
     
       
       const showWarn = (e) => {
-          toast.current.show({severity:'warn', summary: 'Warning', detail:e, life: 3000});
+          toast.current.show({severity:'warn', summary: 'Warning', detail:e?e:"To many request", life: 3000});
       }
 //    ham  get data 
 async function Loadperson() {

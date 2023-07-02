@@ -50,11 +50,11 @@ export default function AD_disbale_show() {
 
   // Toast
   const showSuccess = (e) => {
-    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e?e:"To many request", life: 1000});
    
   }
   const showError = (e) => {
-    toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
+    toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});
   }
 
   useEffect(() => {
@@ -70,12 +70,12 @@ export default function AD_disbale_show() {
 
    // Ham active
    const handleActive=()=> {
-    let time=5000
+    let time=1000
     if (selection.length>=1) {
-      if(selection.length>10) {
+      // if(selection.length>10) {
         
-        time=10000
-      }
+      //   time=10000
+      // }
       
       
         selection.map((item=> {
@@ -101,8 +101,10 @@ async function activeperson(item) {
       Load();
     }
     catch (err) {
-     
+  
     showError(err.message)
+
+  
     }
 }
 // ham delete
@@ -121,7 +123,10 @@ async function activeperson(item) {
       Load()
     }
     catch (err) {
-    showError(err.message)
+    
+
+        showError(err.message)
+   
     }
   }
 // Hàm search Golbal

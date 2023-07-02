@@ -66,11 +66,11 @@ export default function AD_disable_life() {
   
       // Toast
   const showSuccess = (e) => {
-    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e?e:"To many request", life: 1000});
    
   }
   const showError = (e) => {
-    toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
+    toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});
   }
 // Ham active
     const handleActive=()=> {
@@ -88,7 +88,10 @@ export default function AD_disable_life() {
         Load()
     }
     catch(err) {
-     showError(err.message)
+   
+
+        showError(err.message)
+     
     }}
 
     // Ham active
@@ -107,7 +110,10 @@ export default function AD_disable_life() {
         Load()
     }
     catch(err) {
-      showError(err.message)
+    
+
+        showError(err.message)
+     
     }}
     
     // handle person
@@ -212,7 +218,7 @@ export default function AD_disable_life() {
               <Column field='personalities' filter header='personalities' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
               <Column field='achievements_detail' filter header='achievements_detail' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
               <Column field='quote' filter header='quote' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='book' filter header='book' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
+              <Column field='books' filter header='book' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
             </DataTable>
           </section>
 

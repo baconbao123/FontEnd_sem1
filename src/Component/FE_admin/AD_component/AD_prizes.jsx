@@ -40,11 +40,11 @@ export default function AD_prizes() {
     },[])
     // Toast
   const showSuccess = (e) => {
-    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e?e:"To many request", life: 1000});
    
   }
   const showError = (e) => {
-    toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
+    toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});
   }
   // get data
    async function Load() {
@@ -68,7 +68,10 @@ export default function AD_prizes() {
       Load()
   }
   catch(err) {
-    showError(err.message)
+
+
+      showError(err.message)
+    
   }
   
   }

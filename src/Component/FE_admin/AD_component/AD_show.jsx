@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState ,createRef} from 'react'
 import { DataTable } from 'primereact'
 import { Column } from 'primereact/column';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
@@ -50,20 +50,29 @@ export default function AD_show() {
   const showModalEdit = useRef('')
    // Toast
    const showSuccess = (e) => {
-    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e?e:"To many request", life: 1000});
    
   }
   const showError = (e) => {
-    toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
+    toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});
   }
+  useEffect(() => {
+    toast.current = toast.current || createRef();
+  }, [toast]);
+  
+  console.log(person);
+  console.log(selection);
   // fectch data
 
   useEffect(() => {
     (async () => await Load())();
 
     setLoading(false);
-
+    console.log('SET UP ____-------------------------------------');
   }, [])
+  const Reload=()=> {
+    window.location.reload();
+  }
 
   async function Load() {
     const result = await axios.get('http://127.0.0.1:8000/api/person');
@@ -73,13 +82,13 @@ export default function AD_show() {
   const handleDisable = () => {
     let time=1000
     if (selection.length >= 1) {
-      if(selection.length>10) {
+      // if(selection.length>10) {
         
-        time=time+selection.length*1000
-      }
-      else if(selection.length>20) {
-        time=1000+selection.length*1000
-      }
+      //   time=time+selection.length*1000
+      // }
+      // else if(selection.length>20) {
+      //   time=1000+selection.length*1000
+      // }
      
     
     console.log(time);
@@ -93,6 +102,8 @@ export default function AD_show() {
     }
  
   }
+  
+  console.log(toast);
   async function disableperson(item) {
 
 
@@ -103,12 +114,20 @@ export default function AD_show() {
         status: 'disable',
 
       })
-      showSuccess(' sucess disable')
+      console.log(toast);
+      
+    
+
+          showSuccess(' sucess disable')
+     
       Load();
     }
     catch (err) {
-      showError(err.message)
-     
+      console.log(toast);
+      
+
+          showError(err.message)
+      
     }
   }
 
@@ -149,6 +168,7 @@ export default function AD_show() {
   const renderHeader = () => {
     return (
       <div className="d-flex justify-content-around AD-header mt-3">
+
         <div  className='d-none show-1000 mb-3 row  '>
           
             <section className=' fs-2 text-start d-inline-block  d-lg-none  d-md-inline-block col-2 show-menu' onClick={e=>setShowNav(true)}>
@@ -309,7 +329,7 @@ export default function AD_show() {
 
   return (
     <Container fluid className='wrapper'>
-        <Toast ref={toast} />
+           <Toast ref={toast} />
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav/></Col>
       <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
@@ -322,7 +342,7 @@ export default function AD_show() {
         <Col className='bg-content col-xl-10  col-md-12'>
 
           <section className='card'>
-
+     
             <DataTable value={person} data-key='id' loading={loading}
 
               selectionMode={'checkbox'}
@@ -337,6 +357,8 @@ export default function AD_show() {
               emptyMessage="No customers found."
               filters={filters}
             >
+          
+
               <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
 
           
@@ -360,7 +382,7 @@ export default function AD_show() {
 
         </Col>
 
-        <AD_modal  toast={toast}  title={"ADD NEW"} show={showModalButoon} Load={Load} />
+        <AD_modal  toast={toast}  title={"ADD NEW"} show={showModalButoon} Load={Reload} />
 
       </Row>
     </Container>

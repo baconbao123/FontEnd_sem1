@@ -110,6 +110,9 @@ export default function AD_home() {
   const handleOnclickBLog=()=> {
     navigate('/admin/blog')
   }
+  const reload=()=> {
+    window.location.reload()
+  }
   
   
 
@@ -165,8 +168,8 @@ export default function AD_home() {
                  </section>
 
 
-                  <AD_show_modal toast={toast} show={showPersonModal} title={'ADD NEW '}  Load={LoadPerson}/>
-                  <AD_life_modal toast={toast} show={showLifeModal}  title={"ADD NEW LIFE"} Load={LoadPerson} />
+                  <AD_show_modal toast={toast} show={showPersonModal} title={'ADD NEW '}  Load={reload}/>
+                  <AD_life_modal toast={toast} show={showLifeModal}  title={"ADD NEW LIFE"} Load={reload} />
                 </Col>
                 <Col lg={4} md={4} className="mb-4 mt-5" >
                   <section onClick={handleOnclickPrize} className='mb-4 d-flex justify-content-center'>
@@ -181,8 +184,8 @@ export default function AD_home() {
                   <PrimeButton ref={showsetPrizeModal} severity="info" label='SET PRIZE'> <BsFillTrophyFill className='ms-1'/> </PrimeButton>
                   </section>
 
-                <AD_setprize_modal toast={toast} show={showsetPrizeModal} title={"SET NEW PRIZE"} Load={LoadPrize}/>
-                  <AD_prizes_modal toast={toast} show={showPrizeModal} Load={LoadPrize} title={"ADD NEW PRIZE "}   />
+                <AD_setprize_modal toast={toast} show={showsetPrizeModal} title={"SET NEW PRIZE"} Load={reload}/>
+                  <AD_prizes_modal toast={toast} show={showPrizeModal} Load={reload} title={"ADD NEW PRIZE "}   />
                 </Col>
 
                 <Col lg={4} md={4} className="mb-4 mt-5 " >
@@ -194,7 +197,7 @@ export default function AD_home() {
 
                 <PrimeButton ref={showBlogModal} severity="info" label='ADD BLOG'  > <BsChatSquareTextFill className='ms-1 '/> </PrimeButton>
                 </section>
-                  <AD_blog_modal toast={toast} show={showBlogModal} title={"ADD NEW BLOG"} Load={LoadBlog}/>
+                  <AD_blog_modal toast={toast} show={showBlogModal} title={"ADD NEW BLOG"} Load={reload}/>
                 </Col>
 
               </Row>

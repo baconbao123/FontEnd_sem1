@@ -41,11 +41,11 @@ export default function AD_disable_setprize() {
   )
     // Toast
     const showSuccess = (e) => {
-      toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+      toast.current.show({severity:'success', summary: ' SUCCESS', detail:e?e:"To many request", life: 1000});
      
     }
     const showError = (e) => {
-      toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
+      toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});
     }
   useEffect(() => {
     
@@ -124,7 +124,10 @@ async function  activesetprize(item){
         showSuccess(' sucess active')
     }
     catch(err) {
-      showError(err.message)
+    
+
+        showError(err.message)
+    
     }
 }
 // Ham delete setprize
@@ -142,7 +145,9 @@ async function  deletesetprize(item){
     showSuccess(' sucess delete')
     }
     catch(err) {
-     showError(err.message)
+   
+        showError(err.message)
+   
     }
 }
 

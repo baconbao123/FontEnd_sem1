@@ -36,11 +36,11 @@ export default function AD_disable_prize() {
     )
       // Toast
   const showSuccess = (e) => {
-    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e, life: 1000});
+    toast.current.show({severity:'success', summary: ' SUCCESS', detail:e?e:"To many request", life: 1000});
    
   }
   const showError = (e) => {
-    toast.current.show({severity:'error', summary: 'ERROR', detail:e, life: 1000});
+    toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});
   }
     useEffect(()=>{
       (async()=>await Load())()
@@ -68,7 +68,10 @@ export default function AD_disable_prize() {
         Load()
     }
     catch(err) {
-      showError(err.message)
+  
+
+        showError(err.message)
+  
     }
     }
     // ham delete prize
@@ -87,7 +90,10 @@ export default function AD_disable_prize() {
         Load()
     }
     catch(err) {
-       showError(err.message)
+  
+
+        showError(err.message)
+   
     }
     }
     // hàm set Init FIlter
