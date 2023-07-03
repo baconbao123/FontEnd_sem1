@@ -12,13 +12,13 @@ import nobel from './pictures/nobel.jpg'
 
 const Biography = ({personData}) => {
     const [pdfUrl, setPdfUrl] = useState(null);
-    
-    
+
+     
     useEffect(() => {
         AOS.init();
     }, []);
     
-    
+
 
 // img
     let images = [];
