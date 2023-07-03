@@ -31,7 +31,7 @@ import Laureates from "./Component/FE_user/Layout/Page/Laureates/Laureates";
 
 import NobelPrizeItem from "./Component/FE_user/Layout/Page/NobelPrizeItem/NobelPrizeItem";
 import DetailNobelPrize from "./Component/FE_user/Layout/Page/DetailNobelPrize/DetailNobelPrize";
-
+import About from "./Component/FE_user/Layout/Page/About/About";
 
 
 function App() {
@@ -57,7 +57,7 @@ function App() {
       </Routes>
 
       {/* User */}
-      {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/') ? <Navbar /> : null}
+      {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/') || location.pathname==='/about'? <Navbar /> : null}
       
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -69,7 +69,8 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/nobel-prizes/:name/:year/:id" element={<DetailNobelPrize />} />
-        <Route path="nobel/:namePrize" element={<NobelPrizeItem/>}/>
+        <Route path="/nobel/:namePrize" element={<NobelPrizeItem/>}/>
+        <Route path="/about" element={<About/>}/>
       </Routes>
       <ScollToTop />
     </>

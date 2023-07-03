@@ -1,60 +1,83 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Montserrat:wght@700@300&family=Open+Sans:wght@600;700&family=Raleway:wght@300&family=Roboto:wght@300&display=swap");
 
-.card-nobel-prizes{
-    margin-top: 125px;
+.card-nobel-prizes {
+  margin-top: 125px;
 }
-.form-year-nobel-detail{
-    display: flex;
-    justify-content: end;
+.form-year-nobel-detail {
+  display: flex;
+  justify-content: end;
 }
-.form-select-nobel{
-    width: 10%;
-    
+.form-select-nobel {
+  width: 15%;
 }
 
 .card {
-    display: block;
-    margin-bottom: 20px;
-    background-color: transparent !important;
-    border: none !important;
+  display: block;
+  margin-bottom: 20px;
+  background-color: transparent !important;
+  border: none !important;
 }
 
 .card .card-body {
-    padding: 10px;
-    margin-top: 0px;
-    color: #ffffff;
-    text-align: center;
+  padding: 10px;
+  margin-top: 0px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #f0f2f5 !important;
+  border-radius: 0 0 5px 5px;
 }
-.card .card-body a{
-    text-decoration: none;
+.card .card-body a {
+  text-decoration: none;
 }
-.card-title-person{
-    font-family: "Open Sans", sans-serif !important;
-    color: #2650F2 !important;
-    font-size: 20px !important;
-    font-weight: 800;
+.card-title-person {
+  font-family: "Open Sans", sans-serif !important;
+  color: #2650f2 !important;
+  font-size: 20px !important;
+  font-weight: 800;
 }
-p.prizes.card-text>p{
-    font-size: 18px !important;
-    color: #3f3f3f;
-    font-family: "Roboto",sans-serif;
-    font-weight: 300 !important;
+p.prizes.card-text > p {
+  font-size: 18px !important;
+  color: #3f3f3f;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300 !important;
 }
 img.card-img {
-    padding: 15px 15px 0px 15px;
-    background-color: #fff;
-    border-radius: 0 !important;
-    object-fit: cover !important;
+  padding: 10px 10px 0px 10px;
+  background-color: #f0f2f5;
+  border-radius: 5px 5px 0 0 !important;
+  object-fit: cover !important;
 }
-button.btn.btn-primary{
-    background-color: transparent !important;
-    color: #000;
-    border-radius: 0 !important;
-    border: 1px solid #000 !important;
-    padding: 8px 25px;
+button.btn.btn-explore {
+  background-color: #3d5bd1 !important;
+    border: none !important;
+  padding: 8px 25px;
+  color: #fff !important;
+  border-radius: 5px !important;
 }
-button.btn.btn-primary:hover{
-    background-color: #F1A40E !important;
-    color: #ffffff;
-    border: 1px solid #F1A40E !important;
+button.btn.btn-explore:hover {
+  background-color: #2650f2 !important;
+  color: #ffffff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+}
+.related-awards {
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: relative;
+  color: #a5a9ad;
+}
+/* btn -admin- logout */
+button.btn.btn-primary {
+  background-color: transparent ;
+  color: #000;
+  border: 1px solid #000000;
+  padding: 8px 25px;
+  border-radius: 0 ;
+
+}
+button.btn.btn-primary:hover {
+  background-color: #F1A40E ;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border:1px solid #F1A40E;
 }

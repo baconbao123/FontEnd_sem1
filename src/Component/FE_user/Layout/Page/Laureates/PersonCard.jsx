@@ -20,7 +20,7 @@ const PersonCard = ({ person }) => {
               <Card.Text className="prizes">
                 <p>The Nobel Prize in {person.nobel_name} {person.nobel_year}</p>
               </Card.Text>
-              <Button variant="primary">Explore</Button>{" "}
+              <Button variant="primary" className="btn-explore">Explore</Button>{" "}
             </Link>
           </Card.Body>
         </Card>

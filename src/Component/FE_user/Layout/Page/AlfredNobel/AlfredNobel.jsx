@@ -19,7 +19,7 @@ function AlfredNobel() {
         </header>
         {/* title-bio */}
         <section className="text-light text-center mt-4">
-          <div className="col-md-10 col-lg-7 m-auto">
+          <div className="col-md-12 col-lg-7 m-auto">
             <h1 className="title-bio mb-4" data-aos-duration="800" data-aos='zoom-in'>
               ​THE MAN BEHIND THE PRIZE – ALFRED NOBEL
             </h1>
@@ -91,7 +91,7 @@ function AlfredNobel() {
           <section className="container">
             <div className="row text-dark">
               <div
-                className="col-lg-6 col-md-5 content-testament-nobel"
+                className="col-lg-6 col-md-12 content-testament-nobel"
                 data-aos="fade-right"
                 data-aos-offset="300"
                 data-aos-easing="ease-in-sine"
@@ -108,7 +108,7 @@ function AlfredNobel() {
                 <Link to="/alfred-nobel/nobel-will">READ MORE</Link>
               </div>
               <div
-                className="col-lg-6 col-md-5 content-testament-nobel text-center  "
+                className="col-lg-6 col-md-12 content-testament-nobel text-center  "
                 data-aos="fade-left"
                 data-aos-duration="800"
               >
