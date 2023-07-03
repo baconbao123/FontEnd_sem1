@@ -12,6 +12,8 @@ import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
 import { Toast } from 'primereact/toast';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import { BlockUI } from 'primereact/blockui';
 import { useNavigate } from 'react-router-dom'
 export default function AD_disable_life() {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ export default function AD_disable_life() {
   const [person,setPerson]=useState([])
   const showModalEdit = useRef()
   const toast =useRef()
+  const [blocked,setBlocked]=useState(false)
   const [filters, setFilters] = useState(
     {
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -56,17 +59,13 @@ export default function AD_disable_life() {
   }, [])
 // ham get data
     async function Load() {
-      const instance = axios.create({
-        timeout:5000 
-      });
-      const result= await instance.get('http://127.0.0.1:8000/api/lifedisable')
+    
+      const result= await axios.get('http://127.0.0.1:8000/api/lifedisable')
       setData(result.data)
     }
     async function LoadPerson() {
-      const instance = axios.create({
-        timeout:5000 
-      });
-      const result= await instance.get('http://127.0.0.1:8000/api/allperson');
+      
+      const result= await axios.get('http://127.0.0.1:8000/api/allperson');
       setPerson(result.data)
   }
   
@@ -80,10 +79,19 @@ export default function AD_disable_life() {
   }
 // Ham active
     const handleActive=()=> {
-      selection.map(item=> {
-        activelife(item);
-        setSelection(selection.filter(item=>item !== item));
-      })
+      setBlocked(true)
+      Promise.all(
+        selection.map((item) => {
+          setSelection(selection.filter(item=>item !== item))
+          return activelife(item);
+        })
+      ).then(() => {
+      
+        Load();
+        setBlocked(false);
+      }).catch((err) => {
+        showError(err.message);
+      });
     }
     async function activelife (item) {
       try {
@@ -99,28 +107,49 @@ export default function AD_disable_life() {
         showError(err.message)
      
     }}
-
-    // Ham active
-    const handleDelete=()=> {
-      selection.map(item=> {
-        deletelife(item);
-        setSelection(selection.filter(item=>item !== item));
-      })
-    }
-    async function deletelife (item) {
-      try {
-        await axios.put('http://127.0.0.1:8000/api/deletelife/'+item.id,{
-            status: 'active'
+// ham handle delete
+    const handleDelete = () => {
+      setBlocked(true)
+      Promise.all(
+        selection.map((item) => {
+          setSelection(selection.filter(item=>item !== item))
+          return confirmDelete(item);
         })
-        showSuccess(' delete success')
-        Load()
-    }
-    catch(err) {
+      ).then(() => {
     
-
-        showError(err.message)
-     
-    }}
+        setBlocked(false);
+      }).catch((err) => {
+        showError(err.message);
+      });
+    }
+    
+    const confirmDelete = (item) => {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await deletelife(item);
+            showSuccess('Delete success');
+            Load();
+          } catch (err) {
+            showError(err.message);
+          }
+        }
+      });
+    };
+    
+    async function deletelife(item) {
+      return axios.put('http://127.0.0.1:8000/api/deletelife/' + item.id, {
+        status: 'active'
+      });
+    }
     
     // handle person
     const handlePerson=(e)=> {
@@ -189,6 +218,7 @@ export default function AD_disable_life() {
 
   return (
     <Container fluid className='wrapper' >
+        <BlockUI blocked={blocked}>
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Disable life'}/></Col>
       <Col md={8} xs={4} className='hidden-color ps-1 padding-none' onClick={()=>setShowNav(false)}> </Col>
@@ -230,7 +260,7 @@ export default function AD_disable_life() {
 
         </Col>
       </Row>
-      
+      </BlockUI>
     </Container>
   )
 }

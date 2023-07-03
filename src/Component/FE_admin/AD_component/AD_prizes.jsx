@@ -9,6 +9,7 @@ import {RiFilterOffFill  } from "react-icons/ri";
 import axios from 'axios'
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom'
+import { BlockUI } from 'primereact/blockui';
 import Cookies from 'js-cookie';
 export default function AD_prizes() {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ export default function AD_prizes() {
     const  showModalButoon=useRef()
     const showModalEdit=useRef()
     const toast = useRef(null);
+    const [blocked,setBlocked]=useState(false)
     const [filters,setFilters]=useState(
         {
             global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -48,18 +50,25 @@ export default function AD_prizes() {
   }
   // get data
    async function Load() {
-    const instance = axios.create({
-      timeout:5000 
-    });
-     const result= await instance.get('http://127.0.0.1:8000/api/prize');
+    
+     const result= await axios.get('http://127.0.0.1:8000/api/prize');
      setPrizes(result.data)
    }
   //  ham disable
   const handleDisable=()=>{
-    selection.map(item=> {
-      disableprize(item)
-      setSelection(selection.filter(item=>item !== item))
-    })
+    setBlocked(true);
+    Promise.all(
+      selection.map((item) => {
+        setSelection(selection.filter(item=>item !== item))
+        return disableprize(item);
+      })
+    ).then(() => {
+    
+      Load();
+      setBlocked(false);
+    }).catch((err) => {
+      showError(err.message);
+    });
   }
   async function disableprize(item) {
     try {
@@ -185,7 +194,8 @@ export default function AD_prizes() {
       }
 
   return (
-    <Container fluid className='wrapper'>
+    <Container fluid className='wrapper'> 
+     <BlockUI blocked={blocked}> 
              <Toast ref={toast} />
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav  page={'Prize'} /></Col>
@@ -220,6 +230,7 @@ export default function AD_prizes() {
             </Col>
         </Row>
         <AD_prizes_modal setSelection={handleSelection} toast={toast} Load={Load} title={"ADD NEW"} show={showModalButoon}/>
+        </BlockUI>
     </Container>
   )
 }

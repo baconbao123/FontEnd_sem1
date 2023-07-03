@@ -11,6 +11,7 @@ import AD_hidden_nav from '../Layout/AD_hidden_nav';
 import AD_setprize_modal from "../AD_component/AD_setprize_modal"
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import { BlockUI } from 'primereact/blockui';
 import { Toast } from 'primereact/toast';
 export default function AD_setprize() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export default function AD_setprize() {
   const [person,setPerson]=useState([]);
   const showModalButoon = useRef()
   const showModalEdit = useRef()
+  const [blocked,setBlocked]=useState(false)
   const toast=useRef()
   const [filters, setFilters] = useState(
     {
@@ -50,24 +52,18 @@ export default function AD_setprize() {
   }, [])
   // get data
   async function Load() {
-    const instance = axios.create({
-      timeout:5000 
-    });
-    const result= await instance.get('http://127.0.0.1:8000/api/pn');
+   
+    const result= await axios.get('http://127.0.0.1:8000/api/pn');
     setPrizes(result.data) 
   }
   async function LoadPrize() {
-    const instance = axios.create({
-      timeout:5000 
-    });
-    const result = await instance.get('http://127.0.0.1:8000/api/nobelprize');
+    
+    const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
     setAllPrize(result.data)
 }
 async function LoadPerson() {
-  const instance = axios.create({
-    timeout:5000 
-  });
-    const result = await instance.get('http://127.0.0.1:8000/api/personprize');
+  
+    const result = await axios.get('http://127.0.0.1:8000/api/personprize');
     let data=result.data.filter(item=>{
         if(item.life_story)return item
     })
@@ -89,10 +85,20 @@ const reload=()=> {
     }
       // ham disable 
       const handleDisable=() => {
-        selection.map(item=>{
-          disablesetprize(item);
-          setSelection(selection.filter(item=>item !== item))
-        })
+        setBlocked(true)
+        Promise.all(
+          selection.map((item) => {
+            setSelection(selection.filter(item=>item !== item))
+            return disablesetprize  (item);
+          })
+        ).then(() => {
+    
+          Load();
+          setBlocked(false);
+        }).catch((err) => {
+          showError(err.message);
+        });
+      
       }
       async function  disablesetprize(item){
           try {
@@ -243,6 +249,7 @@ const reload=()=> {
   
   return (
     <Container fluid className='wrapper'>
+        <BlockUI blocked={blocked}>
       <Toast       ref={toast}  />
        <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Set-Prize'}/></Col>
@@ -281,6 +288,7 @@ const reload=()=> {
         </Col>
       </Row>
       <AD_setprize_modal toast={toast} Load={Load} title={"ADD NEW NOBEL PERSON"} show={showModalButoon} />
+      </BlockUI>
     </Container>
   )
 }

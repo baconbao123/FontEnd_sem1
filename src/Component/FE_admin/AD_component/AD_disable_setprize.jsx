@@ -11,6 +11,8 @@ import AD_hidden_nav from '../Layout/AD_hidden_nav';
 import { useNavigate } from 'react-router-dom'
 import { Toast } from 'primereact/toast';
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
+import { BlockUI } from 'primereact/blockui';
 export default function AD_disable_setprize() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -25,6 +27,7 @@ export default function AD_disable_setprize() {
   const [showNav,setShowNav]=useState(false)
   const [person,setPerson]=useState([]);
   const [allPrize,setAllPrize]=useState([])
+  const [blocked,setBlocked]=useState(false)
   const showModalButoon = useRef()
   const toast= useRef()
  
@@ -58,25 +61,19 @@ export default function AD_disable_setprize() {
   }, [])
  // get data
  async function Load() {
-  const instance = axios.create({
-    timeout:5000 
-  });
-  const result= await instance.get('http://127.0.0.1:8000/api/pndisable');
+ 
+  const result= await axios.get('http://127.0.0.1:8000/api/pndisable');
   setPrizes(result.data) 
 }
 
 async function LoadPrize() {
-  const instance = axios.create({
-    timeout: 5000 
-  });
-  const result = await instance.get('http://127.0.0.1:8000/api/nobelprize');
+ 
+  const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
   setAllPrize(result.data)
 }
 async function LoadPerson() {
-  const instance = axios.create({
-    timeout: 5000 
-  });
-  const result = await instance.get('http://127.0.0.1:8000/api/personprize');
+  
+  const result = await axios.get('http://127.0.0.1:8000/api/personprize');
   let data=result.data.filter(item=>{
       if(item.life_story)return item
   })
@@ -119,10 +116,20 @@ const handleNobelYear=(e)=> {
 }
  // ham active 
  const handleActive=() => {
-  selection.map(item=>{
-    activesetprize(item);
-    setSelection(selection.filter(item=>item !== item))
-  })
+  setBlocked(true)
+  Promise.all(
+    selection.map((item) => {
+      setSelection(selection.filter(item=>item !== item))
+      return activesetprize(item);
+    })
+  ).then(() => {
+   
+    Load();
+    setBlocked(false);
+  }).catch((err) => {
+    showError(err.message);
+  });
+
 }
 async function  activesetprize(item){
     try {
@@ -141,23 +148,47 @@ async function  activesetprize(item){
 }
 // Ham delete setprize
 
-const handleDelete=() => {
-  selection.map(item=>{
-    deletesetprize(item);
-    setSelection(selection.filter(item=>item !== item))
-  })
-}
-async function  deletesetprize(item){
-    try {
-        await axios.delete('http://127.0.0.1:8000/api/deletepn/'+item.person_id +'/'+item.nobel_id)
+const handleDelete = () => {
+  setBlocked(true)
+  Promise.all(
+    selection.map((item) => {
+      setSelection(selection.filter(item=>item !== item))
+      return confirmDelete(item);
+    })
+  ).then(() => {
+    showSuccess(' success disable');
+    Load();
+    setBlocked(false);
+  }).catch((err) => {
+    showError(err.message);
+  });
+
+};
+
+const confirmDelete = (item) => {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await deletesetprize(item);
+        showSuccess('Delete success');
         Load();
-    showSuccess(' sucess delete')
+      } catch (err) {
+        showError(err.message);
+      }
     }
-    catch(err) {
-   
-        showError(err.message)
-   
-    }
+  });
+};
+
+async function deletesetprize(item) {
+  return axios.delete('http://127.0.0.1:8000/api/deletepn/' + item.person_id + '/' + item.nobel_id);
 }
 
   // hàm set Init FIlter
@@ -255,6 +286,7 @@ async function  deletesetprize(item){
 
   return (
     <Container fluid className='wrapper'>
+        <BlockUI blocked={blocked}>
       <Toast  ref={toast}/>
        <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Disable setprizes'}/></Col>
@@ -292,7 +324,7 @@ async function  deletesetprize(item){
           </DataTable>
         </Col>
       </Row>
-   
+      </BlockUI>
     </Container>
   )
 }

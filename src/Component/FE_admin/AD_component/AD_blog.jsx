@@ -16,6 +16,7 @@ import AD_blog_modal  from './AD_blog_modal';
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { Toast } from 'primereact/toast';
+import { BlockUI } from 'primereact/blockui';
 export default function AD_blog() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -41,11 +42,11 @@ export default function AD_blog() {
   
   const [global, SetGlobal] = useState('');
   const [statusName]=useState(['success','disbale']);
-
+  const [blocked,setBlocked]=useState(false)
   const [selection,setSelection]=useState([]);
   const toast=useRef()
   const [storeImg,setStoreImg]=useState([])
-
+ 
   const showModalButoon=useRef(null)
   const showModalEdit=useRef('')
     // Toast
@@ -66,25 +67,28 @@ export default function AD_blog() {
   }, [])
 
   async function  Load() {
-    const instance = axios.create({
-      timeout:5000 
-    });
-    const result=await instance.get('http://127.0.0.1:8000/api/blog');
+   
+    const result=await axios.get('http://127.0.0.1:8000/api/blog');
         setBlog(result.data);
   }
    // Ham disable
    const handleDisable=()=> {
+
     if (selection.length>=1) {
-     
-        selection.map((item=> {
+      setBlocked(true)
+      Promise.all(
+        selection.map((item) => {
+          setSelection(selection.filter(item=>item !== item))
+          return disableperson(item);
+        })
+      ).then(() => {
        
-
-            disableperson(item)
-            setSelection(selection.filter(item=>item !== item))
-        }))
-
-    }
-}
+        Load();
+        setBlocked(false);
+      }).catch((err) => {
+        showError(err.message);
+      });
+    }}
 async function disableperson(item) {
 
     
@@ -277,6 +281,7 @@ async function disableperson(item) {
 
   return (
     <Container fluid className='wrapper'>
+        <BlockUI blocked={blocked}>
       <Toast ref={toast} />
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'BLog  '}/></Col>
@@ -329,6 +334,7 @@ async function disableperson(item) {
         <AD_blog_modal   toast={toast} title={"ADD NEW BLOG"} show={showModalButoon} Load={Load} />
         
       </Row>
+      </BlockUI>
     </Container>
   )
 }

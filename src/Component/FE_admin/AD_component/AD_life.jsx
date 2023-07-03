@@ -10,6 +10,7 @@ import {RiFilterOffFill  } from "react-icons/ri";
 import axios from 'axios';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom'
+import { BlockUI } from 'primereact/blockui';
 import Cookies from 'js-cookie';
 export default function AD_life() {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function AD_life() {
     const [global, setGlobal] = useState('')
     const [selection, setSelection] = useState([]);
     const showModal = useRef()
+    const [blocked,setBlocked]=useState(false)
     const showModalEdit = useRef()
     const [showNav,setShowNav]=useState(false)
     const [person,setPerson]=useState([])
@@ -52,27 +54,32 @@ export default function AD_life() {
     }, [])
 // Ham get data
     async function Load() {
-        const instance = axios.create({
-            timeout:5000 
-          });
-        const result= await instance.get('http://127.0.0.1:8000/api/life');
+        
+        const result= await axios.get('http://127.0.0.1:8000/api/life');
         setData(result.data)
     }
     async function LoadPerson() {
-        const instance = axios.create({
-            timeout:5000 
-          });
-        const result= await instance.get('http://127.0.0.1:8000/api/allperson');
+       
+        const result= await axios.get('http://127.0.0.1:8000/api/allperson');
         setPerson(result.data)
     }
     
    // Ham disable
    const handleDisable=()=> {
-        selection.map(item=> {
-            disableLife(item);
+    setBlocked(true)
+    Promise.all(
+        selection.map((item) => {
             setSelection(selection.filter(item=>item !== item))
+          return disableLife(item);
         })
-   }
+      ).then(() => {
+       
+        Load();
+        setBlocked(false);
+      }).catch((err) => {
+        showError(err.message);
+      });
+    }
    async function disableLife(item) {
     try {
         await axios.put('http://127.0.0.1:8000/api/updatelife/'+item.id,{
@@ -211,6 +218,7 @@ const handelSelection= ()=> {
 
     return (
         <Container fluid className='wrapper' >
+              <BlockUI blocked={blocked}>
             <Toast ref={toast} />
                <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Life'}/></Col>
@@ -259,6 +267,7 @@ const handelSelection= ()=> {
                 </Col>
             </Row>
             <AD_life_modal toast={toast} title="ADD NEW LIFE" Load={Load} show={showModal} />
+            </BlockUI>
         </Container>
     )
 }

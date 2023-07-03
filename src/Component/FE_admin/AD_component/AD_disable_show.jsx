@@ -14,7 +14,9 @@ import AD_nav from '../Layout/AD_nav';
 import AD_hidden_nav from '../Layout/AD_hidden_nav';
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
 import { Toast } from 'primereact/toast';
+import { BlockUI } from 'primereact/blockui';
 export default function AD_disbale_show() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -26,6 +28,7 @@ export default function AD_disbale_show() {
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true)
   const [showNav,setShowNav]=useState(false);
+  const [blocked,setBlocked]=useState(false)
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       id: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
@@ -43,7 +46,7 @@ export default function AD_disbale_show() {
   const [selection,setSelection]=useState([]);
   const [show,setShow]=useState(10);
   const [showRow]=useState([5,10,15,20,30]);
-  const toast = useRef(null);
+  const toast = useRef('div');
 
   const showModalButoon=useRef(null)
   const showModalEdit=useRef('')
@@ -63,31 +66,29 @@ export default function AD_disbale_show() {
   }, [])
 
   async function  Load() {
-    const instance = axios.create({
-      timeout: 5000 
-    });
-    const result=await instance.get('http://127.0.0.1:8000/api/persondisable');
+   
+    const result=await axios.get('http://127.0.0.1:8000/api/persondisable');
     setPerson(result.data);
   }
 
 
    // Ham active
    const handleActive=()=> {
-    let time=1000
-    if (selection.length>=1) {
-      // if(selection.length>10) {
-        
-      //   time=10000
-      // }
-      
-      
-        selection.map((item=> {
-        
-          setTimeout(()=>{  activeperson(item)},time);
-           
-             setSelection(selection.filter(item=>item !== item))
-        }))
 
+    if (selection.length>=1) {
+      setBlocked(true);
+      Promise.all(
+        selection.map((item) => {
+          setSelection(selection.filter(item=>item !== item))
+          return activeperson(item);
+        })
+      ).then(() => {
+       
+        Load();
+        setBlocked(false);
+      }).catch((err) => {
+        showError(err.message);
+      });
     }
 }
 async function activeperson(item) {
@@ -111,27 +112,45 @@ async function activeperson(item) {
     }
 }
 // ham delete
-  const handelDelete =( )=> {
-    
-    selection.map(item=>{
-      deleteperson(item);
-      setSelection(selection.filter(item=>item !== item))
-    })
-  }
 
-  async function deleteperson(item) {
-    try {
-      await axios.delete('http://127.0.0.1:8000/api/deleteperson/' +item.id)
-      showSuccess(' delete success')
-      Load()
-    }
-    catch (err) {
+  const handelDelete = () => {
+    setBlocked(true)
+    Promise.all(
+      selection.map((item) => {
+        setSelection(selection.filter(item=>item !== item))
+        return confirmDelete(item);
+      })
+    ).then(() => {
     
-
-        showError(err.message)
-   
-    }
-  }
+      Load();
+      setBlocked(false);
+    }).catch((err) => {
+      showError(err.message);
+    });
+  
+  };
+  
+  const confirmDelete = (item) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete('http://127.0.0.1:8000/api/deleteperson/' + item.id);
+          showSuccess('Delete success');
+          Load();
+        } catch (err) {
+          showError(err.message);
+        }
+      }
+    });
+  };
 // Hàm search Golbal
   const hanldeGlobalSearch = (e) => {
     const value = e.target.value;
@@ -306,6 +325,7 @@ async function activeperson(item) {
  
   return (
     <Container fluid className='wrapper'>
+        <BlockUI blocked={blocked}>
         <Toast ref={toast} /> 
       <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Disable show'} /></Col>
@@ -354,6 +374,7 @@ async function activeperson(item) {
        
         
       </Row>
+      </BlockUI>
     </Container>
   )
 }
