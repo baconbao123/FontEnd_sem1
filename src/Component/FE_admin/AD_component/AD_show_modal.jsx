@@ -494,7 +494,13 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                   
                 }
                 catch (err) {
-                   showError(err.message)
+                    if(err.response.status===400) {
+                        showError("Birthdate or Deathdate is invalid")
+                      }
+                      else {
+                            console.log(err);
+                          showError(err.response)
+                      }
                 }
             }
             else if(check>0&&condition>0) {
@@ -556,8 +562,13 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                   
                 }
                 catch (err) {
-                    console.log(err);
-                    showError(err.message)
+                    if(err.response.status===400) {
+                        showError("Birthdate or Deathdate is invalid")
+                      }
+                      else {
+                            console.log(err);
+                          showError(err.response)
+                      }
                 }
             }
             else if(count>0&&condition>0) {
@@ -620,8 +631,13 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                   
                 }
                 catch (err) {
-                    console.log(err);
-                    showError(err.message)
+                    if(err.response.status===400) {
+                        showError("Birthdate or Deathdate is invalid")
+                      }
+                      else {
+                            console.log(err);
+                          showError(err.response)
+                      }
                 }
             }
             //Img change
@@ -684,8 +700,13 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                  
                 }
                 catch (err) {
-                    console.log(err);
-                    showError(err.message)
+                    if(err.response.status===400) {
+                        showError("Birthdate or Deathdate is invalid")
+                      }
+                      else {
+                            console.log(err);
+                          showError(err.response)
+                      }
                 }
             }
             else if(count>0) {
@@ -747,8 +768,13 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                    
                 }
                 catch (err) {
-                    console.log(err);
-                    showError(err.message)
+                    if(err.response.status===400) {
+                        showError("Birthdate or Deathdate is invalid")
+                      }
+                      else {
+                            console.log(err);
+                          showError(err.response)
+                      }
                 }
             }
             else if(condition>0) {
@@ -810,8 +836,13 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                    
                 }
                 catch (err) {
-                    console.log(err);
-                    showError(err.message)
+                    if(err.response.status===400) {
+                        showError("Birthdate or Deathdate is invalid")
+                      }
+                      else {
+                            console.log(err);
+                          showError(err.response)
+                      }
                 }
             }
           
@@ -847,8 +878,13 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                    
                 }
                 catch (err) {
-                    console.log(err);
-                    showError(err.message)
+                    if(err.response.status===400) {
+                        showError("Birthdate or Deathdate is invalid")
+                      }
+                      else {
+                            console.log(err);
+                          showError(err.response)
+                      }
                 }
             }
         }
