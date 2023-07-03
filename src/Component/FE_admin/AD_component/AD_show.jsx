@@ -16,6 +16,7 @@ import AD_modal from './AD_show_modal';
 import AD_hidden_nav from '../Layout/AD_hidden_nav'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import { BlockUI } from 'primereact/blockui';
 export default function AD_show() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -26,6 +27,7 @@ export default function AD_show() {
   // Khởi tạo các biến
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true)
+  const [blocked,setBlocked]=useState(false)
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     id: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
@@ -42,7 +44,7 @@ export default function AD_show() {
   const [statusName] = useState(['success', 'sucess', 'danger']);
   const [genderName] = useState(['male', 'female']);
   const [selection, setSelection] = useState([]);
-  const toast = useRef(null);
+  const toast = useRef('div');
  const [showNav,setShowNav]=useState(false)
   const [storeImg, setStoreImg] = useState([])
 
@@ -73,12 +75,10 @@ export default function AD_show() {
     window.location.reload();
   }
   async function Load() {
-    const instance = axios.create({
-      timeout:5000 // thời gian chờ giữa các yêu cầu là 1 giây
-    });
+   
     
     try {
-      const result = await instance.get('http://127.0.0.1:8000/api/person');
+      const result = await axios.get('http://127.0.0.1:8000/api/person');
       setPerson(result.data);
     } catch (error) {
       console.error(error);
@@ -86,44 +86,33 @@ export default function AD_show() {
   }
   // Ham disable
   const handleDisable = () => {
-    let time=1000
+  
     if (selection.length >= 1) {
-      // if(selection.length>10) {
+      setBlocked(true)
+      Promise.all(
+        selection.map((item) => {
+          setSelection(selection.filter(item=>item !== item))
+          return disableperson(item);
+        })
+      ).then(() => {
         
-      //   time=time+selection.length*1000
-      // }
-      // else if(selection.length>20) {
-      //   time=1000+selection.length*1000
-      // }
-     
- 
-    console.log(time);
-      selection.map((item => {
-
-        setTimeout(()=>{ disableperson(item)},time)
-       
-        setSelection(selection.filter(item => item !== item))
-      }))
-
+        Load();
+        setBlocked(false);
+      }).catch((err) => {
+        showError(err.message);
+      });
     }
- 
-  }
-  console.log(toast); 
-
+  };
+  
   async function disableperson(item) {
 
-
+   
     try {
-     
       await axios.put('http://127.0.0.1:8000/api/updateperson/' + item.id, {
-
-        status: 'disable',
-
-      })
-     
-      
     
-
+        status: 'disable',
+    
+      })
           showSuccess(' sucess disable')
      
       Load();
@@ -131,12 +120,12 @@ export default function AD_show() {
     catch (err) {
       console.log(toast);
       
-
+    
           showError(err.message)
       
     }
-  }
-
+   
+    }
 
   // Hàm search Golbal
   const hanldeGlobalSearch = (e) => {
@@ -335,6 +324,7 @@ export default function AD_show() {
 
   return (
     <Container fluid className='wrapper'>
+      <BlockUI blocked={blocked}>
            <Toast ref={toast} />
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav  page={'Show'}/></Col>
@@ -391,6 +381,7 @@ export default function AD_show() {
         <AD_modal  toast={toast}  title={"ADD NEW"} show={showModalButoon} Load={Reload} />
 
       </Row>
+      </BlockUI>
     </Container>
   )
 }

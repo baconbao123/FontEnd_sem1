@@ -10,6 +10,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Toast } from 'primereact/toast';
 import Cookies from 'js-cookie';
+import { BlockUI } from 'primereact/blockui';
+import Swal from 'sweetalert2';
 export default function AD_disable_prize() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -24,6 +26,7 @@ export default function AD_disable_prize() {
     const [showNav,setShowNav]=useState(false);
     const toast=useRef(null)
     const  showModalButoon=useRef()
+    const [blocked,setBlocked]=useState(false)
     const showModalEdit=useRef()
     const [filters,setFilters]=useState(
         {
@@ -48,18 +51,25 @@ export default function AD_disable_prize() {
     },[])
     // ham get data
     async function Load() {
-      const instance = axios.create({
-        timeout:1000 
-      });
-      const result= await instance.get('http://127.0.0.1:8000/api/prizedisable');
+    
+      const result= await axios.get('http://127.0.0.1:8000/api/prizedisable');
       setPrizes(result.data)
     }
     // ham active
     const handleActive=()=>{
-      selection.map(item=> {
-        activeprize(item)
-        setSelection(selection.filter(item=>item !== item))
-      })
+      setBlocked(true)
+      Promise.all(
+        selection.map((item) => {
+          setSelection(selection.filter(item=>item !== item))
+          return activeprize(item);
+        })
+      ).then(() => {
+     
+        Load();
+        setBlocked(false);
+      }).catch((err) => {
+        showError(err.message);
+      });
     }
     async function activeprize(item) {
       try {
@@ -78,26 +88,37 @@ export default function AD_disable_prize() {
     }
     }
     // ham delete prize
-    const handleDelete=()=>{
-      selection.map(item=> {
-       deleteprize(item)
-        setSelection(selection.filter(item=>item !== item))
-      })
-    }
-    async function deleteprize(item) {
-      try {
-        await  axios.delete('http://127.0.0.1:8000/api/deleteprize/'+item.id)
-          
+    const handleDelete = () => {
+      selection.map((item) => {
+        confirmDelete(item);
+        setSelection(selection.filter((selected) => selected !== item));
+      });
+    };
     
-    showSuccess(' success deleted !')
-        Load()
-    }
-    catch(err) {
-  
-
-        showError(err.message)
-   
-    }
+    const confirmDelete = (item) => {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            await deleteprize(item);
+            showSuccess('Delete success');
+            Load();
+          } catch (err) {
+            showError(err.message);
+          }
+        }
+      });
+    };
+    
+    async function deleteprize(item) {
+      return axios.delete('http://127.0.0.1:8000/api/deleteprize/' + item.id);
     }
     // hàm set Init FIlter
   const initFilters=()=> {
@@ -192,6 +213,7 @@ export default function AD_disable_prize() {
 
   return (
     <Container fluid className='wrapper'>
+        <BlockUI blocked={blocked}>
          <Toast ref={toast} />
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Disable prizes'}/></Col>
@@ -226,7 +248,7 @@ export default function AD_disable_prize() {
                 </DataTable>
             </Col>
         </Row>
-   
+        </BlockUI>
     </Container>
   )
 }

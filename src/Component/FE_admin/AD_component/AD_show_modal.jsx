@@ -21,7 +21,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
     const [showModal, setShowModal] = useState(false);
     const [country, setCountry] = useState([]);
     const [filterCountry, setFilterCountry] = useState(null);
-    const [countryName, setCountryName] = useState({name:''});
+    const [countryName, setCountryName] = useState({name:'',code:''});
     const gender = [{ gender: 'male' }, { gender: 'female' }]
     const status = [{ status: "active" }, { status: "disable" }]
     const [genderName, setGenderName] = useState({gender:''})
@@ -374,7 +374,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                 showError("Birthdate or Deathdate is invalid")
               }
               else {
-
+                    console.log(err);
                   showError(err.response)
               }
           
@@ -556,7 +556,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                   
                 }
                 catch (err) {
-                  
+                    console.log(err);
                     showError(err.message)
                 }
             }
@@ -620,7 +620,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                   
                 }
                 catch (err) {
-                 
+                    console.log(err);
                     showError(err.message)
                 }
             }
@@ -684,6 +684,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                  
                 }
                 catch (err) {
+                    console.log(err);
                     showError(err.message)
                 }
             }
@@ -746,6 +747,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                    
                 }
                 catch (err) {
+                    console.log(err);
                     showError(err.message)
                 }
             }
@@ -808,6 +810,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                    
                 }
                 catch (err) {
+                    console.log(err);
                     showError(err.message)
                 }
             }
@@ -844,6 +847,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                    
                 }
                 catch (err) {
+                    console.log(err);
                     showError(err.message)
                 }
             }
@@ -893,7 +897,9 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
     useEffect(() => {
         if (value) {
             setName(value.name);
-            setCountryName(value.national);
+            if(value.national) {
+                setCountryName(value.national);
+            }
             setBirthdate(value.birthdate)
             if (value.deathdate !== 'null') {
                 setDeathdate(value.deathdate)

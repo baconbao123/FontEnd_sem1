@@ -15,6 +15,8 @@ import AD_hidden_nav from '../Layout/AD_hidden_nav';
 import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import { BlockUI } from 'primereact/blockui';
+import Swal from 'sweetalert2';
 export default function AD_disable_blog() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -45,6 +47,7 @@ export default function AD_disable_blog() {
   const [show,setShow]=useState(10);
   const [showRow]=useState([5,10,15,20,30]);
   const [storeImg,setStoreImg]=useState([])
+  const [blocked,setBlocked]=useState()
   const toast=useRef()
   const showModalButoon=useRef(null)
   const showModalEdit=useRef('')
@@ -69,25 +72,27 @@ export default function AD_disable_blog() {
   }, [])
 
   async function  Load() {
-    const instance = axios.create({
-      timeout: 5000 
-    });
-    const result=await instance.get('http://127.0.0.1:8000/api/disableblog');
+   
+    const result=await axios.get('http://127.0.0.1:8000/api/disableblog');
         setBlog(result.data);
   }
    // Ham active
    const handleActive=()=> {
-    if (selection.length>=1) {
+    setBlocked(true)
+    Promise.all(
+      selection.map((item) => {
+        setSelection(selection.filter(item=>item !== item))
+        return activeperson(item);
+      })
+    ).then(() => {
+     
+      Load();
+      setBlocked(false);
+    }).catch((err) => {
+      showError(err.message);
+    });
+  }
 
-        selection.map((item=> {
-       
-
-            activeperson(item)
-            setSelection(selection.filter(item=>item !== item))
-        }))
-
-    }
-}
 async function activeperson(item) {
 
     
@@ -107,32 +112,48 @@ async function activeperson(item) {
 }
 
    // Ham delete
-   const handleDelete=()=> {
-    if (selection.length>=1) {
-
-        selection.map((item=> {
-       
-
-            deleteperson(item)
-            setSelection(selection.filter(item=>item !== item))
-        }))
-
-    }
-}
-async function deleteperson(item) {
-
+   const handleDelete = () => {
+    setBlocked(true)
+    Promise.all(
+      selection.map((item) => {
+        setSelection(selection.filter(item=>item !== item))
+        return confirmDelete(item);
+      })
+    ).then(() => {
     
-    try {
-        
-      await axios.delete('http://127.0.0.1:8000/api/deleteblog/' +item.id,) 
-       showSuccess( ' delete  success')
       Load();
-    }
-    catch (err) {
-    showError(err.message)
-    
-    }
-}
+      setBlocked(false);
+    }).catch((err) => {
+      showError(err.message);
+    });
+  
+  };
+  
+  const confirmDelete = (item) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteperson(item);
+          showSuccess('Delete success');
+          Load();
+        } catch (err) {
+          showError(err.message);
+        }
+      }
+    });
+  };
+  
+  async function deleteperson(item) {
+    return axios.delete('http://127.0.0.1:8000/api/deleteblog/' + item.id);
+  }
 
 // Hàm search Golbal
   const hanldeGlobalSearch = (e) => {
@@ -275,6 +296,7 @@ async function deleteperson(item) {
 
   return (
     <Container fluid className='wrapper'>
+        <BlockUI blocked={blocked}>
       <Toast ref={toast}/>
        <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
        <Col   md={4} xs={8} className=' padding-none   h-100 sticky-top  d-inline-block'> <AD_hidden_nav page={'Disable blog'}/></Col>
@@ -326,6 +348,7 @@ async function deleteperson(item) {
   
         
       </Row>
+      </BlockUI>
     </Container>
   )
 }
