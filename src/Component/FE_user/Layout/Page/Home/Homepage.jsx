@@ -12,7 +12,6 @@ import "aos/dist/aos.css";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
 const Homepage = React.memo(() => {
-
   // effect srcoll
   useEffect(() => {
     AOS.init();
@@ -24,37 +23,37 @@ const Homepage = React.memo(() => {
       title: "Literature",
       subtitle:
         "The Nobel Prize in Literature is awarded by the Swedish Academy, Stockholm, Sweden.",
-      img: "1.png",
+      img: "1.jpg",
     },
     {
       title: "Chemistry",
       subtitle:
         "The Nobel Prize in Chemistry is awarded by the Royal Swedish Academy of Sciences, Stockholm, Sweden.",
-      img: "2.png",
+      img: "2.jpg",
     },
     {
       title: "Medicine",
       subtitle:
         "The Nobel Prize in Physiology or Medicine is awarded by the Nobel Assembly at Karolinska Institutet, Stockholm, Sweden",
-      img: "3.png",
+      img: "3.jpg",
     },
     {
       title: "Peace",
       subtitle:
         "The Norwegian Nobel Committee, consisting of five members appointed by the Norwegian parliament, awards the Nobel Peace Prize.",
-      img: "4.png",
+      img: "4.jpg",
     },
     {
       title: "Physic",
       subtitle:
         "The Nobel Prize in Physics is awarded by the Royal Swedish Academy of Sciences, Stockholm, Sweden.",
-      img: "5.png",
+      img: "5.jpg",
     },
     {
       title: "Economic Sciences",
       subtitle:
         "The prize in economic sciences is awarded by the Royal Swedish Academy of Sciences, Stockholm, Sweden.",
-      img: "6.png",
+      img: "6.jpg",
     },
   ]);
 
@@ -88,7 +87,6 @@ const Homepage = React.memo(() => {
   const handleButtonClick = useCallback(() => {
     // Xử lý sự kiện khi nút được nhấn
   }, []);
-
 
   return (
     <div className="container">

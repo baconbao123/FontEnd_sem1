@@ -15,7 +15,7 @@ function Footer() {
           </p>
           <span>|</span>
           <div className="links">
-            <Link to="/nobel/about">About</Link>
+            <Link to="/about">About</Link>
             <Link to='/nobel-prizes'>Explore</Link>
             <Link to="/blog">Journal</Link>
           </div>

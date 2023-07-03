@@ -14,7 +14,7 @@
 .header-alfred-nobel{
     position: relative;
     height: 100%;
-    min-height: 600px;
+    max-height: 600px;
     text-align: center;
     color: #fff;
     background-image: url(../../../../img/nobel-slide.jpg);
