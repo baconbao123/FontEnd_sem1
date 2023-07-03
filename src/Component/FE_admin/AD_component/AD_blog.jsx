@@ -67,7 +67,7 @@ export default function AD_blog() {
 
   async function  Load() {
     const instance = axios.create({
-      timeout:1000 
+      timeout:5000 
     });
     const result=await instance.get('http://127.0.0.1:8000/api/blog');
         setBlog(result.data);

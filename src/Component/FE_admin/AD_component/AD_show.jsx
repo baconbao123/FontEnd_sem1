@@ -74,7 +74,7 @@ export default function AD_show() {
   }
   async function Load() {
     const instance = axios.create({
-      timeout: 1000 // thời gian chờ giữa các yêu cầu là 1 giây
+      timeout:5000 // thời gian chờ giữa các yêu cầu là 1 giây
     });
     
     try {
@@ -96,7 +96,7 @@ export default function AD_show() {
       //   time=1000+selection.length*1000
       // }
      
-    
+ 
     console.log(time);
       selection.map((item => {
 
@@ -108,7 +108,7 @@ export default function AD_show() {
     }
  
   }
-  
+  console.log(toast); 
 
   async function disableperson(item) {
 
@@ -208,7 +208,7 @@ export default function AD_show() {
             <>
               <Button ref={showModalEdit} className='ms-3' type='button' label="edit" severity='warning' >
                 <BsGear className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-              <AD_modal  toast={toast} setSelection={handleSelection} Load={Load} title="EDIT" show={showModalEdit} value={selection[0]} />
+              <AD_modal  toast={toast} setSelection={handleSelection} Load={Reload} title="EDIT" show={showModalEdit} value={selection[0]} />
 
             </>
           )}

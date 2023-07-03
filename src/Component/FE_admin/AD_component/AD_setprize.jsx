@@ -51,21 +51,21 @@ export default function AD_setprize() {
   // get data
   async function Load() {
     const instance = axios.create({
-      timeout: 1000 
+      timeout:5000 
     });
     const result= await instance.get('http://127.0.0.1:8000/api/pn');
     setPrizes(result.data) 
   }
   async function LoadPrize() {
     const instance = axios.create({
-      timeout: 1000 
+      timeout:5000 
     });
     const result = await instance.get('http://127.0.0.1:8000/api/nobelprize');
     setAllPrize(result.data)
 }
 async function LoadPerson() {
   const instance = axios.create({
-    timeout: 1000 
+    timeout:5000 
   });
     const result = await instance.get('http://127.0.0.1:8000/api/personprize');
     let data=result.data.filter(item=>{

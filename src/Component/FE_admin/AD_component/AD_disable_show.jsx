@@ -64,7 +64,7 @@ export default function AD_disbale_show() {
 
   async function  Load() {
     const instance = axios.create({
-      timeout: 1000 
+      timeout: 5000 
     });
     const result=await instance.get('http://127.0.0.1:8000/api/persondisable');
     setPerson(result.data);
@@ -294,6 +294,15 @@ async function activeperson(item) {
       )
     }
   }
+  const pdfItem = (e) => {
+    if (e.pdf) {
+      return (
+        <>
+          <a target="_blank" href={"http://127.0.0.1:8000/api/pdfs/" + e.pdf}>{e.pdf}</a>
+        </>
+      )
+    }
+  }
  
   return (
     <Container fluid className='wrapper'>
@@ -336,7 +345,7 @@ async function activeperson(item) {
               <Column field='avatar' header='avatar' body={avatarImage}  style={{ minWidth: '12rem' }} />
               
               <Column field='img' header='img' body={itemImage}    style={{ minWidth: '40rem' }}   />
-              
+              <Column field='pdf' body={pdfItem} header='pdf' style={{ minWidth: '12rem' }} />
             </DataTable>
           </section>
 
