@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import { Card, Col, Form, Row } from 'react-bootstrap';
+import { Card, Col, Form, NavLink, Row } from 'react-bootstrap';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import swal from 'sweetalert';
@@ -61,9 +61,14 @@ function Blog() {
     
     if (!blogData) {
     return (
+      <>
         <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px' }}>
         Not find a blog
         </h1>
+          <Link to="/" style={{textAlign: 'center'}} className='card-back'>
+            <div className='to-home'>Back to Home</div>
+          </Link>
+      </>
     );
     }
 

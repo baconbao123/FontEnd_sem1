@@ -11,11 +11,34 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
+const TruncatedContent =  (content, maxlength) => {
+  if (content.length > maxlength) {
+    return content.substring(0, maxlength) + "...";
+  }
+  return content;
+}
+
 const Homepage = React.memo(() => {
+  const [blogData, setBlogData] = useState([])
   // effect srcoll
   useEffect(() => {
     AOS.init();
   }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await axios.get(`http://127.0.0.1:8000/api/allblogs`);
+      if(res &&  res.data.blogs) {
+        const activeBlogs = res.data.blogs.filter(blog => blog.status === 'active');
+        if (activeBlogs.length > 0) {
+            setBlogData(activeBlogs);
+      }
+
+    }}
+    fetchData();
+  }, [])
+
+  const activeBlog = blogData?.filter((blog) => blog.status === 'active')
 
   // DATA
   const itemCategorys = useMemo(() => [
@@ -151,25 +174,25 @@ const Homepage = React.memo(() => {
           <h6 className="title mb-4 mt-4 pt-5 ">The Journal</h6>
         </div>
         <div className="row container m-auto container-item-post mb-3">
-          {posts.slice(0, numPosts).map((post, index) => (
+          {activeBlog.slice(0, numPosts).map((item, index) => (
             <div
               className="col-md-6 col-lg-6"
               key={index}
               data-aos="fade-up"
               data-aos-duration="800"
             >
-              <a href="#" className="card">
+              <Link to={`blog/${item.id}`} className="card">
                 <img
-                  src={require(`../../../../img/${post.imgPost}`)}
+                  src={'http://127.0.0.1:8000/api/images/' + item.avatar}
                   className="card-img"
-                  alt={post.titlePost}
+                  // alt={item.titlePost}
                 />
                 <div className="card-body">
-                  <h6 className="card-subtitle">{post.timePost}</h6>
-                  <h3 className="card-title">{post.titlePost}</h3>
-                  <p>{post.subtitlePost}</p>
+                  <h6 className="card-subtitle">{new Date(item.created_at).getFullYear()}</h6>
+                  <h3 className="card-title">{item.title}</h3>
+                  <p>{TruncatedContent(item.content, 300)}</p>
                 </div>
-              </a>
+              </Link>
             </div>
           ))}
           <Link to="/blog" className="text-center">

@@ -96,6 +96,19 @@
     }
 }
 
+.card-back {
+    color: white;
+    margin-top: 20px;
+    font-size: 20px;
+
+    .to-home{
+        text-align: center;
+    }
+    &:hover {
+        color: #F1A40E;
+    }
+}
+
 // -------------------Blog details ----------------
 .bd-page {
     margin-top: 110px;

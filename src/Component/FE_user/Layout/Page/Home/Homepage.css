@@ -276,6 +276,7 @@
   margin-bottom: 40px;
   background-color: transparent !important;
   border: none !important;
+  text-decoration: none;
 
 }
 
@@ -289,6 +290,7 @@
   margin-top: 20px;
   color: #ffffff ;
  text-align: center;
+ height: 210px;
 }
 
 .card .card-subtitle {
@@ -296,15 +298,18 @@
   opacity: .8;
   font-weight: bold;
   margin-bottom: 3px;
+  color: rgb(70, 70, 70)
 }
 
 .card .card-title {
   font-size: calc(17px + (22 - 17) * ((100vw - 300px) / (1300 - 300)));
   margin-bottom: 15px;
+  color: rgb(70, 70, 70)
 }
 .card .card-body p {
   font-size: .875rem !important;
   color: #9ca0a0;
+
 }
 .container-item-post{
   max-width: 65% !important;

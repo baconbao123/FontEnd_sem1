@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Biography from "./Biography";
 import axios from 'axios';
 import swal from 'sweetalert';
@@ -44,7 +44,12 @@ function BiographyContent() {
         personData ? (
           <Biography personData={personData} />
         ) : (
-          <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px' }}>Cannot find a person</h1>
+          <>
+            <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px' }}>Cannot find a person</h1>
+            <Link to="/" className='card-back'>
+                <div className="home">Back to Home</div>
+            </Link>
+          </>
         )
       )}
     </section>

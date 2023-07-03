@@ -194,7 +194,9 @@ const Biography = ({personData}) => {
                         <Col lg={8} md={12} className='col-nbprize-des'>
                             <div className='nbprize-des' data-aos="zoom-in-up" data-aos-duration="1000">
                                 {personData.nobelYears.map((year, index) => (
-                                    <div key={index}>{year} &nbsp; {personData.motivations[index]}</div>
+                                    <div key={index}>
+                                        <span style={{fontWeight: "1000", color: "#d59d3f"}}>{year}</span> &nbsp; {personData.motivations[index]}
+                                    </div>
                                 ))}
                             </div>
                         </Col>

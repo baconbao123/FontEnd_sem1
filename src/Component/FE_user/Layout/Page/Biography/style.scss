@@ -148,8 +148,9 @@
 
         .col-nbprize-des {
           display: flex;
-          justify-items: center;
           align-items: center;
+          margin-top: 80px;
+
           
           .nbprize-des {
             // margin-top: 150px;
@@ -433,6 +434,8 @@
   }}
 }
 
+
+
 @media only screen and (min-width: 768px) and (max-width: 1180px) {
   .quote-site {
     margin-top: 230px;
@@ -477,4 +480,11 @@
 }
 
 
+.card-back {
+  text-decoration: none;
+  
 
+  .home{
+    text-align: center;
+  }
+}
