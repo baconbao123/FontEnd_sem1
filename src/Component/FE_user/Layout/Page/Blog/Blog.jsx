@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import { Card, Col, Form, NavLink, Row } from 'react-bootstrap';
+import { Card, Col, Form, Row } from 'react-bootstrap';
+import { Paginator } from 'primereact/paginator';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import swal from 'sweetalert';
@@ -20,6 +21,9 @@ function Blog() {
     const [selectedYear, setSelectedYear] = useState(null);
     const [loading, setLoading] = useState(true);
     const {id} = useParams()
+    const [first, setFirst] = useState(0);
+    const [rows, setRows] = useState(6);
+    const [totalRecords, setTotalRecords] = useState(0);
 
     useEffect(() => {
         async function fetchData() {
@@ -29,6 +33,7 @@ function Blog() {
                     const activeBlogs = res.data.blogs.filter(blog => blog.status === 'active');
                     if (activeBlogs.length > 0) {
                         setBlogData(activeBlogs);
+                        setTotalRecords(activeBlogs.length);
                     } else {
                         swal("Error", "No active blogs found.", "error");
                     }
@@ -50,6 +55,11 @@ function Blog() {
     const handleChange = (e) => {
         setSelectedYear(e.target.value)
     }
+
+    const onPageChange = (event) => {
+      setFirst(event.first);
+      setRows(event.rows);
+    };
 
     if (loading) {
         return (
@@ -112,6 +122,7 @@ function Blog() {
                       ? new Date(item.created_at).getFullYear() == selectedYear
                       : true
                   )
+                  .slice(first, first + rows)
                   .map((item, index) => (
                     <Col lg={4} md={6} key={index}>
                       <Card className="card-1" style={{ width: '23rem' }}>
@@ -145,6 +156,13 @@ function Blog() {
                   ))}
               </Row>
             </section>
+            <Paginator
+              first={first}
+              rows={rows}
+              totalRecords={totalRecords}
+              rowsPerPageOptions={[3, 6, 9]} // Lựa chọn số bài viết trên mỗi trang
+              onPageChange={onPageChange}
+            />
           </section>
         </section>
       );

@@ -33,6 +33,8 @@ import NobelPrizeItem from "./Component/FE_user/Layout/Page/NobelPrizeItem/Nobel
 import DetailNobelPrize from "./Component/FE_user/Layout/Page/DetailNobelPrize/DetailNobelPrize";
 import About from "./Component/FE_user/Layout/Page/About/About";
 
+import NotFound from "./Component/FE_user/Layout/NotFound";
+
 
 function App() {
   const location = useLocation();
@@ -57,7 +59,7 @@ function App() {
       </Routes>
 
       {/* User */}
-      {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' ||  location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/') || location.pathname==='/about'? <Navbar /> : null}
+      {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' || location.pathname==='/notfound' || location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/')  || location.pathname==='/about'? <Navbar /> : null}
       
       <Routes>
         <Route path="/" element={<Homepage />} />
@@ -71,6 +73,8 @@ function App() {
         <Route path="/nobel-prizes/:name/:year/:id" element={<DetailNobelPrize />} />
         <Route path="/nobel/:namePrize" element={<NobelPrizeItem/>}/>
         <Route path="/about" element={<About/>}/>
+
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
       <ScollToTop />
     </>
