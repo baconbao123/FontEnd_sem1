@@ -49,7 +49,7 @@ export default function AD_disable_prize() {
     // ham get data
     async function Load() {
       const instance = axios.create({
-        timeout: 3000 
+        timeout:1000 
       });
       const result= await instance.get('http://127.0.0.1:8000/api/prizedisable');
       setPrizes(result.data)

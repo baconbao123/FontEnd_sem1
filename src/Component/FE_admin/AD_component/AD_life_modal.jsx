@@ -88,7 +88,7 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
     
       
       const showWarn = (e) => {
-          toast.current.show({severity:'warn', summary: 'Warning', detail:e?e:"To many request", life: 3000});
+          toast.current.show({severity:'warn', summary: 'Warning', detail:e?e:"To many request", life: 1000});
       }
 //    ham  get data 
 async function Loadperson() {

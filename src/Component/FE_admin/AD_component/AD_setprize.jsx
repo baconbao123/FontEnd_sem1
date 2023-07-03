@@ -51,21 +51,21 @@ export default function AD_setprize() {
   // get data
   async function Load() {
     const instance = axios.create({
-      timeout: 3000 
+      timeout: 1000 
     });
     const result= await instance.get('http://127.0.0.1:8000/api/pn');
     setPrizes(result.data) 
   }
   async function LoadPrize() {
     const instance = axios.create({
-      timeout: 3000 
+      timeout: 1000 
     });
     const result = await instance.get('http://127.0.0.1:8000/api/nobelprize');
     setAllPrize(result.data)
 }
 async function LoadPerson() {
   const instance = axios.create({
-    timeout: 3000 
+    timeout: 1000 
   });
     const result = await instance.get('http://127.0.0.1:8000/api/personprize');
     let data=result.data.filter(item=>{
@@ -75,6 +75,9 @@ async function LoadPerson() {
     setPerson(data)
 }
 
+const reload=()=> {
+  window.location.reload()
+}
  
     // Toast
     const showSuccess = (e) => {
@@ -204,7 +207,7 @@ async function LoadPerson() {
                 ref={showModalEdit}
                 className='ms-3' type='button' label="edit" severity='warning' >
                 <BsGear className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-              <AD_setprize_modal  toast={toast} Load={Load} setSelection={handleSelection} title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
+              <AD_setprize_modal  toast={toast} Load={reload} setSelection={handleSelection} title={"EDIT PRIZE"} show={showModalEdit} value={selection[0]} />
 
 
             </>

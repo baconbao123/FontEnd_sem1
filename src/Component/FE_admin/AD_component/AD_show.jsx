@@ -74,7 +74,7 @@ export default function AD_show() {
   }
   async function Load() {
     const instance = axios.create({
-      timeout: 3000 // thời gian chờ giữa các yêu cầu là 1 giây
+      timeout: 1000 // thời gian chờ giữa các yêu cầu là 1 giây
     });
     
     try {
