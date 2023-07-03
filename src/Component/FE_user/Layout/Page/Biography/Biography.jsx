@@ -152,7 +152,7 @@ const Biography = ({personData}) => {
                                 <ul className='tl-list' data-aos="fade-right"
                                 data-aos-duration="1000">
                                     {personData.time_line && personData.time_line.split('\n').map((item, index) => {
-                                        const match = item.match(/^(\d{4})(-?\d{0,2})?(.*)$/);
+                                        const match = item.match(/^(\d{4})(-?\d{0,4})?(.*)$/);
                                         if (match) {
                                         const year = `${match[1]}${match[2] ? `${match[2]}` : ''}`;
                                         return (
