@@ -87,7 +87,7 @@ function Navbar() {
               Nobel Prizes & Laureates
             </Link>
             {onMouseEnterNav &&
-              (<ul class="dropdown arrow-top" data-aos='fade-zoom'>
+              (<ul class="dropdown arrow-top" data-aos='fade'>
                 <li><Link to="/laureates">Laureates</Link></li>
                 <li><Link to='/nobel-prizes'> Nobel Prizes</Link></li>
                 <li><Link to="nobel/literature">Literature</Link></li>
