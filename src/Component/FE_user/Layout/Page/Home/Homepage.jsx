@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import axios from "axios";
@@ -11,11 +11,13 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
-const TruncatedContent =  (content, maxlength) => {
-  if (content.length > maxlength) {
-    return content.substring(0, maxlength) + "...";
+const TruncatedContent = ({content}) => {
+  if(content.length > 100) {
+      return <Card.Text>{content.slice(0,100)}...</Card.Text>
   }
-  return content;
+  else {
+      return <Card.Text>{content}</Card.Text>
+  }
 }
 
 const Homepage = React.memo(() => {
@@ -105,7 +107,7 @@ const Homepage = React.memo(() => {
   ]);
 
   // set show max 2 post
-  const [numPosts, setNumPosts] = useState(2);
+  const [numPosts, setNumPosts] = useState(3);
 
   const handleButtonClick = useCallback(() => {
     // Xử lý sự kiện khi nút được nhấn
@@ -175,25 +177,35 @@ const Homepage = React.memo(() => {
         </div>
         <div className="row container m-auto container-item-post mb-3">
           {activeBlog.slice(0, numPosts).map((item, index) => (
-            <div
-              className="col-md-6 col-lg-6"
-              key={index}
-              data-aos="fade-up"
-              data-aos-duration="800"
-            >
-              <Link to={`blog/${item.id}`} className="card">
-                <img
-                  src={'http://127.0.0.1:8000/api/images/' + item.avatar}
-                  className="card-img"
-                  // alt={item.titlePost}
-                />
-                <div className="card-body">
-                  <h6 className="card-subtitle">{new Date(item.created_at).getFullYear()}</h6>
-                  <h3 className="card-title">{item.title}</h3>
-                  <p>{TruncatedContent(item.content, 300)}</p>
-                </div>
-              </Link>
-            </div>
+            <Col lg={4} md={3}  key={index}>
+            <Card className="card-1" style={{ width: '23rem' }}>
+              <Card.Img
+                className="c-img"
+                variant="top"
+                src={'http://127.0.0.1:8000/api/images/' + item.avatar}
+              ></Card.Img>
+              <Card.Body
+                className="c-body"
+                style={{
+                  backgroundColor: '#e9ecef',
+                  borderRadius: '5px',
+                }}
+              >
+                <Card.Subtitle
+                  style={{ color: 'gray', marginTop: '10px' }}
+                >
+                  Topic: {new Date(item.created_at).getFullYear()}
+                </Card.Subtitle>
+                <Link className="c-title" to={`blog/${item.id}`}>
+                  <h5 style={{color: "black"}}>{item.title}</h5>
+                </Link>
+                <TruncatedContent content={item.content} />
+                <Link className="card-link" to={`blog/${item.id}`}>
+                  See more
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
           ))}
           <Link to="/blog" className="text-center">
             <button className="learn-more">
