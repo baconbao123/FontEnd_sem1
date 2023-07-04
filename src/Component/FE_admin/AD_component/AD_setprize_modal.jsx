@@ -31,7 +31,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
     const [suggestPrize, setSuggestPrize] = useState([]);
     const [allPrize, setAllPrize] = useState([])
     const category = [{ category: 'Physic Prize' }, { category: 'Chemistry Prize' }, { category: 'Medicine Prize' }, { category: 'Literature Prize' }, { category: 'Peace Prize' }, { category: 'Prize in Economic Sciences' }]
-    const [categoryName, setCategoryName] = useState('');
+    const [categoryName, setCategoryName] = useState({category:''});
     const [motivation, setMotivation] = useState('')
     const [prizeContent, setPrizeContent] = useState()
    
@@ -71,6 +71,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                 setStatusName({status:''});
                 setNobelShare('');
                 setShowModal(false)
+                setCategoryName({category:''})
             }
             catch (err) {
                 showError(err.message)

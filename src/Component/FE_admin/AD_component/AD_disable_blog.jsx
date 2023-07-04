@@ -112,22 +112,7 @@ async function activeperson(item) {
 }
 
    // Ham delete
-   const handleDelete = () => {
-    setBlocked(true)
-    Promise.all(
-      selection.map((item) => {
-        setSelection(selection.filter(item=>item !== item))
-        return confirmDelete(item);
-      })
-    ).then(() => {
-    
-      Load();
-      setBlocked(false);
-    }).catch((err) => {
-      showError(err.message);
-    });
-  
-  };
+
   
   const confirmDelete = (item) => {
     Swal.fire({
@@ -140,19 +125,33 @@ async function activeperson(item) {
       confirmButtonText: 'Yes, delete it!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try {
-          await deleteperson(item);
-          showSuccess('Delete success');
+        setBlocked(true)
+        Promise.all(
+          selection.map((item) => {
+            setSelection(selection.filter(item=>item !== item))
+            return deleteperson(item);
+          })
+        ).then(() => {
+        
           Load();
-        } catch (err) {
+          setBlocked(false);
+        }).catch((err) => {
           showError(err.message);
-        }
+        });
+      
       }
     });
   };
   
   async function deleteperson(item) {
-    return axios.delete('http://127.0.0.1:8000/api/deleteblog/' + item.id);
+    try {
+      await axios.delete('http://127.0.0.1:8000/api/deleteblog/' + item.id);
+      showSuccess('Delete success');
+      Load();
+    } catch (err) {
+      showError(err.message);
+    }
+    
   }
 
 // Hàm search Golbal
@@ -222,7 +221,7 @@ async function activeperson(item) {
             <>
           <Button onClick={handleActive}   className='ms-3' type='button' label="Active" severity='success' >
             <BsPlusLg   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-          <Button  onClick={handleDelete}  className='ms-3' type='button' label="Delete" severity='danger' >
+          <Button  onClick={confirmDelete}  className='ms-3' type='button' label="Delete" severity='danger' >
             <BsTrashFill   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
             </>
           )}

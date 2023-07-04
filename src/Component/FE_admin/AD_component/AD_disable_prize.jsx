@@ -88,12 +88,7 @@ export default function AD_disable_prize() {
     }
     }
     // ham delete prize
-    const handleDelete = () => {
-      selection.map((item) => {
-        confirmDelete(item);
-        setSelection(selection.filter((selected) => selected !== item));
-      });
-    };
+   
     
     const confirmDelete = (item) => {
       Swal.fire({
@@ -106,19 +101,31 @@ export default function AD_disable_prize() {
         confirmButtonText: 'Yes, delete it!'
       }).then(async (result) => {
         if (result.isConfirmed) {
-          try {
-            await deleteprize(item);
-            showSuccess('Delete success');
+          setBlocked(true)
+          Promise.all(
+            selection.map((item) => {
+              setSelection(selection.filter(item=>item !== item))
+              return deleteprize(item);
+            })
+          ).then(() => {
+            showSuccess(' success disable');
             Load();
-          } catch (err) {
+            setBlocked(false);
+          }).catch((err) => {
             showError(err.message);
-          }
+          });
         }
       });
     };
     
     async function deleteprize(item) {
-      return axios.delete('http://127.0.0.1:8000/api/deleteprize/' + item.id);
+      try {
+        await       axios.delete('http://127.0.0.1:8000/api/deleteprize/' + item.id);
+        showSuccess('Delete success');
+        Load();
+      } catch (err) {
+        showError(err.message);
+      }
     }
     // hàm set Init FIlter
   const initFilters=()=> {
@@ -182,7 +189,7 @@ export default function AD_disable_prize() {
               className='ms-3' type='button' label="Active" severity='success' >
                 <BsPlusLg   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
            
-                <Button  onClick={handleDelete} className='ms-3' type='button' label="Delete" severity='danger' >
+                <Button  onClick={confirmDelete} className='ms-3' type='button' label="Delete" severity='danger' >
                 <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
     
              </>

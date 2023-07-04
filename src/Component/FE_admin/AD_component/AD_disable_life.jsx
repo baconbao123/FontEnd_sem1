@@ -108,20 +108,7 @@ export default function AD_disable_life() {
      
     }}
 // ham handle delete
-    const handleDelete = () => {
-      setBlocked(true)
-      Promise.all(
-        selection.map((item) => {
-          setSelection(selection.filter(item=>item !== item))
-          return confirmDelete(item);
-        })
-      ).then(() => {
     
-        setBlocked(false);
-      }).catch((err) => {
-        showError(err.message);
-      });
-    }
     
     const confirmDelete = (item) => {
       Swal.fire({
@@ -134,21 +121,31 @@ export default function AD_disable_life() {
         confirmButtonText: 'Yes, delete it!'
       }).then(async (result) => {
         if (result.isConfirmed) {
-          try {
-            await deletelife(item);
-            showSuccess('Delete success');
-            Load();
-          } catch (err) {
+          setBlocked(true)
+          Promise.all(
+            selection.map((item) => {
+              setSelection(selection.filter(item=>item !== item))
+              return deletelife(item);
+            })
+          ).then(() => {
+        
+            setBlocked(false);
+          }).catch((err) => {
             showError(err.message);
-          }
+          });
         }
       });
     };
     
     async function deletelife(item) {
-      return axios.put('http://127.0.0.1:8000/api/deletelife/' + item.id, {
-        status: 'active'
-      });
+      try {
+        await  axios.put('http://127.0.0.1:8000/api/deletelife/' + item.id);
+        showSuccess('Delete success');
+        Load();
+      } catch (err) {
+        showError(err.message);
+      }
+     
     }
     
     // handle person
@@ -200,7 +197,7 @@ export default function AD_disable_life() {
 
           <Button onClick={handleActive} ref={showModalEdit} className='ms-3' type='button' label="active" severity='success' >
             <BsPlusLg className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
-            <Button  onClick={handleDelete} className='ms-3' type='button' label="Delete" severity='danger' >
+            <Button  onClick={confirmDelete} className='ms-3' type='button' label="Delete" severity='danger' >
               <BsTrashFill className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
             </>
 
