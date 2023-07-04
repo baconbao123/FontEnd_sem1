@@ -302,7 +302,6 @@
 }
 
 .card .card-title {
-  font-size: calc(17px + (22 - 17) * ((100vw - 300px) / (1300 - 300)));
   margin-bottom: 15px;
   color: rgb(70, 70, 70)
 }
