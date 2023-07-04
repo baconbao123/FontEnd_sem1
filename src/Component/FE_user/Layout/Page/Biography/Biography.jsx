@@ -82,7 +82,7 @@ const Biography = ({personData}) => {
             <section className='block-content-bg-1' style={{backgroundImage: `url(${bgbio})`}}>
                 <section className='container'>
                     <Row>
-                        <Col lg={4}  className='label-content'>
+                        <Col lg={4} md={12} className='label-content'>
                             <h1 className='label-bio' data-aos="flip-left" data-aos-duration="1000">Biography</h1>
                         </Col>
                         <Col lg={8} md={12}>
@@ -119,17 +119,21 @@ const Biography = ({personData}) => {
             <section className='outside-block-black'>
                 <section className="block-content-black-1 container">
                     <Row>
-                        <Col lg={4} className='d-lg-block d-md-none d-xs-none col-achive'>
+                        <Col lg={4} md={5} xs={5} className='d-lg-block d-md-block d-none col-achive'>
                             <section className='achive-topic-site' data-aos="fade-right" data-aos-duration="1000">
-                                <div className='achive-label'>
-                                    <strong>Achievement</strong>
-                                </div>
+                                    <strong className='achive-label'>Achievement</strong>
+                                <div className='achive-label'></div>
                                 <div className='img-achive-site'>
                                     <img src={tn} alt='tn'/>
                                 </div>
                             </section>
                         </Col>
-                        <Col lg={8} md={12} className='col-ahive-detail'>
+                        <Col xs={12} className='d-block d-md-none d-lg-none'>
+                            <section className='achive-topic-site' data-aos="fade-right" data-aos-duration="1000">
+                                <strong className='achive-label'>Achievement</strong>
+                            </section>
+                        </Col>
+                        <Col lg={8} md={7} xs={12} className='col-ahive-detail'>
                             <section className='achive-site' data-aos="fade-left" data-aos-duration="1000">
                                 <div className='achive-des-content'>
                                 {personData.achievements_detail && personData.achievements_detail.split('\n').map((achievement, index) => (
@@ -183,7 +187,7 @@ const Biography = ({personData}) => {
             <section className='outside-block-black'>
                 <section className="block-content-black-2 container">
                     <Row>
-                        <Col lg={4} md={12} className='col-nbprize'>
+                        <Col lg={4} md={5} xs={12} className='col-nbprize'>
                             <div className='rhombus-bg'>
                                 <div className='img-nobel'>
                                     <img src={nobel} alt='nobel'></img>
@@ -191,7 +195,7 @@ const Biography = ({personData}) => {
                                 </div>
                             </div>
                         </Col>
-                        <Col lg={8} md={12} className='col-nbprize-des'>
+                        <Col lg={8} md={7} xs={12} className='col-nbprize-des'>
                             <div className='nbprize-des' data-aos="zoom-in-up" data-aos-duration="1000">
                                 {personData.nobelYears.map((year, index) => (
                                     <div key={index}>
