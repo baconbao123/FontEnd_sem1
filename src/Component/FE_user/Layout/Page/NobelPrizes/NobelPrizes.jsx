@@ -71,7 +71,7 @@ function NobelPrizes() {
           <option value="Literature Prize">Literature</option>
           <option value="Medicine Prize">Medical</option>
           <option value="Peace Prize">Peace</option>
-          <option value="Economic Sciences Prize">Economic Sciences</option>
+          <option value="Prize in Economic Sciences">Economic Sciences</option>
         </Form.Select>
         <Form.Select
           className="form-select-nobel col-lg-12"
@@ -119,12 +119,12 @@ function NobelPrizes() {
                         >
                           <div className="item-nobel-prize col-lg-12 bg-light mt-4">
                             <h3 className="title-nobel-prize mb-4">
-                              The Nobel Prize in {prize.namePrize} {item.year}
+                              The Nobel Prize in {prize.namePrize.replace('Prize in' &&'Prize' ,'')} {item.year}
                             </h3>
                             <p className="sub-nobel-prize">
                               <span>{prize.namePerson.join(", ")}:</span>{" "}
                               <span className="text-dark">
-                                "{prize.motivation} "
+                                {prize.motivation}
                               </span>{" "}
                             </p>
                           </div>
