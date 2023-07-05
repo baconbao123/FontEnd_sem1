@@ -70,6 +70,9 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
         else if(!content) {
             showWarn('Content can not be empty')
         }
+        else if(!titlePost) {
+            showWarn('Title  can not be empty')
+        }
         else {
 
             const data = new FormData();
@@ -160,6 +163,9 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
         }
         else if(!content) {
             showWarn('Content can not be empty')
+        }
+        else if(!titlePost) {
+            showWarn('Title can not be empty')
         }
         
         else if (check > 0 && count > 0) {
