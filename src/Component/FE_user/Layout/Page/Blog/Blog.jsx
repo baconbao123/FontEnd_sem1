@@ -16,6 +16,14 @@ const TruncatedContent = ({content}) => {
     }
 }
 
+const TruncatedTitle = ({ content }) => {
+  if (content.length > 50) {
+    return <Card.Title>{content.slice(0, 50)}...</Card.Title>;
+  } else {
+    return <Card.Title>{content}</Card.Title>;
+  }
+};
+
 function Blog() {
     const [blogData, setBlogData] = useState(null);
     const [selectedYear, setSelectedYear] = useState(null);
@@ -74,7 +82,7 @@ function Blog() {
     if (!blogData) {
     return (
       <>
-        <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px' }}>
+        <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px', backgroundColor: '#212529' }}>
         Not find a blog
         </h1>
           <Link to="/" style={{textAlign: 'center'}} className='card-back' >

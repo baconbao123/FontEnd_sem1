@@ -41,7 +41,7 @@
             }
 
             .c-body {
-                height: 17.5rem;
+                height: 16rem;
                 margin-top: -5px;
 
 
@@ -107,6 +107,14 @@
     &:hover {
         color: #F1A40E;
     }
+}
+
+.carousel-control-prev {
+    display: none;
+}
+
+.carousel-control-next{
+    display: none;
 }
 
 // -------------------Blog details ----------------
