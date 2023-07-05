@@ -16,6 +16,14 @@ const TruncatedContent = ({content}) => {
     }
 }
 
+const TruncatedTitle = ({ content }) => {
+  if (content.length > 50) {
+    return <Card.Title>{content.slice(0, 50)}...</Card.Title>;
+  } else {
+    return <Card.Title>{content}</Card.Title>;
+  }
+};
+
 function Blog() {
     const [blogData, setBlogData] = useState(null);
     const [selectedYear, setSelectedYear] = useState(null);
@@ -72,7 +80,7 @@ function Blog() {
     if (!blogData) {
     return (
       <>
-        <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px' }}>
+        <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px', backgroundColor: '#212529' }}>
         Not find a blog
         </h1>
           <Link to="/" style={{textAlign: 'center'}} className='card-back'>
@@ -144,7 +152,7 @@ function Blog() {
                             Topic: {new Date(item.created_at).getFullYear()}
                           </Card.Subtitle>
                           <Link className="card-link c-title" to={`${item.id}`}>
-                            {item.title}
+                            <TruncatedTitle content={item.title} />
                           </Link>
                           <TruncatedContent content={item.content} />
                           <Link className="card-link c-see-more" to={`${item.id}`}>
