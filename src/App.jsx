@@ -42,6 +42,9 @@ function App() {
   return (
     <>
       {/* Admin */}
+        {/* User */}
+        {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' || location.pathname==='/notfound' || location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/')  || location.pathname==='/about'? <Navbar /> : null}
+      
       <Routes>
         <Route exact  path="/admin" element={<AD_home />} />
         <Route  path="/admin/show" element={<AD_show />} />
@@ -56,12 +59,11 @@ function App() {
     
         <Route path="/admin/disable/blog" element={< AD_disable_blog/>} />
         <Route path="/login" element={< AD_login/>} />
-      </Routes>
+        <Route path="*" element={<NotFound/>}/>
+ 
 
-      {/* User */}
-      {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' || location.pathname==='/notfound' || location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/')  || location.pathname==='/about'? <Navbar /> : null}
-      
-      <Routes>
+    
+     
         <Route path="/" element={<Homepage />} />
         <Route path="/nobel-prizes" element={<NobelPrizes />} />
         <Route path="/laureates" element={<Laureates />} />

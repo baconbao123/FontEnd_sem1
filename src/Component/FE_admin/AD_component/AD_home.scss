@@ -158,6 +158,12 @@
       .logo-login {
         width: 300px;
       }
+      .input-login:focus {
+        outline: none!important;
+      }
+      input:focus {
+        outline: none;
+      }
     
       
       // RESPONSIVE HOME ADMIN

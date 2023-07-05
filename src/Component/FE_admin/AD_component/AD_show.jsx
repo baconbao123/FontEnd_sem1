@@ -320,10 +320,13 @@ export default function AD_show() {
   }
 
   // Toast
- 
+
+
 
   return (
     <Container fluid className='wrapper'>
+    
+     
       <BlockUI blocked={blocked}>
            <Toast ref={toast} />
         <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>

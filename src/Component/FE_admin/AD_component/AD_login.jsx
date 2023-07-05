@@ -1,11 +1,13 @@
 import React,{useState, useEffect,useRef} from 'react'
-import { Container,Card,Row,Button,Form } from 'react-bootstrap'
+import { Container,Row,Button,Form } from 'react-bootstrap'
 import logo from '../AD_img/logo-admin.png'
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Link,useNavigate } from 'react-router-dom';
 import {Toast} from 'primereact'
 
+import { Card } from 'primereact/card';
+        
 export default function AD_login() {
   
   const [email,setEmail]=useState();
@@ -66,14 +68,13 @@ export default function AD_login() {
         </Row>
 
         <Row className=' d-flex justify-content-evenly mt-5'>
-      <Card bg='white' text={'dark'} style={{ width: '40rem' }}>
+      <Card title="LOGIN" bg='white'  className='text-center' style={{ width: '40rem' }}>
      
-      <Card.Body className='text-dark'>
-        <Card.Title>LOGIN</Card.Title>
+ 
         <Form   className='mb-5'>
           <Form.Group className='mt-3'>
             <Form.Label className='mb-3'>EMAIL</Form.Label>
-            <Form.Control required value={email} onChange={e=>setEmail(e.target.value)} style={{minWidth:'100%'}} placeholder='Enter email'></Form.Control>
+            <Form.Control  className=' input-login'required value={email} onChange={e=>setEmail(e.target.value)} style={{minWidth:'100%'}} placeholder='Enter email'></Form.Control>
           </Form.Group>
         </Form>
         <Form className='mb-5'>
@@ -85,7 +86,7 @@ export default function AD_login() {
           <Button  onKeyDown={handleKeyDown} type='submit' onClick={login} className='mt-5' variant='primary'>LOGIN</Button>
         </Form>
       <Link to={'/'}>Come back home</Link>
-      </Card.Body>
+     
     </Card>
         </Row>
     </Container>

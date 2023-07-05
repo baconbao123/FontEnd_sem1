@@ -249,6 +249,7 @@ const reload=()=> {
   
   return (
     <Container fluid className='wrapper'>
+      
         <BlockUI blocked={blocked}>
       <Toast       ref={toast}  />
        <Row className={`fixed-top h-100 d-xl-none ${showNav?'d-flex':'d-none'}` }>
@@ -277,7 +278,7 @@ const reload=()=> {
             <Column sortable   field='nobel_id' body={handleNobel} header='nobel name' />
             <Column sortable  field='nobel_id' body={handleNobelYear} header='nobel year' />
             <Column sortable  field='person_id' body={handlePerson  } header='person name' />
-            <Column sortable  field='motivation' header='motivation' />
+            <Column sortable filter field='motivation' header='motivation' />
             <Column sortable field='nobel_share' header='nobel share' />
 
             <Column field='status' header='status' body={itemStatus} />
