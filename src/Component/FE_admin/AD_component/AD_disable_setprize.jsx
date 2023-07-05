@@ -35,10 +35,13 @@ export default function AD_disable_setprize() {
     {
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       id_nobel: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      prize_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      prize_year: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      person_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       id_person: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-      motivation: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-      nobel_share: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+      motivation: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
+      nobel_share: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
       status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
     }
   )
@@ -194,10 +197,13 @@ async function deletesetprize(item) {
     setFilters({
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       id_nobel: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      prize_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      prize_year: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      person_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       id_person: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-      motivation: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-      nobel_share: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+      motivation: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
+      nobel_share: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
       status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
     })
     setGlobal('');
@@ -307,11 +313,13 @@ async function deletesetprize(item) {
             removableSort
             filters={filters}
             selection={selection} onSelectionChange={(e) => setSelection(e.value)}
+            globalFilterFields={['id_person','id_nobel','motivation','nobel_share','prize_name','prize_year','person_name']}
+
           >
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-            <Column sortable  field='nobel_id' body={handleNobel} header='nobel name' />
-            <Column sortable  field='nobel_id' body={handleNobelYear} header='nobel year' />
-            <Column sortable  field='person_id' body={handlePerson} header='person name' />
+            <Column sortable filter  field='prize_name'  header='nobel name' />
+            <Column sortable  filter field='prize_year'  header='nobel year' />
+            <Column sortable filter  field='person_name'  header='person name' />
             <Column sortable filter field='motivation' header='motivation' />
             <Column sortable filter field='nobel_share' header='nobel share' />
 

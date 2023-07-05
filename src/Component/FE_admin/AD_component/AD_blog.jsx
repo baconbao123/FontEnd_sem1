@@ -297,6 +297,7 @@ async function disableperson(item) {
           <section className='card'>
 
             <DataTable value={blog} data-key='id' loading={loading}
+              showGridlines
             
             selectionMode={'checkbox'}
             selection={selection} onSelectionChange={(e)=>setSelection(e.value)}

@@ -35,10 +35,13 @@ export default function AD_setprize() {
     {
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       id_nobel: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      prize_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      prize_year: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      person_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       id_person: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-      motivation: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-      nobel_share: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+      motivation: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
+      nobel_share: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
       status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
     }
   )
@@ -48,8 +51,30 @@ export default function AD_setprize() {
     (async()=>await Load())();
     (async()=>await LoadPrize())();
     (async()=>await LoadPerson())();
+    if(prizes&&allPrize&&person) {
+
+      let storePrizes=prizes;
+      storePrizes.map(item=>{
+        let save
+       let  personSave=person.filter(person=>{
+        if( person.id===item.id) {
+          return person.name
+        }})
+      let  prizeSave=allPrize.filter(prize=>{
+          if( prize.id===item.id) {
+            return prize.name
+          }
+        })
+        item={...item,'person_name':personSave}
+        item={...item,'prize_name':prizeSave}
+        console.log(item);
+      })
+      console.log(storePrizes);
+      setPrizes(storePrizes)
+    }
     setLoading(false)
   }, [])
+  console.log(prizes);
   // get data
   async function Load() {
    
@@ -115,42 +140,20 @@ const reload=()=> {
         
           }
       }
-      
-      const handlePerson=(e)=> {
-      
-
-          let storePerson=person.filter(item=>item.id===e.person_id)
-         if(storePerson.length>0) {
-
-           return storePerson[0].name
-         }
-      
-        }
-      const handleNobel=(e)=> {
-        let storeNobel=allPrize.filter(item=>item.id===e.nobel_id)
-      
-        if(storeNobel.length>0) {
-
-          return storeNobel[0].nobel_name
-        }
-      }
-      const handleNobelYear=(e)=> {
-        let storeNobel=allPrize.filter(item=>item.id===e.nobel_id)
-        if(storeNobel.length>0) {
-
-          return storeNobel[0].nobel_year
-        }
-      }
+  
   
   // hàm set Init FIlter
   const initFilters = () => {
     setFilters({
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       id_nobel: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      prize_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      prize_year: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      person_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       id_person: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-      motivation: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-      nobel_share: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+      motivation: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
+      nobel_share: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
       status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
     })
     setGlobal('');
@@ -271,15 +274,15 @@ const reload=()=> {
             showGridlines
             removableSort
             filters={filters}
-            globalFilterFields={['id_person','id_nobel','motivation','nobel_share']}
+            globalFilterFields={['id_person','id_nobel','motivation','nobel_share','prize_name','prize_year','person_name']}
             selection={selection} onSelectionChange={(e) => setSelection(e.value)}
           >
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-            <Column sortable   field='nobel_id' body={handleNobel} header='nobel name' />
-            <Column sortable  field='nobel_id' body={handleNobelYear} header='nobel year' />
-            <Column sortable  field='person_id' body={handlePerson  } header='person name' />
-            <Column sortable filter field='motivation' header='motivation' />
-            <Column sortable field='nobel_share' header='nobel share' />
+            <Column sortable  filter  field='prize_name'  header='nobel name' style={{minWidth:'12rem'}} />
+            <Column sortable  filter field='prize_year' header='nobel year'  style={{minWidth:'12rem'}} />
+            <Column sortable  filter field='person_name' header='person name'   style={{minWidth:'12rem'}}/>
+            <Column sortable filter field='motivation' header='motivation'   style={{minWidth:'12rem'}}/>
+            <Column sortable field='nobel_share' header='nobel share'  style={{minWidth:'12rem'}} />
 
             <Column field='status' header='status' body={itemStatus} />
 
