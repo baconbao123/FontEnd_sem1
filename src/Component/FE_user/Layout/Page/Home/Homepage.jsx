@@ -150,7 +150,7 @@ const Homepage = React.memo(() => {
         </header>
 
         <section className="container page-container text-light text-center">
-          <div className="col-md-10 col-lg-7 m-auto" data-aos='fade-up'>
+          <div className="col-md-10 col-lg-7 m-auto" data-aos="fade-up">
             <h6 className="title mb-4">Explore Nobel Prizes</h6>
             <p className="mb-5 text-container">
               Between 1901 and 2022, the Nobel Prizes and the Sveriges Riksbank
@@ -199,46 +199,53 @@ const Homepage = React.memo(() => {
         </div>
         <div className="container">
           <div className="row container m-auto container-item-post mb-3">
-          {activeBlog.slice(0, numPosts).map((item, index) => (
-            <Card className=" col-lg-4 col-md-6 col-xs-12 " data-aos='fade-up' key={index}>
-              <Card.Img
-                className="c-img"
-                variant="top"
-                src={"http://127.0.0.1:8000/api/images/" + item.avatar}
-              ></Card.Img>
-              <Card.Body
-                className=""
-                style={{
-                  backgroundColor: "#e9ecef",
-                  borderRadius: "0 0 5px 5px",
-                }}
+            {activeBlog.slice(0, numPosts).map((item, index) => (
+              <Card
+                className=" col-lg-4 col-md-6 col-xs-12 "
+                data-aos="fade-up"
+                key={index}
               >
-                <Card.Subtitle style={{ color: "gray", marginTop: "10px" }}>
-                  Topic: {new Date(item.created_at).getFullYear()}
-                </Card.Subtitle>
-                <Link to={`blog/${item.id}`} title={item.title}>
-                  <div style={{ color: "black" }}>
-                    <TruncatedTitle content={item.title} />
-                  </div>
-                </Link>
-                <TruncatedContent content={item.content} />
-                <Link to={`blog/${item.id}`} style={{ padding: "0 0 30px 0" }}>
-                  See more
-                </Link>
-              </Card.Body>
-            </Card>
-          ))}
-          <Link to="/blog" className="text-center">
-            <button className="learn-more">
-              <span className="circle" aria-hidden="true">
-                <span className="icon arrow"></span>
-              </span>
-              <span className="button-text">All Posts</span>
-            </button>
-          </Link>
+                <Card.Img
+                  className="c-img"
+                  variant="top"
+                  src={"http://127.0.0.1:8000/api/images/" + item.avatar}
+                ></Card.Img>
+                <Card.Body
+                  className=""
+                  style={{
+                    backgroundColor: "#e9ecef",
+                    borderRadius: "0 0 5px 5px",
+                  }}
+                >
+                  <Card.Subtitle style={{ color: "gray", marginTop: "10px" }}>
+                    Topic: {new Date(item.created_at).getFullYear()}
+                  </Card.Subtitle>
+                  <Link to={`blog/${item.id}`} title={item.title}>
+                    <div style={{ color: "black" }}>
+                      <TruncatedTitle content={item.title} />
+                    </div>
+                  </Link>
+                  <TruncatedContent content={item.content} />
+                  <Link
+                    to={`blog/${item.id}`}
+                    style={{ padding: "0 0 30px 0" }}
+                  >
+                    See more
+                  </Link>
+                </Card.Body>
+              </Card>
+            ))}
+            <Link to="/blog" className="text-center">
+              <button className="learn-more">
+                <span className="circle" aria-hidden="true">
+                  <span className="icon arrow"></span>
+                </span>
+                <span className="button-text">All Posts</span>
+              </button>
+            </Link>
+          </div>
         </div>
-        </div>
-        
+
         <Footer />
       </div>
     </div>

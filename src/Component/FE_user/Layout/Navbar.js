@@ -38,23 +38,27 @@ function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
   useEffect(() => {
-    const handleClickOutside = event => {
+    const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setClickSearch(false);
+        setClickSearch(!clickSearch);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
-  }, [searchRef]);
+  }, []);
 
+  // display none search
   function onClickSearch() {
     setClickSearch(!clickSearch);
+  }
+  function onClickSearch1() {
+    setClickSearch(!clickSearch);
+
   }
   function onMouseEnterNavbar() {
     setOnMouseEnterNav(true);
@@ -135,7 +139,7 @@ function Navbar() {
               </ul>)
             }
           </li>
-          <li className="nav-item search">
+          <li className="nav-item search" ref={searchRef}>
             <a className="nav-link search-toggle" onClick={onClickSearch} style={{ cursor: 'pointer' }}>
               <GoSearch /> Search
             </a>
@@ -154,13 +158,13 @@ function Navbar() {
                 <div className="search-results " data-aos='fade' >
                   {storePerson.length > 0 ? (
                     storePerson.map((person, index) => (
-                      <div className="item-person w-100">                     
-                      <Link to={`/biography/${person.id}`} key={index} className="search-result-item " style={{padding:'10px 20px 10px 15px'}} >
-                        <div className="search-result-info">
-                          <p style={{ fontSize: '14px' }}>{person.name}</p>
-                        </div>
-                        <img src={`http://127.0.0.1:8000/api/images/${person.avatar}`} alt={person.name} width={30} />
-                      </Link>
+                      <div className="item-person w-100">
+                        <Link to={`/biography/${person.id}`} key={index} className="search-result-item " style={{ padding: '10px 20px 10px 15px' }} onClick={onClickSearch1} >
+                          <div className="search-result-info">
+                            <p style={{ fontSize: '14px' }}>{person.name}</p>
+                          </div>
+                          <img src={`http://127.0.0.1:8000/api/images/${person.avatar}`} alt={person.name} width={30} />
+                        </Link>
                       </div>
                     ))
                   ) : (
