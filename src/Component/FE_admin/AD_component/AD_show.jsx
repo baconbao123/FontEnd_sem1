@@ -24,6 +24,9 @@ export default function AD_show() {
       navigate('/login')
     }
   })
+  useEffect(() => {
+    document.title = 'Admin-Person';
+  }, []);
   // Khởi tạo các biến
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true)

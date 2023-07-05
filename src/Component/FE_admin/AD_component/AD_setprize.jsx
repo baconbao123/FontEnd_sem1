@@ -20,6 +20,9 @@ export default function AD_setprize() {
       navigate('/login')
     }
    })
+   useEffect(() => {
+    document.title = 'Admin-SetPrize';
+  }, []);
   const [prizes, setPrizes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [global, setGlobal] = useState('');

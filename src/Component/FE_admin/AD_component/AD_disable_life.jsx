@@ -22,6 +22,9 @@ export default function AD_disable_life() {
       navigate('/login')
     }
    })
+   useEffect(() => {
+    document.title = 'Admin-Disable-Life';
+  }, []);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [global, setGlobal] = useState('')

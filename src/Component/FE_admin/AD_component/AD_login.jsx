@@ -9,7 +9,9 @@ import {Toast} from 'primereact'
 import { Card } from 'primereact/card';
         
 export default function AD_login() {
-  
+  useEffect(() => {
+    document.title = 'Admin-Login';
+  }, []);
   const [email,setEmail]=useState();
   const [password,setPassword]=useState();
   const navigate = useNavigate();

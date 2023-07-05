@@ -18,6 +18,9 @@ export default function AD_prizes() {
       navigate('/login')
     }
    })
+   useEffect(() => {
+    document.title = 'Admin-Prizes';
+  }, []);
    const [showNav,setShowNav]=useState(false)
     const [prizes,setPrizes]=useState([]);
     const [loading, setLoading] = useState(true);
