@@ -17,9 +17,9 @@ const Biography = ({personData}) => {
     useEffect(() => {
         AOS.init();
     }, []);
-    
-
-
+    useEffect(() => {
+        document.title = `Nobel- ${personData.name}`;
+      }, [personData]);
 // img
     let images = [];
     if (personData && personData.img) {

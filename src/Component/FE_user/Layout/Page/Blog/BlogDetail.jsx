@@ -22,7 +22,9 @@ const BlogDetail = () => {
   useEffect(() => {
     fetchData();
   }, [id]);
-
+  useEffect(() => {
+    document.title = 'Nobel-Blog-Detail';
+  }, []);
   async function fetchData() {
     try {
       const res = await axios.get(`http://127.0.0.1:8000/api/blogs/${id}`);

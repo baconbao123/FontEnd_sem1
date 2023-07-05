@@ -14,7 +14,9 @@ function About() {
   useEffect(() => {
     AOS.init();
   }, []);
-
+  useEffect(() => {
+    document.title = 'Nobel-AboutUs';
+  }, []);
   const [items, setItems] = useState([]);
   const [founders, setFounders] = useState([]);
   useEffect(() => {

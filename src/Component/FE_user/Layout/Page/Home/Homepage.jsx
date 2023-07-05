@@ -20,9 +20,9 @@ const TruncatedContent = ({ content }) => {
 };
 const TruncatedTitle = ({ content }) => {
   if (content.length > 50) {
-    return <Card.Title>{content.slice(0, 50)}...</Card.Title>;
+    return <Card.Title className="title-hover">{content.slice(0, 50)}...</Card.Title>;
   } else {
-    return <Card.Title>{content}</Card.Title>;
+    return <Card.Title className="title-hover">{content}</Card.Title>;
   }
 };
 const Homepage = React.memo(() => {
@@ -31,7 +31,9 @@ const Homepage = React.memo(() => {
   useEffect(() => {
     AOS.init();
   }, []);
-
+  useEffect(() => {
+    document.title = "Home";
+  }, []);
   useEffect(() => {
     async function fetchData() {
       const res = await axios.get(`http://127.0.0.1:8000/api/allblogs`);
@@ -134,6 +136,13 @@ const Homepage = React.memo(() => {
   const handleButtonClick = useCallback(() => {
     // Xử lý sự kiện khi nút được nhấn
   }, []);
+  const scrollToBot = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+      duration: 10000,
+    });
+  };
 
   return (
     <div className="container">
@@ -143,9 +152,14 @@ const Homepage = React.memo(() => {
           <div className="overlay"></div>
           <div className="header-content">
             <h1 className="header-title">
-              "FOR THE GREATEST BENEFIT TO HUMANKIND"
+              “ FOR THE GREATEST BENEFIT TO HUMANKIND ”
             </h1>
             <p className="header-subtitle">- Alfred Nobel -</p>
+            <div
+              class="scroll-down text "
+              title="scroll down 🔽"
+              onClick={() => scrollToBot()}
+            ></div>
           </div>
         </header>
 

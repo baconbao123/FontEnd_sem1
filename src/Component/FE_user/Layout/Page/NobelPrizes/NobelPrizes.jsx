@@ -11,6 +11,9 @@ function NobelPrizes() {
   useEffect(() => {
     AOS.init();
   }, []);
+  useEffect(() => {
+    document.title = 'Nobel-All-Prize';
+  }, []);
   // Data
   const [nobelPrize, setNobelPrize]=useState([]);
   const {name,year,id} = useParams();
