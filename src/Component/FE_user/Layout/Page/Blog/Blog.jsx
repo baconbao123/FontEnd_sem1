@@ -24,7 +24,9 @@ function Blog() {
     const [first, setFirst] = useState(0);
     const [rows, setRows] = useState(6);
     const [totalRecords, setTotalRecords] = useState(0);
-
+    useEffect(() => {
+      document.title = 'Nobel-Blogs';
+    }, []);
     useEffect(() => {
         async function fetchData() {
             try {
@@ -75,7 +77,7 @@ function Blog() {
         <h1 style={{ color: 'white', textAlign: 'center', marginTop: '400px' }}>
         Not find a blog
         </h1>
-          <Link to="/" style={{textAlign: 'center'}} className='card-back'>
+          <Link to="/" style={{textAlign: 'center'}} className='card-back' >
             <div className='to-home'>Back to Home</div>
           </Link>
       </>
@@ -143,11 +145,11 @@ function Blog() {
                           >
                             Topic: {new Date(item.created_at).getFullYear()}
                           </Card.Subtitle>
-                          <Link className="card-link c-title" to={`${item.id}`}>
+                          <Link className="card-link c-title" to={`${item.id}`} >
                             {item.title}
                           </Link>
                           <TruncatedContent content={item.content} />
-                          <Link className="card-link c-see-more" to={`${item.id}`}>
+                          <Link className="card-link c-see-more" to={`${item.id}`} >
                             See more
                           </Link>
                         </Card.Body>
