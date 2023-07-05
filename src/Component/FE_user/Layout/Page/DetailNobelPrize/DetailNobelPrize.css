@@ -8,9 +8,15 @@
   justify-content: end;
 }
 .form-select-nobel {
-  width: 15%;
+  width: 13%;
+  
 }
-
+@media (max-width: 768px) {
+  .form-select-nobel {
+    width: 30% ;
+    font-size: small;
+  }
+}
 .card {
   display: block;
   margin-bottom: 20px;
