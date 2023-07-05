@@ -54,6 +54,14 @@
   list-style: none;
   font-size: 1.75rem;
   line-height: 4.5rem;
+  
+}
+.list-contact ul >li>a{
+  text-decoration: none;
+  color: #fff;
+}
+.list-contact ul >li>a:hover{
+  color: #57A4FF;
 }
 .des-contact{
   font-size: 1rem;

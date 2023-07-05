@@ -11,17 +11,22 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
-const TruncatedContent = ({content}) => {
-  if(content.length > 100) {
-      return <Card.Text>{content.slice(0,100)}...</Card.Text>
+const TruncatedContent = ({ content }) => {
+  if (content.length > 100) {
+    return <Card.Text>{content.slice(0, 100)}...</Card.Text>;
+  } else {
+    return <Card.Text>{content}</Card.Text>;
   }
-  else {
-      return <Card.Text>{content}</Card.Text>
+};
+const TruncatedTitle = ({ content }) => {
+  if (content.length > 50) {
+    return <Card.Title>{content.slice(0, 50)}...</Card.Title>;
+  } else {
+    return <Card.Title>{content}</Card.Title>;
   }
-}
-
+};
 const Homepage = React.memo(() => {
-  const [blogData, setBlogData] = useState([])
+  const [blogData, setBlogData] = useState([]);
   // effect srcoll
   useEffect(() => {
     AOS.init();
@@ -30,17 +35,19 @@ const Homepage = React.memo(() => {
   useEffect(() => {
     async function fetchData() {
       const res = await axios.get(`http://127.0.0.1:8000/api/allblogs`);
-      if(res &&  res.data.blogs) {
-        const activeBlogs = res.data.blogs.filter(blog => blog.status === 'active');
+      if (res && res.data.blogs) {
+        const activeBlogs = res.data.blogs.filter(
+          (blog) => blog.status === "active"
+        );
         if (activeBlogs.length > 0) {
-            setBlogData(activeBlogs);
+          setBlogData(activeBlogs);
+        }
       }
-
-    }}
+    }
     fetchData();
-  }, [])
+  }, []);
 
-  const activeBlog = blogData?.filter((blog) => blog.status === 'active')
+  const activeBlog = blogData?.filter((blog) => blog.status === "active");
 
   // DATA
   const itemCategorys = useMemo(() => [
@@ -105,10 +112,25 @@ const Homepage = React.memo(() => {
         "Can you match the right peace laureate with the right accomplishment? Have a try!",
     },
   ]);
-
-  // set show max 2 post
   const [numPosts, setNumPosts] = useState(3);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 992) {
+        setNumPosts(3); // lg
+      } else if (window.innerWidth >= 768) {
+        setNumPosts(2); // md
+      } else {
+        setNumPosts(1); // xs
+      }
+    };
 
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup listener when the component is unmounted
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const handleButtonClick = useCallback(() => {
     // Xử lý sự kiện khi nút được nhấn
   }, []);
@@ -128,7 +150,7 @@ const Homepage = React.memo(() => {
         </header>
 
         <section className="container page-container text-light text-center">
-          <div className="col-md-10 col-lg-7 m-auto">
+          <div className="col-md-10 col-lg-7 m-auto" data-aos='fade-up'>
             <h6 className="title mb-4">Explore Nobel Prizes</h6>
             <p className="mb-5 text-container">
               Between 1901 and 2022, the Nobel Prizes and the Sveriges Riksbank
@@ -172,40 +194,39 @@ const Homepage = React.memo(() => {
           </Link>
         </div>
         {/* Post  */}
-        <div className="col-md-10 col-lg-8 m-auto text-light text-center">
+        <div className=" text-light text-center">
           <h6 className="title mb-4 mt-4 pt-5 ">The Journal</h6>
         </div>
-        <div className="row container m-auto container-item-post mb-3">
+        <div className="container">
+          <div className="row container m-auto container-item-post mb-3">
           {activeBlog.slice(0, numPosts).map((item, index) => (
-            <Col lg={4} md={3}  key={index}>
-            <Card className="card-1" style={{ width: '23rem' }}>
+            <Card className=" col-lg-4 col-md-6 col-xs-12 " data-aos='fade-up' key={index}>
               <Card.Img
                 className="c-img"
                 variant="top"
-                src={'http://127.0.0.1:8000/api/images/' + item.avatar}
+                src={"http://127.0.0.1:8000/api/images/" + item.avatar}
               ></Card.Img>
               <Card.Body
-                className="c-body"
+                className=""
                 style={{
-                  backgroundColor: '#e9ecef',
-                  borderRadius: '5px',
+                  backgroundColor: "#e9ecef",
+                  borderRadius: "0 0 5px 5px",
                 }}
               >
-                <Card.Subtitle
-                  style={{ color: 'gray', marginTop: '10px' }}
-                >
+                <Card.Subtitle style={{ color: "gray", marginTop: "10px" }}>
                   Topic: {new Date(item.created_at).getFullYear()}
                 </Card.Subtitle>
-                <Link className="c-title" to={`blog/${item.id}`}>
-                  <h5 style={{color: "black"}}>{item.title}</h5>
+                <Link to={`blog/${item.id}`} title={item.title}>
+                  <div style={{ color: "black" }}>
+                    <TruncatedTitle content={item.title} />
+                  </div>
                 </Link>
                 <TruncatedContent content={item.content} />
-                <Link className="card-link" to={`blog/${item.id}`}>
+                <Link to={`blog/${item.id}`} style={{ padding: "0 0 30px 0" }}>
                   See more
                 </Link>
               </Card.Body>
             </Card>
-          </Col>
           ))}
           <Link to="/blog" className="text-center">
             <button className="learn-more">
@@ -216,6 +237,8 @@ const Homepage = React.memo(() => {
             </button>
           </Link>
         </div>
+        </div>
+        
         <Footer />
       </div>
     </div>

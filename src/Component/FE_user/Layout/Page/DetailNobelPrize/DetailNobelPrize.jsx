@@ -54,7 +54,9 @@ function DetailNobelPrize() {
 
         {jsonData[0]?.nobelPrize[0]?.persons.length === 0 ? (
           <section className="text-center row mb-4">
-            <p className="col-lg-12 m-auto" style={{color:'gray'}}>data not available</p>
+            <p className="col-lg-12 m-auto" style={{ color: "gray" }}>
+              data not available
+            </p>
           </section>
         ) : (
           <>
@@ -76,10 +78,7 @@ function DetailNobelPrize() {
                         <Card.Text className="prizes">
                           <p>
                             The Nobel Prize in{" "}
-                            {jsonData[0]?.nobelPrize[0]?.namePrize.replace(
-                              "Prize",
-                              " "
-                            )}{" "}
+                            {jsonData[0]?.nobelPrize[0]?.namePrize}{" "}
                             {jsonData[0]?.year}
                           </p>
                         </Card.Text>

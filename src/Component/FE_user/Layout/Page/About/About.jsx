@@ -87,6 +87,7 @@ function About() {
                   alt="icon"
                   width={75}
                   className="mb-3"
+                  data-aos='zoom-in'
                 />
                 <p className="mb-3">{item.content}</p>
                 <Link to={item.link} className="btn btn-info mt-3">
@@ -129,25 +130,25 @@ function About() {
             <div className="col-lg-5 col-md-5 list-contact">
               <ul>
                 <li>
-                  <span>
+                  <Link to='https://goo.gl/maps/DKnAZJVpv6W6FsNe7'>
                     <MdLocationOn />
-                  </span>{" "}
-                  <span className="des-contact">
+                  </Link>{" "}
+                  <Link to='https://goo.gl/maps/DKnAZJVpv6W6FsNe7' target="_blank"  className="des-contact">
                     : 35/6 D5, Ward 25, Binh Thanh District, Ho Chi Minh City
-                  </span>
+                  </Link>
                 </li>
                 <li>
-                  <span>
+                  <Link to='tel: 0123456789'>
                     {" "}
                     <BsFillTelephoneOutboundFill />
-                  </span>{" "}
-                  <span className="des-contact"> : (+84) 123456789</span>
+                  </Link>{" "}
+                  <Link to='tel: 0123456789' className="des-contact"> : (+84) 123456789</Link>
                 </li>
                 <li>
-                  <span>
+                  <Link to="mailto:baconbao@gmail.com">
                     <MdAttachEmail />
-                  </span>{" "}
-                  <span className="des-contact"> : baconbao@gmail.com</span>
+                  </Link>{" "}
+                  <Link to="mailto:baconbao@gmail.com" className="des-contact" > : baconbao@gmail.com</Link>
                 </li>
               </ul>
             </div>

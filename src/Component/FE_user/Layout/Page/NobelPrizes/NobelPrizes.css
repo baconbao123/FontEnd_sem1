@@ -10,6 +10,23 @@
   font-size: 48px !important;
   margin-top: 20px;
 }
+/* responsive */
+@media (max-width: 768px) {
+  .title-nobel-prizes h1  {
+   font-size: 30px !important;
+  }
+  .year h3{
+    font-size: 25px !important;
+  }
+  .title-nobel-prizes::after{
+    height: 10px !important;
+    margin-bottom: 10px;
+  }
+  .item-nobel-prize{
+    border-left: 10px solid #f1a40e !important;
+    padding: 10px 50px 15px 15px !important;
+  }
+}
 .title-nobel-prizes::after {
   content: "";
   display: block;
@@ -29,6 +46,11 @@
 }
 .btn-reset{
   width: 10%;
+}
+@media (max-width: 768px) {
+  .btn-reset {
+    width: 25%;
+  }
 }
 /* item-nobel-prize */
 .item-nobel-prizes a {

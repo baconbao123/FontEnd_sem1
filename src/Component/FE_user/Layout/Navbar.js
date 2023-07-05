@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { GoSearch } from 'react-icons/go'
 import AOS from "aos";
 import "aos/dist/aos.css";
+import axios from "axios";
 function Navbar() {
   useEffect(() => {
     AOS.init();
@@ -14,7 +15,6 @@ function Navbar() {
   const [onMouseEnterNav, setOnMouseEnterNav] = useState(false);
   const [onMouseEnterNav1, setOnMouseEnterNav1] = useState(false);
   const searchRef = useRef(null);
-
   // path active
   const [activeLink, setActiveLink] = useState('');
 
@@ -71,6 +71,21 @@ function Navbar() {
     setOnMouseEnterNav1(false);
   }
 
+  const [personList, setPersonList] = useState('');
+  const [storePerson, setStorePerson] = useState([]);
+  const handlePerson = (value) => {
+    setPersonList(value);
+    getPerson(value)
+  }
+  console.log(personList);
+  async function getPerson(value) {
+    const res = await axios.get('http://127.0.0.1:8000/api/person');
+    let stores = res.data.filter(store => {
+      return store.name.toLowerCase().includes(value.toLowerCase()) && store.status === 'active';
+    })
+    setStorePerson(stores)
+  }
+  console.log(storePerson)
   return (
     <div>
       <nav className={`page-navbar ${scrolled ? "scrolled" : ""} ${location.pathname.startsWith('/chemistry/biography/') ? 'black-bg' : ''} `}>
@@ -125,16 +140,36 @@ function Navbar() {
               <GoSearch /> Search
             </a>
             {clickSearch && (
-              <div className="search-wrapper" ref={searchRef} >
+              <div className="search-wrapper" >
                 <form>
                   <input
                     type="search"
                     className="form-control"
-                    name=""
-                    placeholder=" enter to search"
+                    placeholder="search by laureates..."
+                    onChange={(e) => handlePerson(e.target.value)}
+                    value={personList}
                   />
                 </form>
+                {/* Display search results */}
+                <div className="search-results " data-aos='fade' >
+                  {storePerson.length > 0 ? (
+                    storePerson.map((person, index) => (
+                      <div className="item-person w-100">                     
+                      <Link to={`/biography/${person.id}`} key={index} className="search-result-item " style={{padding:'10px 20px 10px 15px'}} >
+                        <div className="search-result-info">
+                          <p style={{ fontSize: '14px' }}>{person.name}</p>
+                        </div>
+                        <img src={`http://127.0.0.1:8000/api/images/${person.avatar}`} alt={person.name} width={30} />
+                      </Link>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="no-data">Results not found</div>
+                  )}
+
+                </div>
               </div>
+
             )}
           </li>
         </ul>
