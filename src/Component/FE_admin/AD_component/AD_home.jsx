@@ -39,6 +39,9 @@ export default function AD_home() {
         navigate('/login');
       }
     }) }
+    useEffect(() => {
+      document.title = 'Nobel-Admin';
+    }, []);
   useEffect(() => {
     if (!Cookies.get('login')) {
       navigate('/login')

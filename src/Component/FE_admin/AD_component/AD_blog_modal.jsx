@@ -17,6 +17,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
             navigate('/login')
         }
     })
+    
     // khoi tao bien
     const [showModal, setShowModal] = useState(false);
 
@@ -65,6 +66,9 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
         }
         else if (!avatar) {
             showWarn('Avatar must be chosen')
+        }
+        else if(!content) {
+            showWarn('Content can not be empty')
         }
         else {
 
@@ -154,11 +158,15 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
         else if (!avatar) {
             showWarn('Avatar must be chosen')
         }
+        else if(!content) {
+            showWarn('Content can not be empty')
+        }
+        
         else if (check > 0 && count > 0) {
             const data = new FormData();
             data.append('_method', "PUT")
             imgName.map(item => data.append('img[]', item));
-            data.append('name', titlePost);
+            data.append('title', titlePost);
 
             data.append('status', statusName.status);
             data.append('author', author)
@@ -176,8 +184,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
 
                 setShowModal(!showModal)
                 setTitlePost('');
-                setAuthor('');
-
+                setAuthor(''); 
                 setContent('')
                 setStatusName({status:''});
                
@@ -191,7 +198,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
             const data = new FormData();
             data.append('_method', "PUT")
             data.append('avatar', avatar)
-            data.append('name', titlePost);
+            data.append('title', titlePost);
 
             data.append('status', statusName.status);
             data.append('author', author)
@@ -224,7 +231,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
             const data = new FormData();
             data.append('_method', "PUT")
             imgName.map(item => data.append('img[]', item));
-            data.append('name', titlePost);
+            data.append('title', titlePost);
 
             data.append('status', statusName.status);
             data.append('author', author)

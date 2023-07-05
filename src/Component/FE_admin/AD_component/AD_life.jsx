@@ -19,6 +19,9 @@ export default function AD_life() {
           navigate('/login')
         }
        })
+       useEffect(() => {
+        document.title = 'Admin-Life';
+      }, []);
        const toast = useRef(null);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);

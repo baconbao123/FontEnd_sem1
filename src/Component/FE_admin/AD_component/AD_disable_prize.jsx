@@ -19,6 +19,9 @@ export default function AD_disable_prize() {
       navigate('/login')
     }
    })
+   useEffect(() => {
+    document.title = 'Admin-Disable-Prize';
+  }, []);
     const [prizes,setPrizes]=useState([]);
     const [loading, setLoading] = useState(true);
     const [global, setGlobal] = useState('');

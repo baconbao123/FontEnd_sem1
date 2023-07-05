@@ -24,6 +24,9 @@ export default function AD_blog() {
       navigate('/login')
     }
    })
+   useEffect(() => {
+    document.title = 'Admin-Blog';
+  }, []);
 // Khởi tạo các biến
   const [blog, setBlog] = useState([]);
   const [loading, setLoading] = useState(true)

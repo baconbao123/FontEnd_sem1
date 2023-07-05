@@ -24,6 +24,9 @@ export default function AD_disbale_show() {
       navigate('/login')
     }
    })
+   useEffect(() => {
+    document.title = 'Admin-Disable-Person';
+  }, []);
 // Khởi tạo các biến
   const [person, setPerson] = useState([]);
   const [loading, setLoading] = useState(true)
