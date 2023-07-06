@@ -148,10 +148,10 @@ export default function AD_home() {
                   <span className='d-inline-block'>
                     <h1  > ADMIN</h1>
                   </span>
-                  <section className='d-inline-block text-center '>
-                    <Button  ref={showModalButoon} className=' me-3  d-md-none d-sm-none  xs-none d-lg-block mb-3'>Change Password</Button>
+                  <section className='  text-center '>
+                    <Button  ref={showModalButoon} className=' me-3  d-md-none d-sm-none  xs-none d-lg-inline-flex mb-3'>Change Password</Button>
                     <AD_modal_password show={showModalButoon} toast={toast}/>
-                    <Button className='mb-3  d-md-none d-sm-none xs-none d-xs-none d-lg-block' onClick={logout}>Log Out</Button>
+                    <Button className='mb-3  d-md-none d-sm-none xs-none d-xs-none d-lg-inline-flex' onClick={logout}>Log Out</Button>
                   </section>
               
                 </section>

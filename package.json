@@ -22,6 +22,8 @@
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
+    "react-lines-ellipsis": "^0.15.3",
+    "react-read-more-read-less": "^1.0.7",
     "react-router-dom": "^6.12.1",
     "react-scripts": "^5.0.1",
     "sass": "^1.63.4",
