@@ -136,31 +136,34 @@ export default function AD_prizes() {
       <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
             <BsChevronDoubleRight />
           </section>
+          <section>
+
             <span className="p-input-icon-left mb-3">
               <BsSearch className="pi pi-search" />
               <InputText value={global} onChange={handleGlobalSearch} placeholder="Keyword Search" />
            
-              <Button  type="button"  label="Clear" outlined onClick={clearFilter} className='ms-1' >
+            </span>
+              <Button  type="button"  label="Clear" outlined onClick={clearFilter} className='ms-1  mb-3' >
                 <RiFilterOffFill  />
                  </Button>
              
-            </span>
+          </section>
             <h1 className='hidden-1000'>PRIZE</h1>
             <span className='AD-show-dropdown'>
     
 
         
             </span>
-            <section style={{minWidth:'24rem'}}>
+            <section  className='header-button'>
             <Button
              ref={showModalButoon}
-             className='d-inline-flex justify-content-end' type='button' label="ADD"  severity='info'>
+             className='d-inline-flex justify-content-end mb-2' type='button' label="ADD"  severity='info'>
               <BsTrophyFill className='ms-2'/> </Button>
               {selection.length===1&&(
              <>
               <Button 
               ref={showModalEdit} 
-              className='ms-3' type='button' label="edit" severity='warning' >
+              className='ms-3 mb-2' type='button' label="edit" severity='warning' >
                 <BsGear   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
                 <AD_prizes_modal setSelection={handleSelection}  toast={toast}  Load={Load} title={"EDIT PRIZE"} show={showModalEdit}  value={selection[0]}/>
 
@@ -169,7 +172,7 @@ export default function AD_prizes() {
               )}
     
               {selection.length>=1&&(
-              <Button onClick={handleDisable} className='ms-3' type='button' label="disable" severity='danger' >
+              <Button onClick={handleDisable} className='ms-3 mb-2'  type='button' label="disable" severity='danger' >
                 <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
     
               )}

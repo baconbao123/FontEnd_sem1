@@ -406,7 +406,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
         <>
 
 
-            <Modal show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
+            <Modal className='modal-md' show={showModal} onHide={() => setShowModal(!showModal)} centered={true} fullscreen={'lg-down'} size='lg'>
                 <Modal.Header closeButton>
                     <Modal.Title>
                       

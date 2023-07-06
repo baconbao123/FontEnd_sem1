@@ -56,7 +56,9 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
     
      
         if(value) {
-        
+            if(value.person_status==='disable') {
+                showWarn('Person is disable');
+            }
           
             if(value.id) {
                 setPersonSelected(person.filter(item=>item.id===value.id))
@@ -71,12 +73,14 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
             setEducation(value.education);
             setExperiment(value.experiment);
             setStruggles(value.struggles);
-            setBook(value.book)
+            setBook(value.books)
             setStatusName({status:value.status})
             
         }
        
       }, [])
+      console.log(value);
+      console.log(personSelected);
         // Toast
     const showError = (e) => {
         toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});
@@ -157,12 +161,16 @@ async function Loadperson() {
       }
 // Ham update life
       async function updatelife() {
-        if(statusName.name==='') {
+        if  (value.person_status==='disable') {
+            showWarn('Person is disable')
+        }
+        else if(statusName.name==='') {
             showWarn('Status must be chosen')
         }
         else if(!personSelected) {
             showWarn('Person is disable')
         }
+        
         else {
 
             try{
@@ -235,7 +243,7 @@ async function Loadperson() {
    
     return (
         <>
-            <Modal show={showModal} centered={true} size='lg' onHide={() => setShowModal(false)}>
+            <Modal className='modal-md' show={showModal} centered={true} size='lg' onHide={() => setShowModal(false)} fullscreen="lg-down">
                 <Modal.Header closeButton>
                     <Modal.Title><h1>{title}</h1></Modal.Title>
                 </Modal.Header>

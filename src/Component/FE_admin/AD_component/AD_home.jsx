@@ -20,10 +20,12 @@ import AD_prize_modal from '../AD_component/AD_prizes_modal';
 import AD_blog_modal from '../AD_component/AD_blog_modal';
 import AD_setprize_modal from '../AD_component/AD_setprize_modal';
 import AD_prizes_modal from '../AD_component/AD_prizes_modal'
+import AD_modal_password from './AD_modal_password'
 import Swal from 'sweetalert2'
 export default function AD_home() {
   const navigate = useNavigate();
   const toast=useRef()
+  const showModalButoon=useRef()
   const logout = () => {
     Swal.fire({
       title: 'Are you sure?',
@@ -146,9 +148,12 @@ export default function AD_home() {
                   <span className='d-inline-block'>
                     <h1  > ADMIN</h1>
                   </span>
-                  <section className='d-inline-block'>
-                    <Button onClick={logout}>LOG OUT</Button>
+                  <section className='d-inline-block text-center '>
+                    <Button  ref={showModalButoon} className=' me-3  d-md-none d-sm-none  xs-none d-lg-block mb-3'>Change Password</Button>
+                    <AD_modal_password show={showModalButoon} toast={toast}/>
+                    <Button className='mb-3  d-md-none d-sm-none xs-none d-xs-none d-lg-block' onClick={logout}>Log Out</Button>
                   </section>
+              
                 </section>
               </Card>
             </Container >

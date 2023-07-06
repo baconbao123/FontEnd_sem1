@@ -191,7 +191,7 @@ export default function AD_disable_life() {
           </span>
         </section>
         <h1 className=' jutify-content-center hidden-1000'>LIFE STORY DISABLE</h1>
-        <section style={{ minWidth: '24rem' }}>
+        <section className='mt-3' style={{ minWidth: '24rem' }}>
 
 
 

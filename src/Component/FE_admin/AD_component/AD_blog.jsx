@@ -177,13 +177,13 @@ async function disableperson(item) {
         <span className='AD-show-dropdown'>
 
         </span>
-        <section style={{minWidth:'24rem'}}>
-        <Button ref={showModalButoon} className='d-inline-flex justify-content-end ' type='button' label="ADD"  severity='info'>
+        <section >
+        <Button ref={showModalButoon} className='mb-3' type='button' label="ADD"  severity='info'>
           <BsPersonAdd className='ms-2  p-input-icon-left'/> </Button>
        
           {selection.length===1&&(
          <>
-          <Button ref={showModalEdit} className='ms-3' type='button' label="edit" severity='warning' >
+          <Button ref={showModalEdit} className='ms-3 mb-3' type='button' label="edit" severity='warning' >
             <BsGear   className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
             <AD_blog_modal toast={toast} setSelection={handleSelection} Load={Load} title="EDIT" show={showModalEdit} value={selection[0]}/>
 
@@ -191,7 +191,7 @@ async function disableperson(item) {
           )}
 
           {selection.length>=1&&(
-          <Button  onClick={handleDisable} className='ms-3' type='button' label="disable" severity='danger' >
+          <Button  onClick={handleDisable} className='ms-3 mb-3' type='button' label="disable" severity='danger' >
             <BsTrashFill    className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
 
           )}

@@ -166,15 +166,15 @@ const handelSelection= ()=> {
 
                             
                 <h1 className='hidden-1000'>LIFE STORY</h1>
-                <section style={{ minWidth: '25rem' }}>
+                <section >
 
-                    <Button className='me-3' label="ADD LIFE" severity='info' ref={showModal}>
+                    <Button className='me-3 mb-3' label="ADD LIFE" severity='info' ref={showModal}>
                         <BsDatabaseFillAdd className='ms-2' />
                     </Button>
                     {selection.length === 1 && (
                         <>
 
-                            <Button className='me-3' label="EDIT" severity='warning' ref={showModalEdit}>
+                            <Button className='me-3 mb-3' label="EDIT" severity='warning' ref={showModalEdit}>
                                 <BsGear className='ms-2' />
 
                             </Button>
@@ -184,7 +184,7 @@ const handelSelection= ()=> {
 
                     {selection.length >= 1 && (
 
-                        <Button onClick={handleDisable} className='' label="disable" severity='danger' ref={showModal}>
+                        <Button onClick={handleDisable} className=' mb-3' label="disable" severity='danger' ref={showModal}>
                             <BsTrashFill className='ms-2' />
                         </Button>
                     )}
@@ -218,7 +218,7 @@ const handelSelection= ()=> {
        
       }
   
-
+console.log(data);
     return (
         <Container fluid className='wrapper' >
               <BlockUI blocked={blocked}>
@@ -253,15 +253,15 @@ const handelSelection= ()=> {
                                 
                             <Column field='person_id' body={handlePerson} filter sortable header='person name' style={{ minWidth: '12rem' }} />
                             <Column field='life' filter header='life' style={{ minWidth: '70rem' }} />
-                            <Column field='childhood' filter header='childhood' style={{ minWidth: '24rem' }} />
+                         
                             <Column field='education' filter header='education' style={{ minWidth: '70rem' }} />
                             <Column field='experiment' filter header='experiment' style={{ minWidth: '70rem' }} />
                             <Column field='struggles' filter header='struggles' style={{ minWidth: '70rem' }} />
                             <Column field='time_line' filter header='time_line' style={{ minWidth: '70rem' }} />
-                            <Column field='personalities' filter header='personalities' style={{ minWidth: '70rem' }} />
+                       
                             <Column field='achievements_detail' filter header='achievements_detail' style={{ minWidth: '70rem' }} />
-                            <Column field='quote' filter header='quote' style={{ minWidth: '12rem' }} />
-                            <Column field='books'  filter header='book' style={{ minWidth: '12rem' }} />
+                            <Column field='quote' filter header='quote' style={{ minWidth: '70rem' }} />
+                            <Column field='books'  filter header='book' style={{ minWidth: '24rem' }} />
                           
                             <Column field='status' header='status'  body={itemStatus}/>
                         </DataTable>

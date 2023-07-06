@@ -9,7 +9,7 @@ import { FileUpload } from 'primereact/fileupload';
 import { useNavigate } from 'react-router-dom'
 import { InputText, InputTextarea } from 'primereact'
 import Cookies from 'js-cookie';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import { Toast } from 'primereact/toast';
 export default function AD_setprize_modal({ title, show, value, Load,setSelection,toast }) {
     const navigate = useNavigate();
@@ -96,11 +96,18 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
      let    store= allPrize.filter(item=>item.id===value.nobel_id)
      let storeNobelShare
     
-     if(store) {
+     if(value.person_status==='active'&&value.prize_status==='active'&&store) {
         storeNobelShare=store[0].person.length
       
      }
-        if(statusName.status==='') {
+     if(value.person_status==='disable') {
+        showWarn('Person is disable')
+        }
+     else if (value.prize_status==='disable') {
+        showWarn('Prize is disable')
+      
+    }
+    else if(statusName.status==='') {
             showWarn('Status must be chosen')
         }
         else if (!personName) {
@@ -117,6 +124,8 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
             showWarn('Nobel is not matched')
 
         }
+     
+    
         else {
 
             try {
@@ -197,6 +206,16 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
     },[prizeName])
  
     useEffect(() => {
+        if(value) {
+            if (value.person_status==='disable') {
+                showWarn('Person is disable')
+              
+            }
+            if (value.prize_status==='disable') {
+                showWarn('Prize is disable')
+              
+            }
+        }
         (async () => await LoadPrize())();
         (async () => await LoadPerson())()
         
@@ -240,7 +259,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
             })
             setPrizes(result);
         }
-
+        
     }, [personName])
     // set person have life 
     useEffect(()=> {
@@ -264,12 +283,13 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
     
     useEffect(() => {
         if (value) {
+        
             let _filterPerson = person.filter(item => item.id === value.person_id);
  
             setPersonName(_filterPerson[0]);
 
             let _filterPrize = allPrize.filter(item => item.id === value.nobel_id);
-  
+           
             setPrizeName(_filterPrize[0]);
            
             if (_filterPrize.length >0) {
@@ -277,15 +297,15 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
 
                 setCategoryName({ category: _filterPrize[0].nobel_name })
             }
+            
         }
     }, [person,prizes])
-
 
     return (
         <>
 
 
-            <Modal show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
+            <Modal  className='modal-md' show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg' fullscreen='lg-down'>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <h1>{title}</h1>
