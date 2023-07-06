@@ -22,12 +22,12 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
     const [person,setPerson]=useState([])
     const [storePerson,setStorePerson]=useState([])
     const [personSelected,setPersonSelected]=useState('');
-    const [childhood,setChildhood]=useState('')
+  
     const [education,setEducation]=useState('')
     const [experiment,setExperiment]=useState('')
     const [struggles,setStruggles]=useState('')
     const [time_line,setTime_line]=useState('')
-    const [personalities,setPersonalities]=useState('')
+       
     const [achivements,setAchivements]=useState('')
     const [qoute,setQoute]=useState('')
     const [book,setBook]=useState('')
@@ -64,11 +64,11 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
                 setPersonSelected(person.filter(item=>item.id===value.id))
               
             }
-            setChildhood(value.childhood);
+    
             setAchivements(value.achievements_detail);
             setQoute(value.quote);
             setLife(value.life);
-            setPersonalities(value.personalities);
+   
             setTime_line(value.time_line);
             setEducation(value.education);
             setExperiment(value.experiment);
@@ -122,12 +122,12 @@ async function Loadperson() {
     
                 person_id: personSelected.id,
                 life:life,
-                childhood: childhood,
+         
                 education: education ,
                 experiment:  experiment,
                 struggles: struggles ,
                 time_line: time_line ,
-                personalities:  personalities,
+  
                 achievements_detail: achivements ,
                 quote:  qoute,
                 books: book ,
@@ -135,11 +135,11 @@ async function Loadperson() {
             })
            showSuccess('Add success')
             setShowModal(false);
-            setChildhood('');
+      
             setAchivements('');
             setQoute('');
             setLife('');
-            setPersonalities('');
+   
             setTime_line('');
             setEducation('');
             setExperiment('');
@@ -178,12 +178,12 @@ async function Loadperson() {
                 
                 person_id: personSelected.id,
                 life:life,
-                childhood: childhood,
+              
                 education: education ,
                 experiment:  experiment,
                 struggles: struggles ,
                 time_line: time_line ,
-                personalities:  personalities,
+        
                 achievements_detail: achivements ,
                 quote:  qoute,
                 books: book ,
@@ -201,12 +201,12 @@ async function Loadperson() {
                
                
                 setPersonSelected('');
-                setChildhood('');
+             
                 setAchivements('');
                 setQoute('');
                 setLife('');
            
-                setPersonalities('');
+     
                 setTime_line('');
                 setEducation('');
                 setExperiment('');
@@ -278,12 +278,7 @@ async function Loadperson() {
                                 <InputTextarea placeholder=' enter life' style={{minWidth:'100%',minHeight:'12rem'}} value={life} onChange={e=>setLife(e.target.value)} />
                             </Form.Group>
                         </Row>
-                        <Row className='mt-4'>
-                            <Form.Group>
-                                <Form.Label>Childhood</Form.Label>
-                                <InputTextarea placeholder=' enter childhood' style={{minWidth:'100%',minHeight:'12rem'}} value={childhood} onChange={e=>setChildhood(e.target.value)} />
-                            </Form.Group>
-                        </Row>
+                     
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>Education</Form.Label>
@@ -313,12 +308,7 @@ async function Loadperson() {
                                 
                             </Form.Group>
                         </Row>
-                        <Row className='mt-4'>
-                            <Form.Group>
-                                <Form.Label>personalities</Form.Label>
-                                <InputTextarea placeholder='enter personalities' style={{minWidth:'100%',minHeight:'12rem'}} value={personalities} onChange={e=>setPersonalities(e.target.value)} />
-                            </Form.Group>
-                        </Row>    
+                      
                         <Row className='mt-4'>
                             <Form.Group>
                                 <Form.Label>achievements detail</Form.Label>
