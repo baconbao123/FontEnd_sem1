@@ -35,8 +35,8 @@ export default function AD_show() {
     global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     id: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
     name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-    birthdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-    deathdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+    birthdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+    deathdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
     gender: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
     national: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
     status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
@@ -144,8 +144,8 @@ export default function AD_show() {
       global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       id: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-      birthdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-      deathdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
+      birthdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+      deathdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       gender: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
       national: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
       status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
@@ -177,6 +177,8 @@ export default function AD_show() {
         <section className=' fs-2 text-start  d-lg-block d-xl-none d-md-none xs-none d-sm-none show-menu' onClick={e=>setShowNav(true)}>
             <BsChevronDoubleRight />
           </section>
+          <section>
+            
         <span className="p-input-icon-left mb-3">
        
 
@@ -190,15 +192,16 @@ export default function AD_show() {
           <Button type="button" label="Clear" outlined onClick={clearFilter} className='mb-3 ' >
             <RiFilterOffFill className='ms-1' />
           </Button>
+          </section>
         <h1 className='hidden-1000'>PERSON</h1>
 
-        <section className=' ' style={{ minWidth: '24rem' }}>
-          <Button ref={showModalButoon} className='  ' type='button' label="ADD" severity='info'>
+        <section className=' ' >
+          <Button ref={showModalButoon} className=' mb-3 ' type='button' label="ADD" severity='info'>
             <BsPersonAdd className='ms-2  p-input-icon-left' /> </Button>
 
           {selection.length === 1 && (
             <>
-              <Button ref={showModalEdit} className='ms-3' type='button' label="edit" severity='warning' >
+              <Button ref={showModalEdit} className='ms-3 mb-3' type='button' label="edit" severity='warning' >
                 <BsGear className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
               <AD_modal  toast={toast} setSelection={handleSelection} Load={Reload} title="EDIT" show={showModalEdit} value={selection[0]} />
 
@@ -206,7 +209,7 @@ export default function AD_show() {
           )}
 
           {selection.length >= 1 && (
-            <Button onClick={handleDisable} className='ms-3' type='button' label="disable" severity='danger' >
+            <Button onClick={handleDisable} className='ms-3 mb-3' type='button' label="disable" severity='danger' >
               <BsTrashFill className='ms-3 	--bs-body-bg p-input-icon-left' /> </Button>
 
           )}
@@ -365,11 +368,11 @@ export default function AD_show() {
 
           
               <Column field='name' header='name' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='birthdate' header='birthdate' sortable filter dataType='date' style={{ minWidth: '12rem' }} />
-              <Column field='deathdate' header='deathdate' sortable filter dataType='date' style={{ minWidth: '12rem' }} />
+              <Column field='birthdate' header='birthdate' sortable filter style={{ minWidth: '12rem' }} />
+              <Column field='deathdate' header='deathdate' sortable filter style={{ minWidth: '12rem' }} />
               <Column field='national' header='national' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
               <Column field='gender' header='gender' filter sortable filterElement={genderFilter} body={genderStatus} style={{ minWidth: '12rem' }} />
-              <Column field='status' header='status' filter sortable filterElement={statusFilter} body={itemStatus} style={{ minWidth: '12rem' }} />
+              <Column field='status' header='status' sortable filterElement={statusFilter} body={itemStatus} style={{ minWidth: '12rem' }} />
               <Column field='avatar' header='avatar' body={avatarImage}  style={{ minWidth: '12rem' }} />
               
               <Column field='img' header='img'

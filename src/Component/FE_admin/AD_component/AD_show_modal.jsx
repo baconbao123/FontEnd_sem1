@@ -1044,7 +1044,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
         <>
 
 
-            <Modal show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
+            <Modal  className='modal-md hello' fullscreen='lg-down' show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg '>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <Toast ref={toast} />
@@ -1063,15 +1063,14 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
 
 
                         <Row>
-                            <Col lg={4}>
+                            <Col lg={4} sm={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Nation</Form.Label>
-
-                                    <AutoComplete field='name' dropdown value={countryName} onChange={e => setCountryName(e.value)} completeMethod={search} suggestions={filterCountry} />
+                                    <AutoComplete field='name' dropdown value={countryName} onChange={e => setCountryName(e.value)} completeMethod={search} suggestions={filterCountry}  style={{minWidth:'100%'}}/>
                                 </Form.Group>
                             </Col>
 
-                            <Col lg={4}>
+                            <Col lg={4} sm={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Gender</Form.Label>
                                     <Dropdown options={gender} value={genderName} onChange={e => setGenderName(e.target.value)} optionLabel='gender' placeholder='Gender' style={{ minWidth: '100%' }} />
@@ -1080,7 +1079,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                             </Col>
 
 
-                            <Col lg={4}>
+                            <Col lg={4} sm={4}>
                                 <Form.Group className="mb-3" >
                                     <Form.Label>Status</Form.Label>
                                     <Dropdown options={status} value={statusName} onChange={e => setStatusName(e.value)} optionLabel='status' placeholder='Status' style={{ minWidth: '100%' }} />

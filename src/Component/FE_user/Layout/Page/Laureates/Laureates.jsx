@@ -10,7 +10,9 @@ import swal from 'sweetalert';
 function Laureates () {
     const [persons, setPersons] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    useEffect(() => {
+        document.title = 'Nobel-Laureates';
+      }, []);
 
     useEffect(() => {
         async function fetchData() {

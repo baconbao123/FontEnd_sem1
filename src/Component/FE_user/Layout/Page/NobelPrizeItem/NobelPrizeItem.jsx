@@ -15,12 +15,16 @@ function NobelPrizeItem() {
   useEffect(() => {
     AOS.init();
   }, []);
+  
   // Data
   const [nobelPrize, setNobelPrize] = useState([]);
   const [totalPrize, setPrize] = useState("");
   const [totalPerson, setPerson] = useState("");
   const [infoData, setInfoData] = useState([]);
   const { namePrize } = useParams();
+  useEffect(() => {
+    document.title = `Nobel-${namePrize}`;
+  }, [namePrize]);
   useEffect(() => {
     // simulate fetching data from an API
     const fetchData = async () => {

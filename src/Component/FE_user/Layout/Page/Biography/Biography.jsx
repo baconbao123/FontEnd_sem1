@@ -19,8 +19,11 @@ const Biography = ({personData}) => {
     }, []);
     
 
-
+    useEffect(() => {
+        document.title = `Nobel- ${personData.name}`;
+      }, [personData]);
 // cut string in img
+// img
     let images = [];
     if (personData && personData.img) {
       images = personData.img.split(",");

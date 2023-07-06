@@ -6,6 +6,8 @@ import { GoSearch } from 'react-icons/go'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
+import NavbarMD from "./NavbarMD";
+import { FiMenu } from 'react-icons/fi'
 function Navbar() {
   useEffect(() => {
     AOS.init();
@@ -14,6 +16,7 @@ function Navbar() {
   const [clickSearch, setClickSearch] = useState(false);
   const [onMouseEnterNav, setOnMouseEnterNav] = useState(false);
   const [onMouseEnterNav1, setOnMouseEnterNav1] = useState(false);
+  const [onClickMenu, setOnClickMenu] = useState(false);
   const searchRef = useRef(null);
   // path active
   const [activeLink, setActiveLink] = useState('');
@@ -52,13 +55,15 @@ function Navbar() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [searchRef]);
-
+  function handleClickMenu() {
+    setOnClickMenu(!onClickMenu);
+  }
   function onClickSearch() {
     setClickSearch(!clickSearch);
   }
   function onClickSearch1() {
     setClickSearch(!clickSearch);
-    
+
   }
   function onMouseEnterNavbar() {
     setOnMouseEnterNav(true);
@@ -93,20 +98,22 @@ function Navbar() {
   return (
     <div>
       <nav className={`page-navbar ${scrolled ? "scrolled" : ""} ${location.pathname.startsWith('/chemistry/biography/') ? 'black-bg' : ''} `}>
-        <ul className="nav-navbar container">
-          <li className="nav-item">
-            <Link to='/' className={`nav-link nav-active-hover ${activeLink === '/' ? 'active-top-nav' : ''}`}>
+        <ul className="nav-navbar container ">
+          <li className="nav-item" ref={searchRef}>
+            <FiMenu className="d-lg-none d-block text-light nav-link menu-hambuger" onClick={handleClickMenu} />
+            {onClickMenu && (<NavbarMD />)}
+            <Link to='/' className={`d-none d-lg-block m-auto nav-link nav-active-hover ${activeLink === '/' ? 'active-top-nav' : ''}`}>
               Home
             </Link>
           </li>
           <li className="nav-item has-children"
             onMouseEnter={onMouseEnterNavbar}
             onMouseLeave={onMouseLeaveNavbar}>
-            <Link to='/nobel-prizes' className={`nav-link nav-active-hover ${activeLink === '/nobel-prizes' ? 'active-top-nav' : ''}`}>
+            <Link to='/nobel-prizes' className={`d-none d-lg-block m-auto nav-link nav-active-hover ${activeLink === '/nobel-prizes' ? 'active-top-nav' : ''}`}>
               Nobel Prizes & Laureates
             </Link>
             {onMouseEnterNav &&
-              (<ul class="dropdown arrow-top" data-aos='fade'>
+              (<ul class="dropdown arrow-top d-none d-lg-block m-auto" data-aos='fade' >
                 <li><Link to="/laureates">Laureates</Link></li>
                 <li><Link to='/nobel-prizes'> Nobel Prizes</Link></li>
                 <li><Link to="nobel/literature">Literature</Link></li>
@@ -121,23 +128,24 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <Link to='/' className="nav-link nav-active-hover">
-              <img src={logo} alt="Logo" width="100px" />
+              <img src={logo} alt="Logo" width="100px" className="d-none d-lg-block m-auto" />
             </Link>
           </li>
           <li className="nav-item has-children"
             onMouseEnter={onMouseEnterNavbar1}
             onMouseLeave={onMouseLeaveNavbar1}
           >
-            <Link to='/alfred-nobel' className={`nav-link nav-active-hover ${activeLink === '/alfred-nobel' ? 'active-top-nav' : ''}`}>
+            <Link to='/alfred-nobel' className={`d-none d-lg-block m-auto nav-link nav-active-hover ${activeLink === '/alfred-nobel' ? 'active-top-nav' : ''}`}>
               Alfred Nobel &  Blog
             </Link>
             {onMouseEnterNav1 &&
-              (<ul class="dropdown arrow-top" data-aos='fade'>
+              (<ul class="dropdown arrow-top d-none d-lg-block m-auto" data-aos='fade'>
                 <li><Link to='/alfred-nobel'>Alfred Nobel</Link></li>
                 <li><Link to="/blog"> Blogs</Link></li>
                 <li><Link to="/about"> About us</Link></li>
               </ul>)
             }
+
           </li>
           <li className="nav-item search" ref={searchRef}>
             <a className="nav-link search-toggle" onClick={onClickSearch} style={{ cursor: 'pointer' }}>
@@ -158,13 +166,13 @@ function Navbar() {
                 <div className="search-results " data-aos='fade' >
                   {storePerson.length > 0 ? (
                     storePerson.map((person, index) => (
-                      <div className="item-person w-100">                     
-                      <Link to={`/biography/${person.id}`} key={index} className="search-result-item " style={{padding:'10px 20px 10px 15px'}} onClick={onClickSearch1} >
-                        <div className="search-result-info">
-                          <p style={{ fontSize: '14px' }}>{person.name}</p>
-                        </div>
-                        <img src={`http://127.0.0.1:8000/api/images/${person.avatar}`} alt={person.name} width={30} />
-                      </Link>
+                      <div className="item-person w-100">
+                        <Link to={`/biography/${person.id}`} key={index} className="search-result-item " style={{ padding: '10px 20px 10px 15px' }} onClick={onClickSearch1} >
+                          <div className="search-result-info">
+                            <p style={{ fontSize: '14px' }}>{person.name}</p>
+                          </div>
+                          <img src={`http://127.0.0.1:8000/api/images/${person.avatar}`} alt={person.name} width={30} />
+                        </Link>
                       </div>
                     ))
                   ) : (
@@ -177,6 +185,7 @@ function Navbar() {
             )}
           </li>
         </ul>
+
       </nav>
     </div>
   );

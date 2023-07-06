@@ -10,6 +10,9 @@ function AlfredNobel() {
   useEffect(() => {
     AOS.init();
   }, []);
+  useEffect(() => {
+    document.title = 'Nobel-AlfredNobel';
+  }, []);
   return (
     <div className="container alfred-nobel-page">
       <div className="overlay-nobel">

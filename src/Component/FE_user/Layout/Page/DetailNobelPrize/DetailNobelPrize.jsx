@@ -11,7 +11,9 @@ function DetailNobelPrize() {
   const [jsonData, setJsonData] = useState([]);
   const [relatedWards, setRelateWards] = useState([]);
   const { name, year, id } = useParams();
-
+  useEffect(() => {
+    document.title = `Nobel-${name} ${year}`;
+  }, [name]);
   useEffect(() => {
     async function prizeDetailsData() {
       const res = await axios.get(

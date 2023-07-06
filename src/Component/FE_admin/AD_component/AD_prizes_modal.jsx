@@ -141,7 +141,7 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
         <>
 
 
-            <Modal show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
+            <Modal fullscreen="md-down" show={showModal} onHide={() => setShowModal(!showModal)} centered={true} size='lg'>
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <h1>{title}</h1>

@@ -1,6 +1,9 @@
-import React from "react";
+import React ,{useEffect} from "react";
 import { Link } from "react-router-dom";
 const NotFound = () => {
+  useEffect(() => {
+    document.title = `404 Not Found`;
+  }, []);
   return (
     <div style={{ color: "white", textAlign: "center", marginTop: "px" }}>
      <Link to='/'><img src={require(`../../img/logo.png`)} alt="logo" width={100} /></Link>  <br/>

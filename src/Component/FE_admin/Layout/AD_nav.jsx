@@ -8,9 +8,11 @@ import Cookies from 'js-cookie';
 import { useNavigate,Link } from 'react-router-dom';
 import  {BsFillPersonFill,BsFillTrophyFill,BsTrashFill,BsChatLeftTextFill} from   'react-icons/bs';
 import Swal from 'sweetalert2'
+
 export default function AD_nav({page}) {
   const navigate = useNavigate();
   const [nav,setNav]=useState([]);
+
   useEffect(()=>{
     setNav(
       
@@ -104,6 +106,7 @@ export default function AD_nav({page}) {
     
 
     <div className='AD-nav-content '>
+ 
     <section className='AD-nav-container'>
 
     <div className='AD-nav-logo'>
@@ -122,8 +125,11 @@ export default function AD_nav({page}) {
         }  
         <div className='d-flex justify-content-center'>
 
-        <Button className='mt-5' onClick={logout} >LOG OUT </Button>
+        <Button className='mt-5' onClick={logout} >Log out </Button>
+
+      
         </div>
+     
 
     </section>
     </section>

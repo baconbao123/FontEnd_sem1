@@ -10,7 +10,9 @@ function WillAlfedNobel() {
   useEffect(() => {
     AOS.init();
   }, []);
-
+  useEffect(() => {
+    document.title = 'Will-Alfed-Nobel';
+  }, []);
   return (
     <div className="container">
       <div className="overlay">
