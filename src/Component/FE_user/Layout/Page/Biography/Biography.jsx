@@ -20,7 +20,7 @@ const Biography = ({personData}) => {
     
 
 
-// img
+// cut string in img
     let images = [];
     if (personData && personData.img) {
       images = personData.img.split(",");
@@ -28,11 +28,12 @@ const Biography = ({personData}) => {
     
 
 //  Download PDF file  
+// fetch request is sent to the server to get the PDF file from the specified URL
     const getPdfUrl = async () => {
         const response = await fetch(`http://127.0.0.1:8000/api/pdfs/${personData.pdf}`)
-        const blob = await response.blob()
-        const fileUrl = URL.createObjectURL(blob)
-        setPdfUrl(fileUrl)
+        const blob = await response.blob() // response object to extract the response's data as a Blob. to store data such as images, audio, or pdf
+        const fileUrl = URL.createObjectURL(blob)// The createObjectURL() function is used to create a unique URL that can be used to access the data of this Blob object.
+        setPdfUrl(fileUrl) // to update the pdfUrl state with the generated URL.
     }
 
 
@@ -42,6 +43,7 @@ const Biography = ({personData}) => {
 
     const latestNobelYear = sortedNobels[0].nobel_year;
 
+    // Search for information about the Nobel Prize with the year corresponding to the latest award
     const latestNobel = sortedNobels.find(nobel => nobel.nobel_year === latestNobelYear);
 
 
@@ -137,6 +139,7 @@ const Biography = ({personData}) => {
                             <section className='achive-site' data-aos="fade-left" data-aos-duration="1000">
                                 <div className='achive-des-content'>
                                 {personData.achievements_detail && personData.achievements_detail.split('\n').map((achievement, index) => (
+                                    
                                     <p key={index}>{achievement}</p>
                                 ))}
                                 </div>
@@ -157,6 +160,10 @@ const Biography = ({personData}) => {
                                 data-aos-duration="1000">
                                     {personData.time_line && personData.time_line.split('\n').map((item, index) => {
                                         const match = item.match(/^(\d{4})(-?\d{0,4})?(.*)$/);
+                                        // ^(\d{4}): Start the line with a string of 4 digits (representing the year)
+                                        // (-?\d{0,4})?: Dash character - may or may not appear, followed by a string that can be 0 to 4 digits (representing month or day).
+                                        // (.*)$: Any string after the stated section, up to the end of the line (representing the event).
+                                        console.log(match);
                                         if (match) {
                                         const year = `${match[1]}${match[2] ? `${match[2]}` : ''}`;
                                         return (
