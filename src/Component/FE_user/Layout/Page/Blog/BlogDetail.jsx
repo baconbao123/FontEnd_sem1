@@ -74,26 +74,27 @@ const BlogDetail = () => {
       ) : activeBlog && blogData.title ? (
         <section className="container">
           <section className="bd-title pt-5">
-            <span className="bd-title-content" data-aos="fade-right">
+            <span className="bd-title-content" data-aos="fade-up">
               {blogData.title}
             </span>
           </section>
-          <section className="bd-auth" data-aos="fade-left">
+          <section className="bd-auth" data-aos="fade-up">
             {blogData.author}
           </section>
           <section className="bd-pov-1">
             <Row>
-              <Col lg={3} md={5} xs={12}>
+              <Col lg={3} md={12} xs={12}>
                 {images[0] && (
                   <div>
                     <img
                       src={`http://127.0.0.1:8000/api/images/${images[0]}`}
                       alt="pic1"
+                      className="d-none d-md-block d-sm-block d-lg-blog"
                     />
                   </div>
                 )}
               </Col>
-              <Col lg={9} md={7} xs={12}>
+              <Col lg={9} md={12} xs={12}>
                 {contentParts[0] && (
                   <div className="bd-pov-content-1">
                     {contentParts[0].split("\n").map((line, index) => (
@@ -109,7 +110,7 @@ const BlogDetail = () => {
           </section>
           <section className="bd-pov-2">
             <Row>
-              <Col lg={9} md={7}>
+              <Col lg={9} md={12}>
                 {contentParts[1] && (
                   <div className="bd-pov-content-1">
                     {contentParts[1].split("\n").map((line, index) => (
@@ -121,13 +122,13 @@ const BlogDetail = () => {
                   </div>
                 )}
               </Col>
-              <Col lg={3} md={5}>
+              <Col lg={3} md={12}>
                 {images[1] && (
                   <div>
                     <img
                       src={`http://127.0.0.1:8000/api/images/${images[1]}`}
                       alt="pic2"
-                      className="bd-img w-100 mt-3"
+                      className="bd-img w-100 mt-3 d-lg-block d-none"
                     />
                   </div>
                 )}
@@ -136,7 +137,7 @@ const BlogDetail = () => {
           </section>
           <section className="bd-pov-3">
             <Row>
-              <Col lg={4} md={4} className="d-none d-lg-block d-md-block">
+              <Col lg={4} md={12} className="d-none d-lg-block d-md-block">
                 {images[2] && (
                   <div>
                     <img
@@ -147,9 +148,9 @@ const BlogDetail = () => {
                   </div>
                 )}
               </Col>
-              <Col lg={8} md={8}>
+              <Col lg={8} md={12}>
                 {mergeContentParts() && (
-                  <div className="bd-pov-content-1">
+                  <div className="bd-pov-content-1 w-100">
                     {mergeContentParts().split("\n").map((line, index) => (
                       <React.Fragment key={index}>
                         {line}

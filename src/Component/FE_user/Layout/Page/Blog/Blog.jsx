@@ -124,7 +124,7 @@ function Blog() {
       
             {/* card */}
             <section className="card-blog">
-              <Row>
+              <Row className='m-auto'>
                 {activeBlog
                   .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                   .filter((item) =>
@@ -134,8 +134,8 @@ function Blog() {
                   )
                   .slice(first, first + rows)
                   .map((item, index) => (
-                    <Col lg={4} md={6} key={index}>
-                      <Card className="card-1" style={{ width: '23rem' }}>
+                    <Col lg={4} md={6} className='d-flex justify-content-center' key={index}>
+                      <Card className="card-1" style={{ width: '23rem' }} >
                         <Card.Img
                           className="c-img"
                           variant="top"
@@ -154,7 +154,7 @@ function Blog() {
                             Topic: {new Date(item.created_at).getFullYear()}
                           </Card.Subtitle>
                           <Link className="card-link c-title" to={`${item.id}`} >
-                            {item.title}
+                          <TruncatedTitle content={item.title}/>
                           </Link>
                           <TruncatedContent content={item.content} />
                           <Link className="card-link c-see-more" to={`${item.id}`} >

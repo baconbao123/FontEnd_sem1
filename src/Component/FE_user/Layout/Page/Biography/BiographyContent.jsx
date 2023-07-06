@@ -13,9 +13,7 @@ function BiographyContent() {
   useEffect(() => {
     fetchData();
   }, [id]);
-  // useEffect(() => {
-  //   document.title = `Nobel- ${personData.name}`;
-  // }, [personData]);
+
   async function fetchData() {
     try {
       const res = await axios.get(`http://127.0.0.1:8000/api/persons/${id}`);

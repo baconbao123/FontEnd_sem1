@@ -33,7 +33,7 @@ function AlfredNobel() {
           <div className="row ">
             <div
               className="col-lg-7 col-md-7 "
-              data-aos="fade-right"
+              // data-aos="fade-right"
               data-aos-duration="800"
             >
               <h4 className="title-bio-nobel">
@@ -54,8 +54,8 @@ function AlfredNobel() {
             </div>
             <div
               className="col-lg-5 col-md-5 "
-              data-aos="fade-left"
-              data-aos-duration="800"
+              // data-aos="fade-left"
+              // data-aos-duration="800"
             >
               <h4 className="title-bio-nobel">​Quick facts</h4>
               <ul className="sub-title-bio-nobel ">
@@ -95,7 +95,7 @@ function AlfredNobel() {
             <div className="row text-dark">
               <div
                 className="col-lg-6 col-md-12 content-testament-nobel"
-                data-aos="fade-right"
+                data-aos="fade-up"
                 data-aos-offset="300"
                 data-aos-easing="ease-in-sine"
               >
@@ -112,7 +112,7 @@ function AlfredNobel() {
               </div>
               <div
                 className="col-lg-6 col-md-12 content-testament-nobel text-center  "
-                data-aos="fade-left"
+                data-aos="fade-up"
                 data-aos-duration="800"
               >
                 <Link to="/alfred-nobel/nobel-will">
