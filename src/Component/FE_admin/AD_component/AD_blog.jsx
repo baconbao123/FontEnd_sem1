@@ -17,6 +17,8 @@ import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { Toast } from 'primereact/toast';
 import { BlockUI } from 'primereact/blockui';
+import ReadMore from 'react-read-more-read-less';
+
 export default function AD_blog() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -35,7 +37,7 @@ export default function AD_blog() {
     global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
       id: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
     title: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-   created_at: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}] },
+   created_at: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
   
    author: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
   
@@ -128,7 +130,7 @@ async function disableperson(item) {
         global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
         id: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
       title: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-      created_at: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}] },
+      created_at: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
     
      author: { operator:FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}] },
     
@@ -280,7 +282,19 @@ async function disableperson(item) {
       )
     }
   }
-
+  const bodyShowMore=(e)=> {
+    return (
+     <ReadMore
+     charLimit={100}
+     readMoreText="Read More"
+     readLessText="See Less"
+     className='text-primary'
+   >
+     {e}
+   </ReadMore>
+    )
+    
+ }
 
   return (
     <Container fluid className='wrapper'>
@@ -317,8 +331,8 @@ async function disableperson(item) {
          
           
               <Column field='title' header='title' sortable filterPlaceholder="Search"  filter style={{ minWidth:'12rem', maxWidth: '24rem' }} />
-              <Column field='created_at' header='post date' sortable filter  dataType='date'  style={{ minWidth: '12rem' }}   />
-              <Column field='content' header='content' sortable filterPlaceholder="Search" filter style={{ minWidth: '70rem' }} />
+              <Column field='created_at' header='post date' sortable filter    style={{ minWidth: '12rem' }}   />
+              <Column field='content' header='content'  body={e=>bodyShowMore(e.content)} sortable filterPlaceholder="Search" filter style={{ minWidth: '20rem' }} />
               <Column field='author' header='author' sortable filterPlaceholder="Search" filter style={{ minWidth: '12rem' }} />
 
               <Column field='status' header='status'  filterElement={statusFilter} body={itemStatus}   style={{ minWidth: '12rem' }}   />

@@ -15,6 +15,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { BlockUI } from 'primereact/blockui';
 import { useNavigate } from 'react-router-dom'
+import ReadMore from 'react-read-more-read-less';
+
 export default function AD_disable_life() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -212,6 +214,19 @@ export default function AD_disable_life() {
   }
   const header = renderHeader;
 
+  const bodyShowMore=(e)=> {
+    return (
+     <ReadMore
+     charLimit={100}
+     readMoreText="Read More"
+     readLessText="See Less"
+     className='text-primary'
+   >
+     {e}
+   </ReadMore>
+    )
+    
+ }
 
 
 
@@ -244,17 +259,17 @@ export default function AD_disable_life() {
             >
               <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
            
-              <Column field='person_id' filter sortable header='person name' body={handlePerson} style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='life' filter header='life' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='childhood' filter header='childhood' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='education' filter header='education' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='experiment' filter header='experiment' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='struggles' filter header='struggles' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='time_line' filter header='time_line' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='personalities' filter header='personalities' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='achievements_detail' filter header='achievements_detail' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='quote' filter header='quote' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
-              <Column field='books' filter header='book' style={{ minWidth: '12rem', maxWidth: '24rem' }} />
+              <Column field='person_id' filter sortable header='person name' body={handlePerson} style={{ minWidth: '12rem', maxWidth: '20rem' }} />
+              <Column field='life' filter header='life' body={e=>bodyShowMore(e.life)} style={{ minWidth: '20rem' }} />
+           
+              <Column field='education' filter header='education'   body={e=>bodyShowMore(e.education)} style={{  minWidth: '20rem' }} />
+              <Column field='experiment' filter header='experiment' body={e=>bodyShowMore(e.experiment)} style={{  minWidth: '20rem' }} />
+              <Column field='struggles' filter header='struggles'  body={e=>bodyShowMore(e.struggles)} style={{  minWidth: '20rem' }} />
+              <Column field='time_line' filter header='time_line'   body={e=>bodyShowMore(e.time_line)} style={{  minWidth: '20rem' }} />
+            
+              <Column field='achievements_detail' filter header='achievements_detail'   body={e=>bodyShowMore(e.achievements_detail)}  style={{ minWidth: '20rem' }} />
+              <Column field='quote' filter header='quote'  body={e=>bodyShowMore(e.quote)} style={{  minWidth: '20rem' }} />
+              <Column field='books' filter header='books' body={e=>bodyShowMore(e.books)} style={{  minWidth: '20rem' }} />
             </DataTable>
           </section>
 

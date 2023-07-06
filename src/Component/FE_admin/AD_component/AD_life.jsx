@@ -12,6 +12,8 @@ import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom'
 import { BlockUI } from 'primereact/blockui';
 import Cookies from 'js-cookie';
+import LinesEllipsis from 'react-lines-ellipsis';
+import ReadMore from 'react-read-more-read-less';
 export default function AD_life() {
     const navigate = useNavigate();
     useEffect(()=>{
@@ -218,6 +220,21 @@ const handelSelection= ()=> {
        
       }
   
+    const bodyShowMore=(e)=> {
+       return (
+        <ReadMore
+        charLimit={100}
+        readMoreText="Read More"
+        readLessText="See Less"
+        className='text-primary'
+      >
+        {e}
+      </ReadMore>
+       )
+       
+    }
+   
+     
 console.log(data);
     return (
         <Container fluid className='wrapper' >
@@ -239,7 +256,7 @@ console.log(data);
                     <section className='card'>
                         <DataTable value={data} data-key='id' loading={loading}
                             showGridlines
-                            paginator rows={5}
+                            paginator rows={10}
                             header={header}
                             rowsPerPageOptions={[2, 5, 10, 25, 50]}
                             emptyMessage="No customers found."
@@ -252,16 +269,16 @@ console.log(data);
                             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
                                 
                             <Column field='person_id' body={handlePerson} filter sortable header='person name' style={{ minWidth: '12rem' }} />
-                            <Column field='life' filter header='life' style={{ minWidth: '70rem' }} />
+                            <Column field='life' filter header='life' body={e=>bodyShowMore(e.life)} style={{ minWidth: '20rem' }} />
                          
-                            <Column field='education' filter header='education' style={{ minWidth: '70rem' }} />
-                            <Column field='experiment' filter header='experiment' style={{ minWidth: '70rem' }} />
-                            <Column field='struggles' filter header='struggles' style={{ minWidth: '70rem' }} />
-                            <Column field='time_line' filter header='time_line' style={{ minWidth: '70rem' }} />
+                            <Column field='education' filter header='education'  body={e=>bodyShowMore(e.education)} style={{ minWidth: '20rem'  }} />
+                            <Column field='experiment' filter header='experiment'  body={e=>bodyShowMore(e.experiment)} style={{minWidth: '20rem'  }} />
+                            <Column field='struggles' filter header='struggles'  body={e=>bodyShowMore(e.struggles)} style={{minWidth: '20rem'  }} />
+                            <Column field='time_line' filter header='time_line'   body={e=>bodyShowMore(e.time_line)} style={{ minWidth: '20rem'  }} />
                        
-                            <Column field='achievements_detail' filter header='achievements_detail' style={{ minWidth: '70rem' }} />
-                            <Column field='quote' filter header='quote' style={{ minWidth: '70rem' }} />
-                            <Column field='books'  filter header='book' style={{ minWidth: '24rem' }} />
+                            <Column field='achievements_detail' filter header='achievements_detail'   body={e=>bodyShowMore(e.achievements_detail)} style={{ minWidth: '20rem'  }} />
+                            <Column field='quote'  filter header='quote'   body={e=>bodyShowMore(e.quote)} style={{ minWidth: '20rem'  }} />
+                            <Column field='books'  filter header='books' body={e=>bodyShowMore(e.books)} style={{ minWidth: '20rem' }} />
                           
                             <Column field='status' header='status'  body={itemStatus}/>
                         </DataTable>
