@@ -33,6 +33,7 @@ function NavbarMD() {
               src={require(`../../img/logo-admin.png`)}
               alt="logo"
               width={200}
+              className="mt-4"
             />
             <ul className="list-menu">
               <li>
@@ -49,7 +50,10 @@ function NavbarMD() {
                 </span>
               </li>
               {dropDown && (
-                <div className="drop-down-list">
+                <div className="drop-down-list" data-aos='fade'>
+                  <li>
+                    <Link to="/nobel-prizes" onClick={handleOnClickHidden}>All Nobel Prize</Link>
+                  </li>
                   <li>
                     <Link to="nobel/literature" onClick={handleOnClickHidden}>Literature</Link>
                   </li>

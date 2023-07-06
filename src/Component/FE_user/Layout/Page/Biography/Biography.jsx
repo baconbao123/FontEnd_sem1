@@ -51,8 +51,8 @@ const Biography = ({personData}) => {
             <section className='block-content-white-top container'>
                 <h1 className='heading-page text-center'>Biography</h1>
                     <section>
-                        <Row>
-                            <Col lg={4} md={5} className='col-avatar'>
+                        <Row className='m-auto'>
+                            <Col lg={4} md={5}className='col-avatar'>
                                 <div className='img-per-site'>
                                     <img src={"http://127.0.0.1:8000/api/images/"+avatar} alt='mc3'/>
                                 </div>
@@ -83,10 +83,10 @@ const Biography = ({personData}) => {
                 <section className='container'>
                     <Row>
                         <Col lg={4} md={12} className='label-content'>
-                            <h1 className='label-bio' data-aos="flip-left" data-aos-duration="1000">Biography</h1>
+                            <h1 className='label-bio' data-aos="flip-right" data-aos-duration="1000">Biography</h1>
                         </Col>
                         <Col lg={8} md={12}>
-                            <section className='content-bio' data-aos="fade-left" data-aos-duration="1000">
+                            <section className='content-bio' data-aos="fade-up" data-aos-duration="1000">
                                 <section className='content-bio-life'>
                                     <div className='title-bio'>
                                         <strong>Life</strong>
@@ -120,7 +120,7 @@ const Biography = ({personData}) => {
                 <section className="block-content-black-1 container">
                     <Row>
                         <Col lg={4} md={5} xs={5} className='d-lg-block d-md-block d-none col-achive'>
-                            <section className='achive-topic-site' data-aos="fade-right" data-aos-duration="1000">
+                            <section className='achive-topic-site' data-aos="fade-up" data-aos-duration="1000">
                                     <strong className='achive-label'>Achievement</strong>
                                 <div className='achive-label'></div>
                                 <div className='img-achive-site'>
@@ -129,12 +129,12 @@ const Biography = ({personData}) => {
                             </section>
                         </Col>
                         <Col xs={12} className='d-block d-md-none d-lg-none'>
-                            <section className='achive-topic-site' data-aos="fade-right" data-aos-duration="1000">
+                            <section className='achive-topic-site' data-aos="fade-up" data-aos-duration="1000">
                                 <strong className='achive-label'>Achievement</strong>
                             </section>
                         </Col>
                         <Col lg={8} md={7} xs={12} className='col-ahive-detail'>
-                            <section className='achive-site' data-aos="fade-left" data-aos-duration="1000">
+                            <section className='achive-site' data-aos="fade-up" data-aos-duration="1000">
                                 <div className='achive-des-content'>
                                 {personData.achievements_detail && personData.achievements_detail.split('\n').map((achievement, index) => (
                                     <p key={index}>{achievement}</p>
@@ -148,12 +148,12 @@ const Biography = ({personData}) => {
             <section className='block-content-white-1'>
                 <section className="block-content-white-bottom container">
                     <Row>
-                        <Col lg={6} md={7} xs={12}>
+                        <Col lg={6} md={6} xs={12}>
                             <section className='tl-site'>
                                 <div className='tl-topic'>
                                     {personData.name} TimeLine
                                 </div>
-                                <ul className='tl-list' data-aos="fade-right"
+                                <ul className='tl-list' data-aos="fade-up"
                                 data-aos-duration="1000">
                                     {personData.time_line && personData.time_line.split('\n').map((item, index) => {
                                         const match = item.match(/^(\d{4})(-?\d{0,4})?(.*)$/);
@@ -171,8 +171,8 @@ const Biography = ({personData}) => {
                                 </ul>
                             </section>
                         </Col>
-                        <Col lg={6} md={5} xs={12}>
-                            <section className='quote-site' data-aos="fade-left" data-aos-duration="1000">
+                        <Col lg={6} md={6} xs={12}>
+                            <section className='quote-site' data-aos="fade-up" data-aos-duration="1000">
                                 <div className='img-quote'>
                                     <img src={"http://127.0.0.1:8000/api/images/"+images[1]} alt='mc2'/>
                                 </div>
