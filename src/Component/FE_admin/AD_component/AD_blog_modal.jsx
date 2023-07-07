@@ -55,7 +55,29 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
           toast.current.show({severity:'warn', summary: 'Warning', detail:e?e:"To many request", life: 3000});
       }
     async function addBlog(e) {
-        
+        let spaceContent=0;
+        let spaceTitle=0;
+        if(content) {
+          
+         for(let i=0;i<content.length;i++) {
+            if(content[i]!==' ') {
+             
+                spaceContent=1;
+                break;
+            }
+         }
+        }
+        if(title) {
+          
+            for(let i=0;i<title.length;i++) {
+               if(title[i]!==' ') {
+                
+                   spaceTitle=1;
+                   break;
+               }
+            }
+           }
+       
         e.preventDefault();
         if (imgName.length < 3) {
           showWarn('At least 3 images')
@@ -67,10 +89,17 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
         else if (!avatar) {
             showWarn('Avatar must be chosen')
         }
+        
         else if(!content) {
             showWarn('Content can not be empty')
         }
+        else if(spaceContent===0) {
+            showWarn('Content can not be empty')
+        }
         else if(!titlePost) {
+            showWarn('Title  can not be empty')
+        }
+        else if(spaceTitle) {
             showWarn('Title  can not be empty')
         }
         else {
