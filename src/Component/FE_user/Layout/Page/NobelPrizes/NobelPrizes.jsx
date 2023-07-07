@@ -123,7 +123,7 @@ function NobelPrizes() {
                         >
                           <div className="item-nobel-prize col-lg-12 bg-light mt-4" >
                             <h3 className="title-nobel-prize mb-4">
-                              The Nobel Prize in {prize.namePrize.replace('Prize in' &&'Prize' ,'')} {item.year}
+                              The Nobel Prize in {prize.namePrize.replace('Prize','').replace('in','')} {" "}{item.year}
                             </h3>
                             <p className="sub-nobel-prize">
                               <span>{prize.namePerson.join(", ")}:</span>{" "}
