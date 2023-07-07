@@ -155,11 +155,6 @@ const Homepage = React.memo(() => {
               “ FOR THE GREATEST BENEFIT TO HUMANKIND ”
             </h1>
             <p className="header-subtitle">- Alfred Nobel -</p>
-            <div
-              class="scroll-down text "
-              title="scroll down 🔽"
-              onClick={() => scrollToBot()}
-            ></div>
           </div>
         </header>
 
@@ -215,7 +210,7 @@ const Homepage = React.memo(() => {
           <div className="row container m-auto container-item-post mb-3">
             {activeBlog.slice(0, numPosts).map((item, index) => (
               <Card
-                className=" col-lg-4 col-md-6 col-xs-12 "
+                className=" col-lg-4 col-md-6 col-xs-12  hidden-element"
                 data-aos="fade-up"
                 key={index}
               >

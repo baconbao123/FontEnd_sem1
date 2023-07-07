@@ -87,3 +87,12 @@ button.btn.btn-primary:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   border:1px solid #F1A40E;
 }
+@media (min-width: 540px) and (max-width: 991px) {
+  
+  img.card-img {
+    height: 450px;
+  }
+  .card-md{
+    width: 22.5rem !important;
+  }
+}

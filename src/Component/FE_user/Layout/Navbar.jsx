@@ -18,6 +18,7 @@ function Navbar() {
   const [onMouseEnterNav1, setOnMouseEnterNav1] = useState(false);
   const [onClickMenu, setOnClickMenu] = useState(false);
   const searchRef = useRef(null);
+
   // path active
   const [activeLink, setActiveLink] = useState('');
 
@@ -86,7 +87,7 @@ function Navbar() {
     setPersonList(value);
     getPerson(value)
   }
-  console.log(personList);
+
   async function getPerson(value) {
     const res = await axios.get('http://127.0.0.1:8000/api/person');
     let stores = res.data.filter(store => {
@@ -94,14 +95,15 @@ function Navbar() {
     })
     setStorePerson(stores)
   }
-  console.log(storePerson)
+  console.log(onClickMenu)
   return (
     <div>
       <nav className={`page-navbar ${scrolled ? "scrolled" : ""} ${location.pathname.startsWith('/chemistry/biography/') ? 'black-bg' : ''} `}>
         <ul className="nav-navbar container ">
           <li className="nav-item" ref={searchRef}>
-            <FiMenu className="d-lg-none d-block text-light nav-link menu-hambuger" onClick={handleClickMenu} />
             {onClickMenu && (<NavbarMD />)}
+            <FiMenu className="d-lg-none d-block text-light nav-link menu-hambuger" onClick={handleClickMenu} />
+            
             <Link to='/' className={`d-none d-lg-block m-auto nav-link nav-active-hover ${activeLink === '/' ? 'active-top-nav' : ''}`}>
               Home
             </Link>

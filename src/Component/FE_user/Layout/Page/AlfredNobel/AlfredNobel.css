@@ -71,7 +71,7 @@
   width: 90%;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 800px) {
   .header-alfred-nobel {
     display: none;
   }

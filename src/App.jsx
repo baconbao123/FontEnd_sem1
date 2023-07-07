@@ -1,7 +1,7 @@
 
 
 import { Routes, Route ,useLocation } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
 
 import AD_home from "./Component/FE_admin/AD_component/AD_home";
@@ -43,7 +43,7 @@ function App() {
     <>
       {/* Admin */}
         {/* User */}
-        {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' || location.pathname==='/notfound' || location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/')  || location.pathname==='/about'? <Navbar /> : null}
+        {location.pathname ==="/nobel-prizes" ||location.pathname ==="/laureates" || location.pathname === "/alfred-nobel/nobel-will"  || location.pathname === "/"  || location.pathname==='/alfred-nobel' || location.pathname==='/blog' || location.pathname==='/notfound' || location.pathname.startsWith('/biography/')  || location.pathname.startsWith('/blog/') || location.pathname.startsWith('/nobel-prizes/') || location.pathname.startsWith('/nobel/')  || location.pathname==='/about'? <Navbar/> : null}
       
       <Routes>
         <Route exact  path="/admin" element={<AD_home />} />

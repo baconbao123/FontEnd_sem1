@@ -9,6 +9,7 @@ function BiographyContent() {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
+    //fetch Api
   useEffect(() => {
     fetchData();
   }, [id]);
@@ -26,12 +27,12 @@ function BiographyContent() {
         } else {
           swal("Error", "Person is not active.", "error");
         }
-      } else {
+      } else { ////if res.data.persons null or undefined return swal
         swal("Error", "Person not found.", "error");
       }
-    } catch (error) {
+    } catch (error) { //network error or serve,.. return swal
       swal("Error", "Person not found.", "error");
-    } finally {
+    } finally { //the loading variable will be set to false after all tasks in fetchData() have completed, regardless of whether an exception occurred or not.
       setLoading(false);
     }
   }
