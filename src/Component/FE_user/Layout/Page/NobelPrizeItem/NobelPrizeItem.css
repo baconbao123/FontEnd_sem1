@@ -13,6 +13,14 @@
     -webkit-transition-timing-function: linear;
     transition-timing-function: linear;
   }
+  @media (max-width:500px){
+    .header-nobel-prize-item{
+     display: none;
+    }
+    .title-about-prize{
+      margin-top: 40px;
+    }
+  }
   .header-nobel-prize-item .header-content {
     position: absolute;
     left: 30%;

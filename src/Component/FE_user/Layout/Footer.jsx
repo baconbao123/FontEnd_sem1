@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
-    <div className="contact-section">
+    <div className="contact-section d-none d-lg-block d-md-block">
       <div className="overlay"></div>
       <div className="container">
         <footer className="footer">

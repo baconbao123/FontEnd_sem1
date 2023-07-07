@@ -462,3 +462,10 @@ button {
 .title-hover:hover{
   color: #d08307;
 }
+
+@media (min-width: 540px) and (max-width: 991px) {
+  
+  .hidden-element:nth-child(3) {
+    display: none;
+  }
+}

@@ -33,7 +33,7 @@
   }
 }
 
-@media (max-width: 412px) {
+@media (max-width: 414px) {
   .nav-bar-md {
     width: 60%;
   }
@@ -57,6 +57,7 @@
     width: 100%;
   }
 }
+
 
 .list-menu li {
   list-style: none;

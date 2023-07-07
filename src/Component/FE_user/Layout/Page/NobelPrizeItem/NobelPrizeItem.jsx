@@ -15,7 +15,7 @@ function NobelPrizeItem() {
   useEffect(() => {
     AOS.init();
   }, []);
-  
+
   // Data
   const [nobelPrize, setNobelPrize] = useState([]);
   const [totalPrize, setPrize] = useState("");
@@ -28,7 +28,9 @@ function NobelPrizeItem() {
   useEffect(() => {
     // simulate fetching data from an API
     const fetchData = async () => {
-      const res = await axios.get(`http://127.0.0.1:8000/api/nobel/${namePrize}`);
+      const res = await axios.get(
+        `http://127.0.0.1:8000/api/nobel/${namePrize}`
+      );
       if (res && res.data.groupedPersonPrizes) {
         setNobelPrize(res.data.groupedPersonPrizes);
         setPrize(res.data.totalPrizes);
@@ -83,8 +85,7 @@ function NobelPrizeItem() {
         },
         {
           id: "economic sciences",
-          quote:
-            "",
+          quote: "",
           content:
             "In 1968, Sveriges Riksbank (Sweden’s central bank) established the Prize in Economic Sciences in Memory of Alfred Nobel, founder of the Nobel Prize. The prize is based on a donation received by the Nobel Foundation in 1968 from Sveriges Riksbank on the occasion of the bank’s 300th anniversary. The first prize in economic sciences was awarded to Ragnar Frisch and Jan Tinbergen in 1969.",
           place: "Royal Swedish Academy of Sciences, Stockholm, Sweden",
@@ -142,32 +143,32 @@ function NobelPrizeItem() {
         <div className=" container info-nobel">
           <section className=" mt-5 ">
             <div className="row text-light ">
-              <div className="col-lg-12 col-md-12 ">
+              <div className="col-lg-12 col-md-12 title-about-prize ">
                 <h4 className=" mb-4" style={{ color: "#F1A40E" }}>
                   About The Prize
                 </h4>
                 {infoData.map((info, index) => (
-                  <div data-aos='fade-right'>
+                  <div data-aos="fade-right">
                     <p>
                       <i>{info.quote}</i>
                     </p>
                     <p>{info.content}</p>
-                    <p >
+                    <p>
                       The Nobel Prize in{" "}
                       <span className="text-info">{`${
                         namePrize.charAt(0).toUpperCase() + namePrize.slice(1)
                       }`}</span>{" "}
                       is awarded by the{" "}
-                      <span className="text-primary">
-                        {info.place}
-                      </span>
-                      .
+                      <span className="text-primary">{info.place}</span>.
                     </p>
                   </div>
                 ))}
               </div>
               <div className=" row ">
-                <div className="col-lg-12 col-md-12 info-nobel-about " data-aos='fade-left'>
+                <div
+                  className="col-lg-12 col-md-12 info-nobel-about "
+                  data-aos="fade-up"
+                >
                   <h4 className="mb-4 ">Quick Facts</h4>
                   <strong>{`${
                     namePrize.charAt(0).toUpperCase() + namePrize.slice(1)
@@ -192,15 +193,14 @@ function NobelPrizeItem() {
         </div>
 
         {/* Form select search */}
-        <section className=" container row mt-1 form-year-nobel-detail gap-3">
+        <div className="container">
+          <section className="row mt-1 form-year-nobel-detail gap-3">
           <Form.Select
             className="form-select-nobel col-lg-12"
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
           >
-            <option className="active" value="Year">
-              All Year
-            </option>
+            <option className="active">All Year</option>
             {nobelPrize.map((prize, index) => (
               <option value={prize.year} key={index}>
                 {prize.year}
@@ -216,6 +216,8 @@ function NobelPrizeItem() {
             Reset <BiRefresh />
           </button>
         </section>
+        </div>
+        
         {/* Item-nobel-prize */}
         <section className="container item-nobel-prizes w-100 mt-4 mb-4">
           {filteredPrizes.length === 0 ? (

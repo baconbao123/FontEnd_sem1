@@ -120,18 +120,18 @@ function DetailNobelPrize() {
         <section className="related-awards row mt-4">
           {relatedWards.length > 0 && (
             <div className="row mb-4">
-              <span className="col-lg-3 col-md-2">Related awards</span>
-              <span className="col-lg-5 col-md-10 line w-100">{""}</span>
+              <span className="col-lg-5 col-md-5">Related awards</span>
             </div>
           )}
           {relatedWards.map((relatedWard) =>
             relatedWard.nobelPrize.map((prize) =>
               prize.persons.map((person) => (
-                <Card key={person.name} className="col-lg-3 col-md-3">
+                <Card key={person.name} className="col-lg-3 col-md-3 card-md">
                   <Card.Img
                     src={`http://127.0.0.1:8000/api/images/${person.avatar}`}
                     alt="img"
                     height={225}
+                    className="img-md"
                   />
                   <Card.Body style={{ backgroundColor: "#fff" }}>
                     <Link to={`/biography/${person.id_person}`}>

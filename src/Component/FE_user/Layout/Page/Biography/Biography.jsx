@@ -223,7 +223,7 @@ const Biography = ({personData}) => {
                     <div className='block-per-img'>
                     <Carousel>
                         <Carousel.Item>
-                            <Row>
+                            <Row  className='carousel-xs'>
                                 <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[0]} alt='mc2'/>
                                 <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[1]} alt='mc2'/>
                                 <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[2]} alt='mc2'/>

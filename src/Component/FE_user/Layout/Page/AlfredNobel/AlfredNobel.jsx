@@ -17,7 +17,7 @@ function AlfredNobel() {
     <div className="container alfred-nobel-page">
       <div className="overlay-nobel">
         {/* header content */}
-        <header className="header-alfred-nobel">
+        <header className="header-alfred-nobel d-none d-lg-block d-md-block">
           <div className="overlay"></div>
         </header>
         {/* title-bio */}
