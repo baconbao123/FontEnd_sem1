@@ -9,6 +9,7 @@ import './style.scss'
 import tn from './pictures/tn.jpg'
 import bgbio from './pictures/bg-bio.jpg'
 import nobel from './pictures/nobel.jpg'
+import axios from 'axios';
 
 
 const Biography = ({personData}) => {
@@ -34,9 +35,9 @@ const Biography = ({personData}) => {
 //  Download PDF file  
 // fetch request is sent to the server to get the PDF file from the specified URL
     const getPdfUrl = async () => {
-        const response = await fetch(`${URL}/api/pdfs/${personData.pdf}`)
-        const blob = await response.blob() // response object to extract the response's data as a Blob. to store data such as images, audio, or pdf
-        const fileUrl = URL.createObjectURL(blob)// The createObjectURL() function is used to create a unique URL that can be used to access the data of this Blob object.
+        const response = await axios.get(`${URL}/api/pdfs/${personData.pdf}`)
+        const fileData = new Blob([response.data], { type: 'application/pdf' });
+        const fileUrl = window.URL.createObjectURL(fileData);// The createObjectURL() function is used to create a unique URL that can be used to access the data of this Blob object.
         setPdfUrl(fileUrl) // to update the pdfUrl state with the generated URL.
     }
 
