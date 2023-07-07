@@ -10,6 +10,7 @@ import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
+import URL from '../../api/api'
 export default function AD_blog_modal({ title, show, value, Load, setSelection,toast }) {
     const navigate = useNavigate();
     useEffect(() => {
@@ -123,7 +124,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
 
 
             try {
-                await axios.post('http://127.0.0.1:8000/api/addblog', data);
+                await axios.post(`${URL}/api/addblog`, data);
 
              showSuccess("Add success")
 
@@ -210,7 +211,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
 
             e.preventDefault();
             try {
-                await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
+                await axios.post(`${URL}/api/updateblog/` + value.id, data)
                 setTimeout(()=>{
                     Load()
                     setSelection()
@@ -242,7 +243,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
 
             e.preventDefault();
             try {
-                await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
+                await axios.post(`${URL}/api/updateblog/` + value.id, data)
                 setTimeout(()=>{
                     Load()
                     setSelection()
@@ -275,7 +276,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
 
             e.preventDefault();
             try {
-                await axios.post('http://127.0.0.1:8000/api/updateblog/' + value.id, data)
+                await axios.post(`${URL}/api/updateblog/` + value.id, data)
                 setTimeout(()=>{
                     Load()
                     setSelection()
@@ -299,7 +300,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
         else {
 
             try {
-                await axios.put('http://127.0.0.1:8000/api/updateblog/' + value.id, {
+                await axios.put(`${URL}/api/updateblog/` + value.id, {
                     title: titlePost,
                     content: content,
                     author: author,
@@ -366,7 +367,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
 
     // ham img 
     const handleShowImg = (e, index) => {
-        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={"http://127.0.0.1:8000/api/images/" + e} width='100' />
+        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={`${URL}/api/images/` + e} width='100' />
 
     }
 
@@ -479,7 +480,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                             <Form.Group  >
                                 <Form.Label>Avatar</Form.Label>
                                 <InputText type='file' onChange={handleAvatar} accept='image/*' style={{ minWidth: '100% ' }} />
-                                {emtyAvatar&&value&&avatar&&(<img className='d-inline-flex ms-2 mt-1' alt={avatar} src={"http://127.0.0.1:8000/api/images/" + avatar} width='100' />
+                                {emtyAvatar&&value&&avatar&&(<img className='d-inline-flex ms-2 mt-1' alt={avatar} src={`${URL}/api/images/`+ avatar} width='100' />
 )}
 
                             </Form.Group>

@@ -17,6 +17,7 @@ import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 import { Toast } from 'primereact/toast';
 import { BlockUI } from 'primereact/blockui';
+import URL from '../../api/api'
 export default function AD_disbale_show() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -70,7 +71,7 @@ export default function AD_disbale_show() {
 
   async function  Load() {
    
-    const result=await axios.get('http://127.0.0.1:8000/api/persondisable');
+    const result=await axios.get(`${URL}/api/persondisable`);
     setPerson(result.data);
   }
 
@@ -99,7 +100,7 @@ async function activeperson(item) {
     
     try {
         
-      await axios.put('http://127.0.0.1:8000/api/updateperson/' +item.id,{
+      await axios.put(`${URL}/api/updateperson/`+item.id,{
       
         status: 'active',
       
@@ -146,7 +147,7 @@ async function activeperson(item) {
   };
   async function deleteItem(item) {
     try {
-      await axios.delete('http://127.0.0.1:8000/api/deleteperson/' + item.id);
+      await axios.delete(`${URL}/api/deleteperson/` + item.id);
       showSuccess('Delete success');
       Load();
     } catch (err) {
@@ -296,9 +297,9 @@ async function activeperson(item) {
      return (
       <>
       
-      <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={"http://127.0.0.1:8000/api/images/"+store[0]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={"http://127.0.0.1:8000/api/images/"+store[1]}  width='100'/>
-     <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={"http://127.0.0.1:8000/api/images/"+store[2]}  width='100'/>
+      <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={`${URL}/api/images/`+store[0]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={`${URL}/api/images/`+store[1]}  width='100'/>
+     <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={`${URL}/api/images/`+store[2]}  width='100'/>
      
       </>
   
@@ -310,7 +311,7 @@ async function activeperson(item) {
     if(e.avatar) {
       return(
         <>
-          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={"http://127.0.0.1:8000/api/images/" + e.avatar} width='100' />
+          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={`${URL}/api/images/` + e.avatar} width='100' />
 
         </>
       )
@@ -320,7 +321,7 @@ async function activeperson(item) {
     if (e.pdf) {
       return (
         <>
-          <a target="_blank" href={"http://127.0.0.1:8000/api/pdfs/" + e.pdf}>{e.pdf}</a>
+          <a target="_blank" href={`${URL}/api/pdfs/` + e.pdf}>{e.pdf}</a>
         </>
       )
     }

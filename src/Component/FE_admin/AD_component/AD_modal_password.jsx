@@ -12,6 +12,7 @@ import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
 import { Password } from 'primereact/password';
 import { useNavigate } from 'react-router-dom'
+import URL from '../../api/api'
 import axios from 'axios';
 export default function AD_modal_password({show,toast}) {
   const [showModal, setShowModal] = useState(false);
@@ -55,7 +56,7 @@ async function changePassword(e) {
   else {
     
     try {
-     await  axios.put('http://127.0.0.1:8000/api/changePassword',{
+     await  axios.put(`${URL}/api/changePassword`,{
         'oldPass' : oldPass,
         'Pass' : newPass
       })

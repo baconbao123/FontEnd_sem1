@@ -18,7 +18,7 @@ import Cookies from 'js-cookie';
 import { BlockUI } from 'primereact/blockui';
 import Swal from 'sweetalert2';
 import ReadMore from 'react-read-more-read-less';
-
+import URL from '../../api/api'
 export default function AD_disable_blog() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -78,7 +78,7 @@ export default function AD_disable_blog() {
 
   async function  Load() {
    
-    const result=await axios.get('http://127.0.0.1:8000/api/disableblog');
+    const result=await axios.get(`${URL}/api/disableblog`);
         setBlog(result.data);
   }
    // Ham active
@@ -103,7 +103,7 @@ async function activeperson(item) {
     
     try {
         
-      await axios.put('http://127.0.0.1:8000/api/updateblog/' +item.id,{
+      await axios.put(`${URL}/api/updateblog/` +item.id,{
     
         status: 'active',
    
@@ -150,7 +150,7 @@ async function activeperson(item) {
   
   async function deleteperson(item) {
     try {
-      await axios.delete('http://127.0.0.1:8000/api/deleteblog/' + item.id);
+      await axios.delete(`${URL}/api/deleteblog/` + item.id);
       showSuccess('Delete success');
       Load();
     } catch (err) {
@@ -275,9 +275,9 @@ async function activeperson(item) {
     return (
      <>
      
-        <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={"http://127.0.0.1:8000/api/images/"+store[0]}  width='150'/>
-        <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={"http://127.0.0.1:8000/api/images/"+store[1]}  width='150'/>
-        <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={"http://127.0.0.1:8000/api/images/"+store[2]}  width='150'/>
+        <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={`${URL}/api/images/`+store[0]}  width='150'/>
+        <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={`${URL}/api/images/`+store[1]}  width='150'/>
+        <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={`${URL}/api/images/`+store[2]}  width='150'/>
 
      
      </>
@@ -290,7 +290,7 @@ async function activeperson(item) {
     if(e.avatar) {
       return(
         <>
-          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={"http://127.0.0.1:8000/api/images/" + e.avatar} width='100' />
+          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={`${URL}/api/images/` + e.avatar} width='100' />
 
         </>
       )

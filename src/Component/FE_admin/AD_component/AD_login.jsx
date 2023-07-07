@@ -7,7 +7,7 @@ import { Link,useNavigate } from 'react-router-dom';
 import {Toast} from 'primereact'
 
 import { Card } from 'primereact/card';
-        
+import URL from '../../api/api'       
 export default function AD_login() {
   useEffect(() => {
     document.title = 'Admin-Login';
@@ -43,7 +43,7 @@ export default function AD_login() {
   async function login(e) {
     e.preventDefault();
     try {
-      const response= await axios.post('http://127.0.0.1:8000/api/login',{
+      const response= await axios.post(`${URL}/api/login`,{
         email:email,
         password:password
       })

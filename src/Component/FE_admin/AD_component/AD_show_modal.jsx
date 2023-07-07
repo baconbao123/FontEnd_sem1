@@ -10,6 +10,7 @@ import { Toast } from 'primereact/toast';
 import axios from 'axios';
 import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
+import URL from '../../api/api'
 export default function AD_modal({ title, show, value, Load,setSelection,toast }) {
     const navigate = useNavigate();
     useEffect(()=>{
@@ -347,7 +348,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                 data.append('avatar',avatar)
             }
             try {
-                await axios.post('http://127.0.0.1:8000/api/addperson',data);
+                await axios.post(`${URL}/api/addperson`,data);
                    showSuccess("added success")
            
                 setTimeout(()=> {
@@ -473,7 +474,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
               
                 e.preventDefault();
                 try {
-                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    await axios.post(`${URL}/api/updateperson/`+ value.id,data);
                     
                     showSuccess('Update success')
                     setTimeout(()=> {
@@ -543,7 +544,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
               
                 e.preventDefault();
                 try {
-                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    await axios.post(`${URL}/api/updateperson/` + value.id,data);
                     showSuccess('Update success')
                     setTimeout(()=> {
                         setSelection()
@@ -611,7 +612,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
               
                 e.preventDefault();
                 try {
-                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    await axios.post(`${URL}/api/updateperson/` + value.id,data);
                     showSuccess('Update success')
         
                     setTimeout(()=> {
@@ -680,7 +681,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
               
                 e.preventDefault();
                 try {
-                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    await axios.post(`${URL}/api/updateperson/` + value.id,data);
                     showSuccess('Update success')
         
                     setTimeout(()=> {
@@ -748,7 +749,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
               
                 e.preventDefault();
                 try {
-                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    await axios.post(`${URL}/api/updateperson/` + value.id,data);
                     showSuccess('Update success')
         
                     setTimeout(()=> {
@@ -816,7 +817,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
               
                 e.preventDefault();
                 try {
-                    await axios.post('http://127.0.0.1:8000/api/updateperson/' + value.id,data);
+                    await axios.post(`${URL}/api/updateperson/` + value.id,data);
                     showSuccess('Update success')
         
                     setTimeout(()=> {
@@ -850,7 +851,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
             else {
     
                 try {
-                    await axios.put('http://127.0.0.1:8000/api/updateperson/' + value.id, {
+                    await axios.put(`${URL}/api/updateperson/` + value.id, {
                         name: name,
                         birthdate: birthdate,
                         deathdate: deathdate,
@@ -957,7 +958,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
 
     // ham img 
     const handleShowImg = (e,index) => {
-        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={"http://127.0.0.1:8000/api/images/"+e} width='100' />
+        return <img key={index} className='d-inline-flex ms-2 mt-1' alt={e} src={`${URL}/api/images/`+e} width='100' />
 
     }
 
@@ -1105,7 +1106,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                             <Form.Group >
                                 <Form.Label>Avatar</Form.Label>
                                 <InputText type='file'  onChange={handleAvatar} accept="image/*"  style={{minWidth:'100% '}} />
-                                {avatarEmty&&value&&avatar&& (<img key={avatar} className='d-inline-flex ms-2 mt-1' alt={avatar} src={"http://127.0.0.1:8000/api/images/"+avatar} width='100' />) }
+                                {avatarEmty&&value&&avatar&& (<img key={avatar} className='d-inline-flex ms-2 mt-1' alt={avatar} src={`${URL}/api/images/`+avatar} width='100' />) }
                             </Form.Group>
                         </Row>
                         <Row className='' id='avatar'></Row>
@@ -1114,7 +1115,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
                                 <Form.Label>PDF</Form.Label>
                                 <InputText type='file'  onChange={handlePdf} accept="application/pdf"  style={{minWidth:'100% '}} />
                                 {pdfemty&&value&&pdf&&(
-                                      <a target="_blank" href={"http://127.0.0.1:8000/api/pdfs/"+pdf}>{pdf}</a>
+                                      <a target="_blank" href={`${URL}/api/pdfs/`+pdf}>{pdf}</a>
                                 )}
                             </Form.Group>
                         </Row>

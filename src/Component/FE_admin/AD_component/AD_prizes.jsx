@@ -11,6 +11,7 @@ import { Toast } from 'primereact/toast';
 import { useNavigate } from 'react-router-dom'
 import { BlockUI } from 'primereact/blockui';
 import Cookies from 'js-cookie';
+import URL from '../../api/api'
 export default function AD_prizes() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -54,7 +55,7 @@ export default function AD_prizes() {
   // get data
    async function Load() {
     
-     const result= await axios.get('http://127.0.0.1:8000/api/prize');
+     const result= await axios.get(`${URL}/api/prize`);
      setPrizes(result.data)
    }
   //  ham disable
@@ -75,7 +76,7 @@ export default function AD_prizes() {
   }
   async function disableprize(item) {
     try {
-      await  axios.put('http://127.0.0.1:8000/api/updateprize/'+item.id,{
+      await  axios.put(`${URL}/api/updateprize/`+item.id,{
         
           status: 'disable'
       })

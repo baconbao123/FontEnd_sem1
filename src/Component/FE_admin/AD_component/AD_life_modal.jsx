@@ -10,6 +10,7 @@ import { InputText } from 'primereact/inputtext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import URL from '../../api/api'
 export default function AD_life_modal({value,title, show,Load,selection,toast}) {
     const navigate = useNavigate();
     useEffect(()=>{
@@ -97,7 +98,7 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
 //    ham  get data 
 async function Loadperson() {
   
-       const response = await axios.get('http://127.0.0.1:8000/api/personlife')
+       const response = await axios.get(`${URL}/api/personlife`)
        setPerson(response.data);
      
   }
@@ -118,7 +119,7 @@ async function Loadperson() {
         else {
             e.preventDefault()
             try {
-            await  axios.post('http://127.0.0.1:8000/api/addlife',{
+            await  axios.post(`${URL}/api/addlife`,{
     
                 person_id: personSelected.id,
                 life:life,
@@ -174,7 +175,7 @@ async function Loadperson() {
         else {
 
             try{
-                await axios.put('http://127.0.0.1:8000/api/updatelife/'+value.id,{
+                await axios.put(`${URL}/api/updatelife/`+value.id,{
                 
                 person_id: personSelected.id,
                 life:life,

@@ -13,6 +13,7 @@ import { Toast } from 'primereact/toast';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
 import { BlockUI } from 'primereact/blockui';
+import URL from '../../api/api'
 export default function AD_disable_setprize() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -68,18 +69,18 @@ export default function AD_disable_setprize() {
  // get data
  async function Load() {
  
-  const result= await axios.get('http://127.0.0.1:8000/api/pndisable');
+  const result= await axios.get(`${URL}/api/pndisable`);
   setPrizes(result.data) 
 }
 
 async function LoadPrize() {
  
-  const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
+  const result = await axios.get(`${URL}/api/nobelprize`);
   setAllPrize(result.data)
 }
 async function LoadPerson() {
   
-  const result = await axios.get('http://127.0.0.1:8000/api/personprize');
+  const result = await axios.get(`${URL}/api/personprize`);
   let data=result.data.filter(item=>{
       if(item.life_story)return item
   })
@@ -139,7 +140,7 @@ const handleNobelYear=(e)=> {
 }
 async function  activesetprize(item){
     try {
-        await axios.put('http://127.0.0.1:8000/api/updatepn/'+item.person_id +'/'+item.nobel_id,{
+        await axios.put(`${URL}/api/updatepn/`+item.person_id +'/'+item.nobel_id,{
           status: 'active',
         })
         Load();
@@ -186,7 +187,7 @@ const confirmDelete = (item) => {
 
 async function deletesetprize(item) {
   try {
-    await   axios.delete('http://127.0.0.1:8000/api/deletepn/' + item.person_id + '/' + item.nobel_id);
+    await   axios.delete(`${URL}/api/deletepn/` + item.person_id + '/' + item.nobel_id);
     showSuccess('Delete success');
     Load();
   } catch (err) {

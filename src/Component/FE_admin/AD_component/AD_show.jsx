@@ -17,6 +17,7 @@ import AD_hidden_nav from '../Layout/AD_hidden_nav'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { BlockUI } from 'primereact/blockui';
+import URL from '../../api/api'
 export default function AD_show() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -81,7 +82,7 @@ export default function AD_show() {
    
     
     try {
-      const result = await axios.get('http://127.0.0.1:8000/api/person');
+      const result = await axios.get(`${URL}/api/person`);
       setPerson(result.data);
     } catch (error) {
       console.error(error);
@@ -111,7 +112,7 @@ export default function AD_show() {
 
    
     try {
-      await axios.put('http://127.0.0.1:8000/api/updateperson/' + item.id, {
+      await axios.put(`${URL}/api/updateperson/` + item.id, {
     
         status: 'disable',
     
@@ -292,9 +293,9 @@ export default function AD_show() {
           return (
             <>
     
-              <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={"http://127.0.0.1:8000/api/images/" + store[0]} width='100' />
-              <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={"http://127.0.0.1:8000/api/images/" + store[1]} width='100' />
-              <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={"http://127.0.0.1:8000/api/images/" + store[2]} width='100' />
+              <img className='d-inline-flex ms-2 mt-1' alt={store[0]} src={`${URL}/api/images/` + store[0]} width='100' />
+              <img className='d-inline-flex ms-2 mt-1' alt={store[1]} src={`${URL}/api/images/` + store[1]} width='100' />
+              <img className='d-inline-flex ms-2 mt-1' alt={store[2]} src={`${URL}/api/images/` + store[2]} width='100' />
             
     
             </>
@@ -309,7 +310,7 @@ export default function AD_show() {
     if(e.avatar) {
       return(
         <>
-          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={"http://127.0.0.1:8000/api/images/" + e.avatar} width='100' />
+          <img className='d-inline-flex ms-2 mt-1' alt={e.avatar} src={`${URL}/api/images/` + e.avatar} width='100' />
 
         </>
       )
@@ -319,7 +320,7 @@ export default function AD_show() {
     if (e.pdf) {
       return (
         <>
-          <a target="_blank" href={"http://127.0.0.1:8000/api/pdfs/" + e.pdf}>{e.pdf}</a>
+          <a target="_blank" href={`${URL}/api/pdfs/` + e.pdf}>{e.pdf}</a>
         </>
       )
     }

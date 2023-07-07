@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 import { BlockUI } from 'primereact/blockui';
 import { useNavigate } from 'react-router-dom'
 import ReadMore from 'react-read-more-read-less';
-
+import URL from '../../api/api'
 export default function AD_disable_life() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -65,12 +65,12 @@ export default function AD_disable_life() {
 // ham get data
     async function Load() {
     
-      const result= await axios.get('http://127.0.0.1:8000/api/lifedisable')
+      const result= await axios.get(`${URL}/api/lifedisable`)
       setData(result.data)
     }
     async function LoadPerson() {
       
-      const result= await axios.get('http://127.0.0.1:8000/api/allperson');
+      const result= await axios.get(`${URL}/api/allperson`);
       setPerson(result.data)
   }
   
@@ -100,7 +100,7 @@ export default function AD_disable_life() {
     }
     async function activelife (item) {
       try {
-        await axios.put('http://127.0.0.1:8000/api/updatelife/'+item.id,{
+        await axios.put(`${URL}/api/updatelife/`+item.id,{
             status: 'active'
         })
         showSuccess(' active success')
@@ -144,7 +144,7 @@ export default function AD_disable_life() {
     
     async function deletelife(item) {
       try {
-        await  axios.put('http://127.0.0.1:8000/api/deletelife/' + item.id);
+        await  axios.put(`${URL}/api/deletelife/` + item.id);
         showSuccess('Delete success');
         Load();
       } catch (err) {

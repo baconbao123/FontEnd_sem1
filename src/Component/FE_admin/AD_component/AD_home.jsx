@@ -22,6 +22,8 @@ import AD_setprize_modal from '../AD_component/AD_setprize_modal';
 import AD_prizes_modal from '../AD_component/AD_prizes_modal'
 import AD_modal_password from './AD_modal_password'
 import Swal from 'sweetalert2'
+
+import URL from '../../api/api'
 export default function AD_home() {
   const navigate = useNavigate();
   const toast=useRef()
@@ -93,16 +95,16 @@ export default function AD_home() {
   },[showNav])
 
  async function  LoadPerson() {
-    const result=await axios.get('http://127.0.0.1:8000/api/person');
+    const result=await axios.get(`${URL}/api/person`);
     setPerson(result.data);
   }
 
   async function LoadPrize() {
-    const result= await axios.get('http://127.0.0.1:8000/api/prize');
+    const result= await axios.get(`${URL}/api/prize`);
     setPrize(result.data)
   }
   async function  LoadBlog() {
-    const result=await axios.get('http://127.0.0.1:8000/api/blog');
+    const result=await axios.get(`${URL}/api/blog`);
         setBlog(result.data);
   }
  

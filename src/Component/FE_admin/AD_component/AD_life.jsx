@@ -14,6 +14,7 @@ import { BlockUI } from 'primereact/blockui';
 import Cookies from 'js-cookie';
 import LinesEllipsis from 'react-lines-ellipsis';
 import ReadMore from 'react-read-more-read-less';
+import URL from '../../api/api';
 export default function AD_life() {
     const navigate = useNavigate();
     useEffect(()=>{
@@ -60,12 +61,12 @@ export default function AD_life() {
 // Ham get data
     async function Load() {
         
-        const result= await axios.get('http://127.0.0.1:8000/api/life');
+        const result= await axios.get(`${URL}/api/life`);
         setData(result.data)
     }
     async function LoadPerson() {
        
-        const result= await axios.get('http://127.0.0.1:8000/api/allperson');
+        const result= await axios.get(`${URL}/api/allperson`);
         setPerson(result.data)
     }
     
@@ -87,7 +88,7 @@ export default function AD_life() {
     }
    async function disableLife(item) {
     try {
-        await axios.put('http://127.0.0.1:8000/api/updatelife/'+item.id,{
+        await axios.put(`${URL}/api/updatelife/`+item.id,{
             status: 'disable'
         })
      showSuccess('disable success')

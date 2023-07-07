@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { BlockUI } from 'primereact/blockui';
 import { Toast } from 'primereact/toast';
+import URL from '../../api/api'
 export default function AD_setprize() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -81,17 +82,17 @@ export default function AD_setprize() {
   // get data
   async function Load() {
    
-    const result= await axios.get('http://127.0.0.1:8000/api/pn');
+    const result= await axios.get(`${URL}/api/pn`);
     setPrizes(result.data) 
   }
   async function LoadPrize() {
     
-    const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
+    const result = await axios.get(`${URL}/api/nobelprize`);
     setAllPrize(result.data)
 }
 async function LoadPerson() {
   
-    const result = await axios.get('http://127.0.0.1:8000/api/personprize');
+    const result = await axios.get(`${URL}/api/personprize`);
     let data=result.data.filter(item=>{
         if(item.life_story)return item
     })
@@ -130,7 +131,7 @@ const reload=()=> {
       }
       async function  disablesetprize(item){
           try {
-              await axios.put('http://127.0.0.1:8000/api/updatepn/'+item.person_id +'/'+item.nobel_id,{
+              await axios.put(`${URL}/api/updatepn/`+item.person_id +'/'+item.nobel_id,{
                 status: 'disable',
               })
               Load();

@@ -12,6 +12,7 @@ import { Toast } from 'primereact/toast';
 import Cookies from 'js-cookie';
 import { BlockUI } from 'primereact/blockui';
 import Swal from 'sweetalert2';
+import URL from '../../api/api'
 export default function AD_disable_prize() {
   const navigate = useNavigate();
   useEffect(()=>{
@@ -55,7 +56,7 @@ export default function AD_disable_prize() {
     // ham get data
     async function Load() {
     
-      const result= await axios.get('http://127.0.0.1:8000/api/prizedisable');
+      const result= await axios.get(`${URL}/api/prizedisable`);
       setPrizes(result.data)
     }
     // ham active
@@ -76,7 +77,7 @@ export default function AD_disable_prize() {
     }
     async function activeprize(item) {
       try {
-        await  axios.put('http://127.0.0.1:8000/api/updateprize/'+item.id,{
+        await  axios.put(`${URL}/api/updateprize/`+item.id,{
           
             status: 'active'
         })
@@ -123,7 +124,7 @@ export default function AD_disable_prize() {
     
     async function deleteprize(item) {
       try {
-        await       axios.delete('http://127.0.0.1:8000/api/deleteprize/' + item.id);
+        await       axios.delete(`${URL}/api/deleteprize/` + item.id);
         showSuccess('Delete success');
         Load();
       } catch (err) {

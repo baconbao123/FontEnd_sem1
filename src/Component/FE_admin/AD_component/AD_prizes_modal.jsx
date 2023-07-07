@@ -9,7 +9,7 @@ import { FileUpload } from 'primereact/fileupload';
 import { Toast } from 'primereact/toast';
 import { InputText } from 'primereact/inputtext';
 import Cookies from 'js-cookie';
-
+import URL from '../../api/api'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 export default function AD_prizes_modal({ title, show, value, Load,toast,setSelection }) {
@@ -73,7 +73,7 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
         else {
 
             try {
-                await axios.post('http://127.0.0.1:8000/api/addprize', {
+                await axios.post(`${URL}/api/addprize`, {
                     nobel_year: year,
                     nobel_name: categoryName.category,
                     status: statusName.status
@@ -104,7 +104,7 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
         else {
 
             try {
-                await  axios.put('http://127.0.0.1:8000/api/updateprize/'+value.id,{
+                await  axios.put(`${URL}/api/updateprize/`+value.id,{
                     nobel_year: year,
                     nobel_name: categoryName.category,
                     status: statusName.status

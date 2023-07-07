@@ -20,9 +20,9 @@ function NavbarMD({ show }) {
         setClickHidden(!clickHidden);
       };
       show.current.addEventListener("click", handleClick);
-      return () => {
-        show.current.removeEventListener("click", handleClick);
-      };
+      // return () => {
+      //   show.current.removeEventListener("click", handleClick);
+      // };
     }
   }, [show]);
   const [clickHidden, setClickHidden] = useState(false);

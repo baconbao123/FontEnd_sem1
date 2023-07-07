@@ -11,6 +11,7 @@ import { InputText, InputTextarea } from 'primereact'
 import Cookies from 'js-cookie';
 import axios, { all } from 'axios';
 import { Toast } from 'primereact/toast';
+import URL from '../../api/api'
 export default function AD_setprize_modal({ title, show, value, Load,setSelection,toast }) {
     const navigate = useNavigate();
     useEffect(()=>{
@@ -54,7 +55,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
         else {
 
             try {
-                await axios.post('http://127.0.0.1:8000/api/addpn', {
+                await axios.post(`${URL}/api/addpn`, {
                     person_id: personName.id,
                     nobel_id: prizeName.id,
                     motivation: motivation,
@@ -129,7 +130,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
         else {
 
             try {
-                await axios.put('http://127.0.0.1:8000/api/updatepn/'+value.person_id +'/'+value.nobel_id, {
+                await axios.put(`${URL}/api/updatepn/`+value.person_id +'/'+value.nobel_id, {
                     person_id: personName.id,
                     nobel_id: prizeName.id,
                     motivation: motivation,
@@ -268,11 +269,11 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
     },[person])
   
     async function LoadPrize() {
-        const result = await axios.get('http://127.0.0.1:8000/api/nobelprize');
+        const result = await axios.get(`${URL}/api/nobelprize`);
         setAllPrize(result.data)
     }
     async function LoadPerson() {
-        const result = await axios.get('http://127.0.0.1:8000/api/personprize');
+        const result = await axios.get(`${URL}/api/personprize`);
         let data=result.data.filter(item=>{
             if(item.life_story)return item
         })
