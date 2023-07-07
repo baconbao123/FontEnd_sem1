@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { Card, Col, Form, Row } from 'react-bootstrap';
 import { Paginator } from 'primereact/paginator';
+import URL from "../../../../api/api"
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import swal from 'sweetalert';
@@ -38,7 +39,7 @@ function Blog() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await axios.get(`http://127.0.0.1:8000/api/allblogs`);
+                const res = await axios.get(`${URL}/api/allblogs`);
                 if (res && res.data && Array.isArray(res.data.blogs)) {
                     const activeBlogs = res.data.blogs.filter(blog => blog.status === 'active');
                     if (activeBlogs.length > 0) {
@@ -139,7 +140,7 @@ function Blog() {
                         <Card.Img
                           className="c-img"
                           variant="top"
-                          src={'http://127.0.0.1:8000/api/images/' + item.avatar}
+                          src={`${URL}/api/images/` + item.avatar}
                         ></Card.Img>
                         <Card.Body
                           className="c-body"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import axios from "axios";
+import URL from "../../../../api/api"
 import "./style.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -27,7 +28,7 @@ const BlogDetail = () => {
   }, []);
   async function fetchData() {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/blogs/${id}`);
+      const res = await axios.get(`${URL}/api/blogs/${id}`);
       if (res && res.data && res.data.blog) {
         if (res.data.blog.status === 'active') {
           setBlogData(res.data.blog);
@@ -87,7 +88,7 @@ const BlogDetail = () => {
                 {images[0] && (
                   <div>
                     <img
-                      src={`http://127.0.0.1:8000/api/images/${images[0]}`}
+                      src={`${URL}/api/images/${images[0]}`}
                       alt="pic1"
                       className="d-none d-md-block d-sm-block d-lg-blog"
                     />
@@ -126,7 +127,7 @@ const BlogDetail = () => {
                 {images[1] && (
                   <div>
                     <img
-                      src={`http://127.0.0.1:8000/api/images/${images[1]}`}
+                      src={`${URL}/api/images/${images[1]}`}
                       alt="pic2"
                       className="bd-img w-100 mt-3 d-lg-block d-none"
                     />
@@ -141,7 +142,7 @@ const BlogDetail = () => {
                 {images[2] && (
                   <div>
                     <img
-                      src={`http://127.0.0.1:8000/api/images/${images[2]}`}
+                      src={`${URL}/api/images/${images[2]}`}
                       alt="pic3"
                       className="bd-img w-100 mt-3"
                     />

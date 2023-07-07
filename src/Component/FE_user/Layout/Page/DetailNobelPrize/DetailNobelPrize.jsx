@@ -5,6 +5,7 @@ import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link, useParams } from "react-router-dom";
+import URL from "../../../../api/api"
 import axios from "axios";
 import Footer from "../../Footer";
 function DetailNobelPrize() {
@@ -17,7 +18,7 @@ function DetailNobelPrize() {
   useEffect(() => {
     async function prizeDetailsData() {
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/nobel-prizes/${name}/${year}/${id}`
+        `${URL}/api/nobel-prizes/${name}/${year}/${id}`
       );
       if (res && res.data) {
         setJsonData(res.data);
@@ -28,7 +29,7 @@ function DetailNobelPrize() {
   useEffect(() => {
     async function relateWard() {
       const res = await axios.get(
-        `http://127.0.0.1:8000/api/nobel-prizes/${name}/${year}`
+        `${URL}/api/nobel-prizes/${name}/${year}`
       );
       if (res && res.data) {
         setRelateWards(res.data);
@@ -68,7 +69,7 @@ function DetailNobelPrize() {
                 {jsonData[0]?.nobelPrize[0]?.persons.map((person) => (
                   <Card key={person.name} className="col-lg-3">
                     <Card.Img
-                      src={`http://127.0.0.1:8000/api/images/${person.avatar}`}
+                      src={`${URL}/api/images/${person.avatar}`}
                       alt="img"
                       height={275}
                     />
@@ -128,7 +129,7 @@ function DetailNobelPrize() {
               prize.persons.map((person) => (
                 <Card key={person.name} className="col-lg-3 col-md-3 card-md">
                   <Card.Img
-                    src={`http://127.0.0.1:8000/api/images/${person.avatar}`}
+                    src={`${URL}/api/images/${person.avatar}`}
                     alt="img"
                     height={225}
                     className="img-md"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import { Link, useParams, NavLink } from "react-router-dom";
+import URL from "../../../../api/api"
 import axios from "axios";
 import PersonCard from "./PersonCard";
 import swal from 'sweetalert';
@@ -17,7 +18,7 @@ function Laureates () {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await axios.get('http://127.0.0.1:8000/api/allpersons');
+                const res = await axios.get(`${URL}/api/allpersons`);
                 if (res && res.data && res.data.persons) {
                     const activePersons = res.data.persons.filter((person) => person.status === 'active' || person.nobel_prizes?.status === 'active');
                     if(activePersons.length > 0 ) {

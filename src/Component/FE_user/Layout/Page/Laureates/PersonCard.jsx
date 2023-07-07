@@ -1,4 +1,5 @@
 import React from "react";
+import URL from "../../../../api/api"
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,7 @@ const PersonCard = ({ person }) => {
       <div className="row d-flex justify-content-center">
         <Card>
           <Card.Img
-            src={"http://127.0.0.1:8000/api/images/" + avatar}
+            src={`${URL}/api/images/` + avatar}
             alt="img"
             height={275}
           />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { Link ,useParams} from "react-router-dom";
 import axios from "axios";
+import URL from "../../../../api/api"
 import "./NobelPrizes.css";
 import { BiRefresh } from "react-icons/bi";
 import AOS from "aos";
@@ -20,7 +21,7 @@ function NobelPrizes() {
   useEffect(() => {
     // simulate fetching data from an API
     const fetchData = async () => {
-      const res = await axios.get('http://127.0.0.1:8000/api/personprizes/');
+      const res = await axios.get(`${URL}/api/personprizes/`);
       if (res && res.data) {
         setNobelPrize(res.data);
     }

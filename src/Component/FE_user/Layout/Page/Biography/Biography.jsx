@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Row, Col, Image, Carousel } from 'react-bootstrap'
 import {AiOutlineDownload} from 'react-icons/ai';
+import URL from '../../../../api/api';
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -33,7 +34,7 @@ const Biography = ({personData}) => {
 //  Download PDF file  
 // fetch request is sent to the server to get the PDF file from the specified URL
     const getPdfUrl = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/api/pdfs/${personData.pdf}`)
+        const response = await fetch(`${URL}/api/pdfs/${personData.pdf}`)
         const blob = await response.blob() // response object to extract the response's data as a Blob. to store data such as images, audio, or pdf
         const fileUrl = URL.createObjectURL(blob)// The createObjectURL() function is used to create a unique URL that can be used to access the data of this Blob object.
         setPdfUrl(fileUrl) // to update the pdfUrl state with the generated URL.
@@ -51,7 +52,7 @@ const Biography = ({personData}) => {
 
 
     return (
-        <div>
+        <div>"
             <section className='block-content-white-1 '>
             <section className='block-content-white-top container'>
                 <h1 className='heading-page text-center'>Biography</h1>
@@ -59,7 +60,7 @@ const Biography = ({personData}) => {
                         <Row className='m-auto'>
                             <Col lg={4} md={5}className='col-avatar'>
                                 <div className='img-per-site'>
-                                    <img src={"http://127.0.0.1:8000/api/images/"+avatar} alt='mc3'/>
+                                <img src={`${URL}/api/images/`+avatar} alt='mc3'/>
                                 </div>
                             </Col>
                             
@@ -184,7 +185,7 @@ const Biography = ({personData}) => {
                         <Col lg={6} md={6} xs={12}>
                             <section className='quote-site' data-aos="fade-up" data-aos-duration="1000">
                                 <div className='img-quote'>
-                                    <img src={"http://127.0.0.1:8000/api/images/"+images[1]} alt='mc2'/>
+                                    <img src={`${URL}/api/images/`+images[1]} alt='mc2'/>
                                 </div>
                                 <div className='block-quote-black'>
                                     <div className='quote-content'>{personData.quote}</div>
@@ -224,9 +225,9 @@ const Biography = ({personData}) => {
                     <Carousel>
                         <Carousel.Item>
                             <Row  className='carousel-xs'>
-                                <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[0]} alt='mc2'/>
-                                <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[1]} alt='mc2'/>
-                                <img style={{objectFit: 'cover'}} src={"http://127.0.0.1:8000/api/images/"+images[2]} alt='mc2'/>
+                                <img style={{objectFit: 'cover'}} src={`${URL}/api/images/`+images[0]} alt='mc2'/>
+                                <img style={{objectFit: 'cover'}} src={`${URL}/api/images/`+images[1]} alt='mc2'/>
+                                <img style={{objectFit: 'cover'}} src={`${URL}/api/images/`+images[2]} alt='mc2'/>
                             </Row>
                         </Carousel.Item>
                     </Carousel>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Biography from "./Biography";
+import URL from "../../../../api/api"
 import axios from 'axios';
 import swal from 'sweetalert';
 
@@ -16,7 +17,7 @@ function BiographyContent() {
 
   async function fetchData() {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/persons/${id}`);
+      const res = await axios.get(`${URL}/api/persons/${id}`);
       if (res.data && res.data.persons) {
         if (
           res.data.persons.personsstatus === 'active' &&

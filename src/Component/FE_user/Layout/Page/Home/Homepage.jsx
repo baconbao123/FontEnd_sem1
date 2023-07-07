@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import axios from "axios";
 import "./Homepage.css";
+import URL from "../../../../api/api"
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 
@@ -36,7 +37,7 @@ const Homepage = React.memo(() => {
   }, []);
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(`http://127.0.0.1:8000/api/allblogs`);
+      const res = await axios.get(`${URL}/api/allblogs`);
       if (res && res.data.blogs) {
         const activeBlogs = res.data.blogs.filter(
           (blog) => blog.status === "active"
@@ -217,7 +218,7 @@ const Homepage = React.memo(() => {
                 <Card.Img
                   className="c-img"
                   variant="top"
-                  src={"http://127.0.0.1:8000/api/images/" + item.avatar}
+                  src={`${URL}/api/images/` + item.avatar}
                 ></Card.Img>
                 <Card.Body
                   className=""

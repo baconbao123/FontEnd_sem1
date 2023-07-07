@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Navbar.css";
 import logo from "../../../Component/img/logo.png";
 import { Link, useLocation } from "react-router-dom";
+import URL from "../../api/api"
 import { GoSearch } from 'react-icons/go'
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -89,7 +90,7 @@ function Navbar() {
   }
 
   async function getPerson(value) {
-    const res = await axios.get('http://127.0.0.1:8000/api/person');
+    const res = await axios.get(`${URL}/api/person`);
     let stores = res.data.filter(store => {
       return store.name.toLowerCase().includes(value.toLowerCase()) && store.status === 'active';
     })
@@ -177,7 +178,7 @@ function Navbar() {
                           <div className="search-result-info">
                             <p style={{ fontSize: '14px' }}>{person.name}</p>
                           </div>
-                          <img src={`http://127.0.0.1:8000/api/images/${person.avatar}`} alt={person.name} width={30} />
+                          <img src={`${URL}/api/images/${person.avatar}`} alt={person.name} width={30} />
                         </Link>
                       </div>
                     ))
