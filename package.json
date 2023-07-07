@@ -26,6 +26,7 @@
     "react-read-more-read-less": "^1.0.7",
     "react-router-dom": "^6.12.1",
     "react-scripts": "^5.0.1",
+    "react-share": "^4.4.1",
     "sass": "^1.63.4",
     "styled-components": "^5.3.10",
     "sweetalert": "^2.1.2",
