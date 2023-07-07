@@ -200,7 +200,7 @@ function NobelPrizeItem() {
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
           >
-            <option className="active">All Year</option>
+            <option className="active" value="Year">All Year</option>
             {nobelPrize.map((prize, index) => (
               <option value={prize.year} key={index}>
                 {prize.year}

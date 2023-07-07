@@ -68,7 +68,7 @@ function NobelPrizes() {
           value={selectedPrize}
           onChange={(e) => setSelectedPrize(e.target.value)}
         >
-          <option className="active">Nobel Prizes</option>
+          <option className="active" value="Nobel Prizes">Nobel Prizes</option>
           <option value="Physic Prize">Physics</option>
           <option value="Chemistry Prize">Chemistry</option>
           <option value="Literature Prize">Literature</option>
@@ -81,7 +81,7 @@ function NobelPrizes() {
           value={selectedYear}
           onChange={(e) => setSelectedYear(e.target.value)}
         >
-          <option className="active">All Year</option>
+          <option className="active" value="Year">All Year</option>
           {nobelPrize.map((prize, index) => (
             <option value={prize.year} key={index}>
               {prize.year}
@@ -121,7 +121,7 @@ function NobelPrizes() {
                           key={`${index}-${i}`}
                           
                         >
-                          <div className="item-nobel-prize col-lg-12 bg-light mt-4" data-aos='fade' >
+                          <div className="item-nobel-prize col-lg-12 bg-light mt-4" >
                             <h3 className="title-nobel-prize mb-4">
                               The Nobel Prize in {prize.namePrize.replace('Prize in' &&'Prize' ,'')} {item.year}
                             </h3>
