@@ -18,7 +18,7 @@ function Navbar() {
   const [onMouseEnterNav1, setOnMouseEnterNav1] = useState(false);
   const [onClickMenu, setOnClickMenu] = useState(false);
   const searchRef = useRef(null);
-
+  const showMenu=useRef(null);
   // path active
   const [activeLink, setActiveLink] = useState('');
 
@@ -96,13 +96,17 @@ function Navbar() {
     setStorePerson(stores)
   }
   console.log(onClickMenu)
+  console.log(showMenu);
   return (
     <div>
       <nav className={`page-navbar ${scrolled ? "scrolled" : ""} ${location.pathname.startsWith('/chemistry/biography/') ? 'black-bg' : ''} `}>
         <ul className="nav-navbar container ">
           <li className="nav-item" ref={searchRef}>
-            {onClickMenu && (<NavbarMD />)}
-            <FiMenu className="d-lg-none d-block text-light nav-link menu-hambuger" onClick={handleClickMenu} />
+           <NavbarMD show={showMenu} />
+           <div  ref={showMenu}>
+            
+            <FiMenu className="d-lg-none d-block text-light nav-link menu-hambuger" />
+           </div>
             
             <Link to='/' className={`d-none d-lg-block m-auto nav-link nav-active-hover ${activeLink === '/' ? 'active-top-nav' : ''}`}>
               Home

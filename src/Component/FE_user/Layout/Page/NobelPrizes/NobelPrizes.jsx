@@ -99,9 +99,9 @@ function NobelPrizes() {
       </section>
 
       {/* Item-nobel-prize */}
-      <section className="item-nobel-prizes w-100 mt-4 mb-4">
+      <section className="item-nobel-prizes w-100 mt-4 mb-4" >
         {filteredPrizes.length === 0 ? (
-          <div style={{ color: "gray" }} className="row justify-content-center col-lg-12 col-md-12"> 
+          <div style={{ color: "gray" }} className="row justify-content-center col-lg-12 col-md-12" > 
             <img src={require(`../../../../img/no-data.png`)} alt="" className="w-25" style={{filter: 'grayscale(100%)'}} />
             <p className="text-center">No Nobel Prizes found for the selected category.</p>
           </div>
@@ -119,8 +119,9 @@ function NobelPrizes() {
                         <Link
                           to={`/nobel-prizes/${prize.namePrize}/${item.year}/${prize.id}`}
                           key={`${index}-${i}`}
+                          
                         >
-                          <div className="item-nobel-prize col-lg-12 bg-light mt-4">
+                          <div className="item-nobel-prize col-lg-12 bg-light mt-4" data-aos='fade' >
                             <h3 className="title-nobel-prize mb-4">
                               The Nobel Prize in {prize.namePrize.replace('Prize in' &&'Prize' ,'')} {item.year}
                             </h3>

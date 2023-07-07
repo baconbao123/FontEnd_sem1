@@ -221,17 +221,20 @@ const handelSelection= ()=> {
       }
   
     const bodyShowMore=(e)=> {
-       return (
-        <ReadMore
-        charLimit={100}
-        readMoreText="Read More"
-        readLessText="See Less"
-        className='text-primary'
-      >
-        {e}
-      </ReadMore>
-       )
-       
+        if(e) {
+
+            return (
+             <ReadMore
+             charLimit={100}
+             readMoreText="Read More"
+             readLessText="See Less"
+             className='text-primary'
+           >
+             {e}
+           </ReadMore>
+            )
+            
+        }
     }
    
      

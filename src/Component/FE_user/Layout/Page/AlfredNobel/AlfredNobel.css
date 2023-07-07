@@ -78,7 +78,7 @@
   .title-bio {
     font-size: 30px;
     font-weight: 500;
-    margin-top: 150px;
+    margin-top: 150px !important;
     padding: 0 15px 0 15px;
   }
 }

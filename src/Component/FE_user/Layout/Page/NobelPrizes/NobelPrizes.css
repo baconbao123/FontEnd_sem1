@@ -12,39 +12,47 @@
 }
 /* responsive */
 @media (max-width: 768px) {
-  .title-nobel-prizes h1  {
-   font-size: 30px !important;
+  .title-nobel-prizes h1 {
+    font-size: 30px !important;
   }
-  .year h3{
+  .year h3 {
     font-size: 25px !important;
   }
-  .title-nobel-prizes::after{
+  .title-nobel-prizes::after {
     height: 10px !important;
     margin-bottom: 10px;
   }
-  .item-nobel-prize{
+  .item-nobel-prize {
     border-left: 10px solid #f1a40e !important;
-    padding: 10px 50px 15px 15px !important;
+    padding: 10px 50px 10px 15px !important;
+  }
+
+  .item-nobel-prize h3 {
+    font-size: 18px !important;
+  }
+  .sub-nobel-prize span {
+    font-size: 14px;
   }
 }
 .title-nobel-prizes::after {
   content: "";
   display: block;
   width: 20%;
-  height: 15px;
+  height: 10px;
+  border-radius: 3px;
   margin-left: 10px;
   background-color: #f1a40e;
   justify-content: end;
 }
 /* form search */
-.form-select-nobel{
+.form-select-nobel {
   display: flex;
   justify-content: end;
 }
 .form-nobel-prizes {
   margin-right: 0 !important;
 }
-.btn-reset{
+.btn-reset {
   width: 10%;
 }
 @media (max-width: 768px) {
@@ -63,8 +71,9 @@
 }
 .item-nobel-prize {
   padding: 20px 100px 30px 30px;
-  border-radius: 0px 5px 5px 0px;
-  border-left: 16px solid #f1a40e;
+  border-radius: 5px 5px 5px 5px;
+  border-left: 8px solid #f1a40e;
+  background-color: #f5f5f5 !important;
 }
 .item-nobel-prize h3 {
   font-family: "Open Sans", sans-serif !important;
