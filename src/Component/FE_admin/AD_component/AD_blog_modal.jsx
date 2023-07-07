@@ -99,7 +99,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
         else if(!titlePost) {
             showWarn('Title  can not be empty')
         }
-        else if(spaceTitle) {
+        else if(spaceTitle===0) {
             showWarn('Title  can not be empty')
         }
         else {
