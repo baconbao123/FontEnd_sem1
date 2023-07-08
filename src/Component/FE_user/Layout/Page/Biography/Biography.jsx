@@ -47,10 +47,10 @@ const Biography = ({personData}) => {
             downloadLink.href = fileUrl;
             downloadLink.setAttribute('download', personData.pdf);
             downloadLink.click();
-            
+
             URL.revokeObjectURL(fileUrl);
           } catch (error) {
-            console.error('Lỗi khi tải file PDF:', error);
+            <></>
           }
     }
 
