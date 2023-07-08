@@ -35,10 +35,23 @@ const Biography = ({personData}) => {
 //  Download PDF file  
 // fetch request is sent to the server to get the PDF file from the specified URL
     const getPdfUrl = async () => {
-        const response = await axios.get(`${URL}/api/pdfs/${personData.pdf}`)
-        const fileData = new Blob([response.data], { type: 'application/pdf' });
-        const fileUrl = window.URL.createObjectURL(fileData);// The createObjectURL() function is used to create a unique URL that can be used to access the data of this Blob object.
-        setPdfUrl(fileUrl) // to update the pdfUrl state with the generated URL.
+        try {
+            const response = await axios.get(`${URL}/api/pdfs/${personData.pdf}`, {
+              responseType: 'blob', 
+            });
+        
+            const fileData = new Blob([response.data], { type: 'application/pdf' });
+            const fileUrl = window.URL.createObjectURL(fileData);
+        
+            const downloadLink = document.createElement('a');
+            downloadLink.href = fileUrl;
+            downloadLink.setAttribute('download', personData.pdf);
+            downloadLink.click();
+            
+            URL.revokeObjectURL(fileUrl);
+          } catch (error) {
+            console.error('Lỗi khi tải file PDF:', error);
+          }
     }
 
 
@@ -78,9 +91,9 @@ const Biography = ({personData}) => {
                                 <div className='btn-down-site'>
                                      <button className="btn-down" onClick={getPdfUrl}>DOWNLOAD BIO <span className='item-icon-down'>&nbsp;<AiOutlineDownload/></span></button>
                                 </div>
-                                    {pdfUrl && (
-                                        <a href={pdfUrl} download={personData.pdf} className="btn-download-link">Detailed biography (.pdf)</a>
-                                    )}
+                                {pdfUrl && (
+                                    <a href={pdfUrl} download={personData.pdf} className="btn-download-link">Detailed biography (.pdf)</a>
+                                )}
                             </Col>
                         </Row>        
                     </section>
@@ -168,7 +181,6 @@ const Biography = ({personData}) => {
                                         // ^(\d{4}): Start the line with a string of 4 digits (representing the year)
                                         // (-?\d{0,4})?: Dash character - may or may not appear, followed by a string that can be 0 to 4 digits (representing month or day).
                                         // (.*)$: Any string after the stated section, up to the end of the line (representing the event).
-                                        console.log(match);
                                         if (match) {
                                         const year = `${match[1]}${match[2] ? `${match[2]}` : ''}`;
                                         return (

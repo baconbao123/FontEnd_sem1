@@ -96,8 +96,6 @@ function Navbar() {
     })
     setStorePerson(stores)
   }
-  console.log(onClickMenu)
-  console.log(showMenu);
   return (
     <div>
       <nav className={`page-navbar ${scrolled ? "scrolled" : ""} ${location.pathname.startsWith('/chemistry/biography/') ? 'black-bg' : ''} `}>
