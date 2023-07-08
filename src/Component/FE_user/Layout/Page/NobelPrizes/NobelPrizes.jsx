@@ -60,7 +60,6 @@ function NobelPrizes() {
       const res = await axios.get(`${URL}/api/personprizes/`);
       if (res && res.data) {
         setNobelPrize(res.data);
-        console.log("res: " + nobelPrize);
       }
     };
     fetchData();
