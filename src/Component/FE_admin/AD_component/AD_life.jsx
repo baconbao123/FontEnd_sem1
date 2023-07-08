@@ -245,7 +245,7 @@ const handelSelection= ()=> {
     }
    
      
-console.log(data);
+
     return (
         <Container fluid className='wrapper' >
               <BlockUI blocked={blocked}>

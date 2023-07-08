@@ -104,7 +104,6 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
             showWarn('Title  can not be empty')
         }
         else {
-
             const data = new FormData();
             if (imgName) {
 

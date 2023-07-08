@@ -59,7 +59,6 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
             }
         }
     }, [show]);
-    console.log(statusName);
     async function addprize() {
         if(statusName.status==='') {
             showWarn('Status must be chosen')

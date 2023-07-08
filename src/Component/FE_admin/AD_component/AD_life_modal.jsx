@@ -80,8 +80,6 @@ export default function AD_life_modal({value,title, show,Load,selection,toast}) 
         }
        
       }, [])
-      console.log(value);
-      console.log(personSelected);
         // Toast
     const showError = (e) => {
         toast.current.show({severity:'error', summary: 'ERROR', detail:e?e:"To many request", life: 1000});

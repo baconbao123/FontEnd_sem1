@@ -71,14 +71,12 @@ export default function AD_setprize() {
         })
         item={...item,'person_name':personSave}
         item={...item,'prize_name':prizeSave}
-        console.log(item);
+    
       })
-      console.log(storePrizes);
       setPrizes(storePrizes)
     }
     setLoading(false)
   }, [])
-  console.log(prizes);
   // get data
   async function Load() {
    

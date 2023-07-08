@@ -141,7 +141,7 @@ export default function AD_home() {
               <Card className='bg-white card-ad-home ' style={{ width: '100%' }}>
                 <section className='header-ad-containt d-flex justify-content-between align-items-center' >
                   <section>
-                    <div  className='show-menu  d-lg-block d-xl-none' onClick={()=>{setShowNav(true);console.log(showNav);}} >
+                    <div  className='show-menu  d-lg-block d-xl-none' onClick={()=>{setShowNav(true)}} >
 
                       <BsChevronDoubleRight />
                    
