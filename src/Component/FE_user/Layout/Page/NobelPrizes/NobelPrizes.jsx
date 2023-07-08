@@ -53,18 +53,21 @@ function NobelPrizes() {
     };
     data();
   }, []);
+
   useEffect(() => {
     // simulate fetching data from an API
     const fetchData = async () => {
       const res = await axios.get(`${URL}/api/personprizes/`);
       if (res && res.data) {
         setNobelPrize(res.data);
+        console.log("res: " + nobelPrize);
       }
     };
     fetchData();
   }, [name, year, id]);
-
-  console.log(nobelPrize);
+  
+ 
+  // console.log(nobelPrize);
   // State for search
   const [selectedPrize, setSelectedPrize] = useState("Nobel Prizes");
   const [selectedYear, setSelectedYear] = useState("Year");
