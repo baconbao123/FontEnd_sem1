@@ -37,19 +37,17 @@ const Biography = ({personData}) => {
     const getPdfUrl = async () => {
         try {
             const response = await axios.get(`${URL}/api/pdfs/${personData.pdf}`, {
-              responseType: 'blob', // Yêu cầu phản hồi dạng blob
+              responseType: 'blob', 
             });
         
             const fileData = new Blob([response.data], { type: 'application/pdf' });
             const fileUrl = window.URL.createObjectURL(fileData);
         
-            // Tạo link tải về và mở nó trong một cửa sổ mới
             const downloadLink = document.createElement('a');
             downloadLink.href = fileUrl;
             downloadLink.setAttribute('download', personData.pdf);
             downloadLink.click();
-        
-            // Giải phóng URL đã tạo
+            
             URL.revokeObjectURL(fileUrl);
           } catch (error) {
             console.error('Lỗi khi tải file PDF:', error);
@@ -183,7 +181,6 @@ const Biography = ({personData}) => {
                                         // ^(\d{4}): Start the line with a string of 4 digits (representing the year)
                                         // (-?\d{0,4})?: Dash character - may or may not appear, followed by a string that can be 0 to 4 digits (representing month or day).
                                         // (.*)$: Any string after the stated section, up to the end of the line (representing the event).
-                                        console.log(match);
                                         if (match) {
                                         const year = `${match[1]}${match[2] ? `${match[2]}` : ''}`;
                                         return (

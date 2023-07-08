@@ -37,7 +37,6 @@ function DetailNobelPrize() {
     }
     relateWard();
   }, [name, year]);
-  console.log(relatedWards);
 
   if (jsonData.length === 0) {
     return <div style={{ color: "gray" }}>No data </div>;

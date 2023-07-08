@@ -63,8 +63,6 @@ function NobelPrizes() {
     fetchData();
   }, [name, year, id]);
   
- 
-  // console.log(nobelPrize);
   // State for search
   const [selectedPrize, setSelectedPrize] = useState("Nobel Prizes");
   const [selectedYear, setSelectedYear] = useState("Year");

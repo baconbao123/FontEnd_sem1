@@ -13,7 +13,6 @@ function NavbarMD({ show }) {
     AOS.init({ once: true }); // Initialize AOS with the "once" option set to true
   }, []);
 
-  console.log(show);
   useEffect(() => {
     if (show !== null) {
       const handleClick = () => {

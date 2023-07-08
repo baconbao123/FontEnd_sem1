@@ -103,7 +103,6 @@ function NobelPrizeItem() {
     };
     data();
   }, [namePrize]);
-  console.log(infoData);
   // State for search
   const [selectedPrize, setSelectedPrize] = useState("Nobel Prizes");
   const [selectedYear, setSelectedYear] = useState("Year");
