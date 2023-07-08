@@ -5,7 +5,6 @@ import { useCallback, useMemo } from "react";
 import axios from "axios";
 import "./Homepage.css";
 import URL from "../../../../api/api"
-import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 
 import AOS from "aos";
@@ -25,7 +24,7 @@ const TruncatedTitle = ({ content }) => {
   } else {
     return <Card.Title className="title-hover">{content}</Card.Title>;
   }
-};
+}; 
 const Homepage = React.memo(() => {
   const [blogData, setBlogData] = useState([]);
   // effect srcoll
@@ -89,30 +88,6 @@ const Homepage = React.memo(() => {
       subtitle:
         "The prize in economic sciences is awarded by the Royal Swedish Academy of Sciences, Stockholm, Sweden.",
       img: "6.jpg",
-    },
-  ]);
-
-  const posts = useMemo(() => [
-    {
-      imgPost: "blog-1.jpg",
-      timePost: "6/14/2023",
-      titlePost: "How many peace laureates can you match?",
-      subtitlePost:
-        "Can you match the right peace laureate with the right accomplishment? Have a try!",
-    },
-    {
-      imgPost: "blog-2.jpg",
-      timePost: "6/14/2023",
-      titlePost: "How many peace laureates can you match?",
-      subtitlePost:
-        "Can you match the right peace laureate with the right accomplishment? Have a try!",
-    },
-    {
-      imgPost: "blog-1.jpg",
-      timePost: "6/14/2023",
-      titlePost: "How many peace laureates can you match?",
-      subtitlePost:
-        "Can you match the right peace laureate with the right accomplishment? Have a try!",
     },
   ]);
   const [numPosts, setNumPosts] = useState(3);
