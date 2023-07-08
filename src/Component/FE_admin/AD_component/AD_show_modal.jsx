@@ -305,7 +305,17 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
  
      
     async function addperson(e) {
-       
+        let  spaceName
+        if(name) {
+            spaceName=0
+            for(let i=0;i<name.length;i++) {
+               if(name[i]!==' ') {
+                
+                   spaceName=1;
+                   break;
+               }
+            }
+        }
         e.preventDefault();
         if(imgName.length<3){
           showWarn('At least 3 images')
@@ -325,7 +335,10 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
             showWarn('Birthday must be chosen')
         }
         else if(!name) {
-            showWarn('Name must be chosen')
+            showWarn('Name can not be empty')
+        }
+        else if(spaceName===0) {
+            showWarn('Name can not be empty')
         }
         else {
             
@@ -385,6 +398,18 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
 
     // ham update 
     async function updateperson(e) {
+        let  spaceName
+
+        if(name) {
+            spaceName=0
+            for(let i=0;i<name.length;i++) {
+               if(name[i]!==' ') {
+                
+                   spaceName=1;
+                   break;
+               }
+            }
+        }
         e.preventDefault()
        
         const storeImg=value.img.split(',');
@@ -416,6 +441,7 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
         if(imgName.length<3) {
             showWarn('At least 3 images');
         }
+
         else if(!avatar) {
             showWarn('Avatar must be chosen')
         }
@@ -424,7 +450,10 @@ export default function AD_modal({ title, show, value, Load,setSelection,toast }
             
         }
         else if(!name) {
-            showWarn('Name must be chosen')
+            showWarn('Name can not be empty')
+        }
+        else if(spaceName===0) {
+            showWarn('Name can not be empty')
         }
         else if(!birthdate) {
             showWarn('Birthday must be chosen')

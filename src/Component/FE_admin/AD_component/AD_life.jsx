@@ -39,7 +39,7 @@ export default function AD_life() {
         {
             global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
             id: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-            person_id: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+            person_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
             life: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
             childhood: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
             education: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
@@ -64,6 +64,7 @@ export default function AD_life() {
         const result= await axios.get(`${URL}/api/life`);
         setData(result.data)
     }
+    
     async function LoadPerson() {
        
         const result= await axios.get(`${URL}/api/allperson`);
@@ -106,12 +107,17 @@ export default function AD_life() {
         setFilters({
             global: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
             id: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-            name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-            birthdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-            deathdate: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-            gender: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-            national: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-            status: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
+            person_name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+            life: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+            childhood: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+            education: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+            experiment: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+            struggles: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+            time_line: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+            personalities: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
+            chievements_detail: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+            quote: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
+            books: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }] },
         })
         setGlobal('');
     }
@@ -272,15 +278,15 @@ console.log(data);
                         >
                             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
                                 
-                            <Column field='person_id' body={handlePerson} filter sortable header='person name' style={{ minWidth: '12rem' }} />
-                            <Column field='life' filter header='life' body={e=>bodyShowMore(e.life)} style={{ minWidth: '20rem' }} />
+                            <Column field='person_name'  filter sortable header='person name' style={{ minWidth: '12rem' }} />
+                            <Column field='life'  header='life' body={e=>bodyShowMore(e.life)} style={{ minWidth: '20rem' }} />
                          
                             <Column field='education' filter header='education'  body={e=>bodyShowMore(e.education)} style={{ minWidth: '20rem'  }} />
-                            <Column field='experiment' filter header='experiment'  body={e=>bodyShowMore(e.experiment)} style={{minWidth: '20rem'  }} />
-                            <Column field='struggles' filter header='struggles'  body={e=>bodyShowMore(e.struggles)} style={{minWidth: '20rem'  }} />
-                            <Column field='time_line' filter header='time_line'   body={e=>bodyShowMore(e.time_line)} style={{ minWidth: '20rem'  }} />
+                            <Column field='experiment'  header='experiment'  body={e=>bodyShowMore(e.experiment)} style={{minWidth: '20rem'  }} />
+                            <Column field='struggles'  header='struggles'  body={e=>bodyShowMore(e.struggles)} style={{minWidth: '20rem'  }} />
+                            <Column field='time_line' header='time_line'   body={e=>bodyShowMore(e.time_line)} style={{ minWidth: '20rem'  }} />
                        
-                            <Column field='achievements_detail' filter header='achievements_detail'   body={e=>bodyShowMore(e.achievements_detail)} style={{ minWidth: '20rem'  }} />
+                            <Column field='achievements_detail'  header='achievements_detail'   body={e=>bodyShowMore(e.achievements_detail)} style={{ minWidth: '20rem'  }} />
                             <Column field='quote'  filter header='quote'   body={e=>bodyShowMore(e.quote)} style={{ minWidth: '20rem'  }} />
                             <Column field='books'  filter header='books' body={e=>bodyShowMore(e.books)} style={{ minWidth: '20rem' }} />
                           

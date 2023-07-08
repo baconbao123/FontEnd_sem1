@@ -221,7 +221,7 @@ const Homepage = React.memo(() => {
                   src={`${URL}/api/images/` + item.avatar}
                 ></Card.Img>
                 <Card.Body
-                  className=""
+                  className="card-body-xs-md"
                   style={{
                     backgroundColor: "#e9ecef",
                     borderRadius: "0 0 5px 5px",
@@ -246,7 +246,7 @@ const Homepage = React.memo(() => {
               </Card>
             ))}
             <Link to="/blog" className="text-center">
-              <button className="learn-more">
+              <button className="learn-more mb-5">
                 <span className="circle" aria-hidden="true">
                   <span className="icon arrow"></span>
                 </span>

@@ -67,3 +67,25 @@
   font-size: 1rem;
   font-family: 'Roboto' ,sans-serif;
 }
+
+@media (max-width:500px){
+  .list-contact ul{
+    padding-left: 0px;
+  }
+  .list-contact ul >li{
+    line-height: 1.75rem;
+  }
+  .list-contact ul li a{
+    font-size: .875rem;
+    
+  }
+}
+
+@media (max-width:840px){
+  .list-contact ul{
+    padding-left: 0px;
+  }
+  .founder-item img{
+    width: 200px;
+  }
+}

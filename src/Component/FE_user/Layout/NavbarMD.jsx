@@ -84,7 +84,7 @@ function NavbarMD({ show }) {
                 </Link>
               </li>
               <li className={`${activeLink === '/nobel/chemistry' ? 'active-nav' : ''}`}>
-                <Link to="nobel/chemistry">Chemistry</Link>
+                <Link to="nobel/chemistry"  onClick={handleOnClickHidden}>Chemistry</Link>
               </li>
               <li className={`${activeLink === '/nobel/peace' ? 'active-nav' : ''}`}>
                 <Link to="nobel/peace" onClick={handleOnClickHidden}>

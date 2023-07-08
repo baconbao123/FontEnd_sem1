@@ -51,6 +51,7 @@ function NobelPrizeItem() {
           content:
             "Alfred Nobel had broad cultural interests. During his early youth, he developed his literary interests which lasted throughout his life. His library consisted of a rich and broad selection of literature in different languages. During the last years of his life, he tried his hand as an author and began writing fiction. Literature was the fourth prize area Nobel mentioned in his will.",
           place: "Swedish Academy, Stockholm, Sweden.",
+          link:'https://en.wikipedia.org/wiki/Swedish_Academy'
         },
         {
           id: "chemistry",
@@ -59,6 +60,7 @@ function NobelPrizeItem() {
           content:
             "Chemistry was the most important science for Alfred Nobel’s own work. The development of his inventions as well as the industrial processes he employed were based upon chemical knowledge. Chemistry was the second prize area that Nobel mentioned in his will.",
           place: "Royal Swedish Academy of Sciences, Stockholm, Sweden",
+          link:'https://en.wikipedia.org/wiki/Royal_Swedish_Academy_of_Sciences'
         },
         {
           id: "medicine",
@@ -67,6 +69,7 @@ function NobelPrizeItem() {
           content:
             "Alfred Nobel had an active interest in medical research. Through Karolinska Institutet, he came into contact with Swedish physiologist Jöns Johansson around 1890. Johansson worked in Nobel’s laboratory in Sevran, France during a brief period the same year. Physiology or medicine was the third prize area Nobel mentioned in his will.",
           place: " Nobel Assembly at Karolinska Institutet, Stockholm, Sweden",
+          link:'https://en.wikipedia.org/wiki/Nobel_Assembly_at_the_Karolinska_Institute'
         },
         {
           id: "peace",
@@ -75,6 +78,7 @@ function NobelPrizeItem() {
           content:
             "Alfred Nobel showed a big interest in social issues and was engaged in the peace movement. His acquaintance with Bertha von Suttner, who was a driving force in the international peace movement in Europe and later awarded the Peace Prize, influenced his views on peace. Peace was the fifth and final prize area that Nobel mentioned in his will.",
           place: "Norwegian Parliament (Stortinget).",
+          link:'https://en.wikipedia.org/wiki/Storting'
         },
         {
           id: "physic",
@@ -83,6 +87,7 @@ function NobelPrizeItem() {
           content:
             "Physics was the prize area which Alfred Nobel mentioned first in his will from 1895. At the end of the nineteenth century, many people considered physics as the foremost of the sciences, and perhaps Nobel saw it this way as well. His own research was also closely tied to physics.",
           place: "Royal Swedish Academy of Sciences, Stockholm, Sweden.",
+          link:'https://en.wikipedia.org/wiki/Royal_Swedish_Academy_of_Sciences'
         },
         {
           id: "economic sciences",
@@ -90,6 +95,7 @@ function NobelPrizeItem() {
           content:
             "In 1968, Sveriges Riksbank (Sweden’s central bank) established the Prize in Economic Sciences in Memory of Alfred Nobel, founder of the Nobel Prize. The prize is based on a donation received by the Nobel Foundation in 1968 from Sveriges Riksbank on the occasion of the bank’s 300th anniversary. The first prize in economic sciences was awarded to Ragnar Frisch and Jan Tinbergen in 1969.",
           place: "Royal Swedish Academy of Sciences, Stockholm, Sweden",
+          link:'https://en.wikipedia.org/wiki/Royal_Swedish_Academy_of_Sciences'
         },
       ];
       const selectedData = dataInfo.find((item) => item.id === namePrize);
@@ -160,7 +166,7 @@ function NobelPrizeItem() {
                         namePrize.charAt(0).toUpperCase() + namePrize.slice(1)
                       }`}</span>{" "}
                       is awarded by the{" "}
-                      <span className="text-primary">{info.place}</span>.
+                      <Link to={info.link} className="text-primary" target="_blank">{info.place}</Link>
                     </p>
                   </div>
                 ))}

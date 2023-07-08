@@ -135,7 +135,7 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <Link to='/' className="nav-link nav-active-hover">
-              <img src={logo} alt="Logo" width="100px" className="d-none d-md-block d-lg-block m-auto" />
+              <img src={logo} alt="Logo" width="100px" className=" m-auto" />
             </Link>
           </li>
           <li className="nav-item has-children"
