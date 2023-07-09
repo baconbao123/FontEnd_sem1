@@ -19,6 +19,7 @@ function NobelPrizes() {
   const [nobelPrize, setNobelPrize] = useState([]);
   const { name, year, id } = useParams();
   const [imgIcon, setImg] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const data = async () => {
       const dataInfo = [
@@ -58,11 +59,12 @@ function NobelPrizes() {
       const res = await axios.get(`${URL}/api/personprizes`);
       if (res && res.data) {
         setNobelPrize(res.data);
+        setLoading(false);
       }
     };
     fetchData();
   }, [name, year, id]);
-  
+
   // State for search
   const [selectedPrize, setSelectedPrize] = useState("Nobel Prizes");
   const [selectedYear, setSelectedYear] = useState("Year");
@@ -89,7 +91,13 @@ function NobelPrizes() {
         (selectedYear === "Year" || prize.year === selectedYear) &&
         prize.nobelPrize.length > 0
     );
-
+  if (loading) {
+    return (
+      <h1 style={{ color: "white", textAlign: "center", marginTop: "400px" }}>
+        Loading...
+      </h1>
+    );
+  }
   return (
     <div className="container nobel-prizes">
       <section className="row col-lg-6 col-lg-6 title-nobel-prizes text-light">

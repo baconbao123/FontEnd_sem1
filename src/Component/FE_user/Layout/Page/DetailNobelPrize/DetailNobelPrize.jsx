@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link, useParams } from "react-router-dom";
-import URL from "../../../../api/api"
+import URL from "../../../../api/api";
 import axios from "axios";
 import Footer from "../../Footer";
 function DetailNobelPrize() {
@@ -28,9 +28,7 @@ function DetailNobelPrize() {
   }, [name, year, id]);
   useEffect(() => {
     async function relateWard() {
-      const res = await axios.get(
-        `${URL}/api/nobel-prizes/${name}/${year}`
-      );
+      const res = await axios.get(`${URL}/api/nobel-prizes/${name}/${year}`);
       if (res && res.data) {
         setRelateWards(res.data);
       }
@@ -39,7 +37,11 @@ function DetailNobelPrize() {
   }, [name, year]);
 
   if (jsonData.length === 0) {
-    return <div style={{ color: "gray" }}>No data </div>;
+    return (
+      <h1 style={{ color: "white", textAlign: "center", marginTop: "400px" }}>
+        Loading...
+      </h1>
+    );
   }
 
   return (
