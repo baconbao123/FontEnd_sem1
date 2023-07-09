@@ -112,7 +112,7 @@ export default function AD_disable_prize() {
               return deleteprize(item);
             })
           ).then(() => {
-            showSuccess(' success disable');
+         
             Load();
             setBlocked(false);
           }).catch((err) => {

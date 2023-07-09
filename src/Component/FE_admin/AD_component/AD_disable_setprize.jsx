@@ -175,7 +175,7 @@ const confirmDelete = (item) => {
           return deletesetprize(item);
         })
       ).then(() => {
-        showSuccess(' success disable');
+       
         Load();
         setBlocked(false);
       }).catch((err) => {
