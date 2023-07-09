@@ -446,7 +446,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                     <Modal.Body>
 
                         <Form.Group className="mb-3" >
-                            <Form.Label>Title</Form.Label>
+                            <Form.Label>Title *</Form.Label>
                             <InputText value={titlePost} onChange={e => setTitlePost(e.target.value)} placeholder="Enter title" style={{ minWidth: '100%' }} />
 
                         </Form.Group>
@@ -455,7 +455,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
 
                             <Col lg={6}>
                                 <Form.Group className="mb-3" >
-                                    <Form.Label>Status</Form.Label>
+                                    <Form.Label>Status *</Form.Label>
                                     <Dropdown options={status} value={statusName} onChange={e => setStatusName(e.value)} optionLabel='status' placeholder='Status' style={{ minWidth: '100%' }} />
 
                                 </Form.Group>
@@ -470,14 +470,14 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                         </Row>
                         <Row className='mt-4'>
                             <Form.Group>
-                                <Form.Label>Content</Form.Label>
+                                <Form.Label>Content *</Form.Label>
                                 <InputTextarea placeholder='enter personalities' style={{ minWidth: '100%', minHeight: '12rem' }} value={content} onChange={e => setContent(e.target.value)} />
                             </Form.Group>
                         </Row>
 
                         <Row className='mt-4'>
                             <Form.Group  >
-                                <Form.Label>Avatar</Form.Label>
+                                <Form.Label>Avatar *</Form.Label>
                                 <InputText type='file' onChange={handleAvatar} accept='image/*' style={{ minWidth: '100% ' }} />
                                 {emtyAvatar&&value&&avatar&&(<img className='d-inline-flex ms-2 mt-1' alt={avatar} src={`${URL}/api/images/`+ avatar} width='100' />
 )}
@@ -487,7 +487,7 @@ export default function AD_blog_modal({ title, show, value, Load, setSelection,t
                         <Row id="avatar"></Row>
                         <Row className='mt-4'>
                             <Form.Group  >
-                                <Form.Label>Images (&gt;=3 Files)</Form.Label>
+                                <Form.Label>Images (&gt;=3 Files) *</Form.Label>
                                 <InputText type='file' multiple onChange={handleImg} accept='image/*' style={{ minWidth: '100% ' }} />
                                 {imgemty && value && imgName && imgName.length > 0 && imgName.map((item, index) => handleShowImg(item, index))}
 

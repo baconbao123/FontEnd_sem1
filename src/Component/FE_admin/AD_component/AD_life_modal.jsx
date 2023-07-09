@@ -251,7 +251,7 @@ async function Loadperson() {
                         <Row>
                             <Col lg={6}>
                             <Form.Group className="mb-3" >
-                            <Form.Label>Person</Form.Label>
+                            <Form.Label>Person *</Form.Label>
                                 <Dropdown placeholder='select person' value={personSelected} onChange={(e)=>setPersonSelected(e.value)} options={storePerson    } optionLabel='name' style={{minWidth:'100%'}}/>
                         </Form.Group>
                             </Col>
@@ -337,7 +337,7 @@ async function Loadperson() {
                         </Row>
                         <Row className='mt-4'>
                            <Col lg={6}>
-                           <Form.Label>Status</Form.Label>
+                           <Form.Label>Status *</Form.Label>
                             <Dropdown placeholder='select status' options={status}  optionLabel='status' value={statusName} onChange={e=>setStatusName(e.value)} style={{minWidth:"100%"}}/>
                            </Col>
                         </Row>

@@ -123,15 +123,7 @@ const Biography = ({ personData }) => {
                     </span>
                   </button>
                 </div>
-                {pdfUrl && (
-                  <a
-                    href={pdfUrl}
-                    download={personData.pdf}
-                    className="btn-download-link"
-                  >
-                    Detailed biography (.pdf)
-                  </a>
-                )}
+             
               </Col>
             </Row>
             <Row>

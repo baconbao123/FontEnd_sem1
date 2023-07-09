@@ -347,7 +347,12 @@ export default function AD_modal({
       showWarn("Name can not be empty");
     } else if (spaceName === 0) {
       showWarn("Name can not be empty");
-    } else {
+    } 
+    else if(!pdf)  {
+      showWarn("PDF must be chosen");
+
+    }
+    else {
       const data = new FormData();
       if (imgName) {
         imgName.map((item) => data.append("img[]", item));
@@ -441,7 +446,12 @@ export default function AD_modal({
       showWarn("Name can not be empty");
     } else if (!birthdate) {
       showWarn("Birthday must be chosen");
-    } else {
+    }
+    else if(!pdf)  {
+      showWarn("PDF must be chosen");
+
+    }
+    else {
       // image and pdf change
       if (check > 0 && count > 0 && condition > 0) {
         const data = new FormData();
@@ -462,10 +472,10 @@ export default function AD_modal({
         } else {
           data.append("gender", genderName.gender);
         }
-        if (!countryName) {
-          data.append("national", "");
+        if (!countryName.name) {
+          data.append("national", '');
         } else {
-          data.append("national", countryName);
+          data.append("national", countryName.name);
         }
 
         e.preventDefault();
@@ -512,10 +522,10 @@ export default function AD_modal({
         } else {
           data.append("gender", genderName.gender);
         }
-        if (!countryName) {
-          data.append("national", "");
+        if (!countryName.name) {
+          data.append("national", '');
         } else {
-          data.append("national", countryName);
+          data.append("national", countryName.name);
         }
 
         e.preventDefault();
@@ -560,10 +570,10 @@ export default function AD_modal({
         } else {
           data.append("gender", genderName.gender);
         }
-        if (!countryName) {
-          data.append("national", "");
+        if (!countryName.name) {
+          data.append("national", '');
         } else {
-          data.append("national", countryName);
+          data.append("national", countryName.name);
         }
 
         e.preventDefault();
@@ -610,10 +620,10 @@ export default function AD_modal({
         } else {
           data.append("gender", genderName.gender);
         }
-        if (!countryName) {
-          data.append("national", "");
+        if (!countryName.name) {
+          data.append("national", '');
         } else {
-          data.append("national", countryName);
+          data.append("national", countryName.name);
         }
 
         e.preventDefault();
@@ -658,10 +668,10 @@ export default function AD_modal({
         } else {
           data.append("gender", genderName.gender);
         }
-        if (!countryName) {
-          data.append("national", "");
+        if (!countryName.name) {
+          data.append("national", '');
         } else {
-          data.append("national", countryName);
+          data.append("national", countryName.name);
         }
 
         e.preventDefault();
@@ -706,10 +716,10 @@ export default function AD_modal({
         } else {
           data.append("gender", genderName.gender);
         }
-        if (!countryName) {
-          data.append("national", "");
+        if (!countryName.name) {
+          data.append("national", '');
         } else {
-          data.append("national", countryName);
+          data.append("national", countryName.name);
         }
 
         e.preventDefault();
@@ -810,7 +820,8 @@ export default function AD_modal({
     if (value) {
       setName(value.name);
       if (value.national) {
-        setCountryName(value.national);
+        setCountryName({ name: value.national, code: "" });
+      
       }
       setBirthdate(value.birthdate);
       if (value.deathdate !== "null") {
@@ -899,7 +910,16 @@ export default function AD_modal({
       setAvatarEmty(false);
     } else if (avatar === undefined) {
     }
+   
   };
+  const handleNational=(e)=> {
+    if(!e.value) {
+      setCountryName({ name: "", code: "" })
+    }
+    else {
+      setCountryName(e.value)
+    }
+  }
 
   return (
     <>
@@ -924,7 +944,7 @@ export default function AD_modal({
         >
           <Modal.Body>
             <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Name *</Form.Label>
               <InputText
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -937,12 +957,12 @@ export default function AD_modal({
             <Row>
               <Col lg={4} sm={4}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Nation</Form.Label>
+                  <Form.Label>National </Form.Label>
                   <AutoComplete
                     field="name"
                     dropdown
                     value={countryName}
-                    onChange={(e) => setCountryName(e.value)}
+                    onChange={(e) => handleNational(e)}
                     completeMethod={search}
                     suggestions={filterCountry}
                     style={{ minWidth: "100%" }}
@@ -952,7 +972,7 @@ export default function AD_modal({
 
               <Col lg={4} sm={4}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Gender</Form.Label>
+                  <Form.Label>Gender </Form.Label>
                   <Dropdown
                     options={gender}
                     value={genderName}
@@ -966,7 +986,7 @@ export default function AD_modal({
 
               <Col lg={4} sm={4}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Status</Form.Label>
+                  <Form.Label>Status *</Form.Label>
                   <Dropdown
                     options={status}
                     value={statusName}
@@ -981,7 +1001,7 @@ export default function AD_modal({
             <Row>
               <Col lg={6}>
                 <Form.Group>
-                  <Form.Label>Birthdate</Form.Label>
+                  <Form.Label>Birthdate *</Form.Label>
                   <Form.Control
                     value={birthdate}
                     onChange={(e) => setBirthdate(e.target.value)}
@@ -1004,7 +1024,7 @@ export default function AD_modal({
             </Row>
             <Row className="mt-4">
               <Form.Group>
-                <Form.Label>Avatar</Form.Label>
+                <Form.Label>Avatar *</Form.Label>
                 <InputText
                   type="file"
                   onChange={handleAvatar}
@@ -1025,7 +1045,7 @@ export default function AD_modal({
             <Row className="" id="avatar"></Row>
             <Row className="mt-4">
               <Form.Group>
-                <Form.Label>PDF</Form.Label>
+                <Form.Label>PDF *</Form.Label>
                 <InputText
                   type="file"
                   onChange={handlePdf}
@@ -1041,7 +1061,7 @@ export default function AD_modal({
             </Row>
             <Row className="mt-4">
               <Form.Group>
-                <Form.Label>Images (&gt;=3 Files)</Form.Label>
+                <Form.Label>Images (&gt;=3 Files) *</Form.Label>
                 <InputText
                   type="file"
                   multiple

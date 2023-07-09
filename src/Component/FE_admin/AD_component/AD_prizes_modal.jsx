@@ -153,21 +153,21 @@ export default function AD_prizes_modal({ title, show, value, Load,toast,setSele
                         <Row>
                             <Col lg={6}>
                                 <Form.Group>
-                                    <Form.Label>Year</Form.Label>
+                                    <Form.Label>Year *</Form.Label>
 
                                     <InputText maxLength={4}  keyfilter="num" placeholder='enter year' value={year} onChange={e => setYear(e.target.value)} type='text' name='year' style={{ minWidth: '100%' }} />
                                 </Form.Group>
                             </Col>
                             <Col lg={6}>
                                 <Form.Group>
-                                    <Form.Label>Categories</Form.Label>
+                                    <Form.Label>Categories *</Form.Label>
                                     <Dropdown placeholder='select prize' value={categoryName} onChange={e => setCategoryName(e.value)} options={category} optionLabel='category' style={{ minWidth: '100%' }} />
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Row className='mt-4'>
                             <Col lg={6}>
-                                <Form.Label>Status</Form.Label>
+                                <Form.Label>Status *</Form.Label>
                                 <Dropdown placeholder='select status' options={status} optionLabel='status' value={statusName} onChange={e => setStatusName(e.value)} style={{ minWidth: "100%" }} />
                             </Col>
                         </Row>

@@ -319,7 +319,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                         <Row>
                             <Col lg={6}>
                                 <Form.Group>
-                                    <Form.Label>Person</Form.Label>
+                                    <Form.Label>Person *</Form.Label>
 
                                     <Dropdown placeholder='select person' options={person} optionLabel='name' value={personName} onChange={e => setPersonName(e.value)} style={{ minWidth: '100%' }} />
                                 </Form.Group>
@@ -349,14 +349,14 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                         <Row className='mt-4'>
                             <Col lg={6}>
                                 <Form.Group>
-                                    <Form.Label>Prize</Form.Label>
+                                    <Form.Label>Prize *</Form.Label>
 
                                     <Dropdown placeholder='select prize' options={category} optionLabel='category' value={categoryName} onChange={e => setCategoryName(e.value)} style={{ minWidth: '100%' }} />
                                 </Form.Group>
                             </Col>
                             <Col lg={6}>
                                 <Form.Group>
-                                    <Form.Label>Year</Form.Label>
+                                    <Form.Label>Year *</Form.Label>
                                     <Dropdown options={availabePrize} optionLabel='nobel_year' placeholder='select year' value={prizeName} onChange={e => setPrizeName(e.value)} style={{ minWidth: '100%' }} />
                                 </Form.Group>
                             </Col>
@@ -371,7 +371,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                             <Col lg={6}>
                                 <Form.Group >
                                     <Form.Label>
-                                        Nobel Share
+                                        Nobel Share *
                                     </Form.Label>
                                     <InputText  keyfilter="num" maxLength={2}  value={nobelShare} onChange={e => setNobelShare(e.target.value)} placeholder='Enter number share' style={{ minWidth: '100%' }} />
                                 </Form.Group>
@@ -379,7 +379,7 @@ export default function AD_setprize_modal({ title, show, value, Load,setSelectio
                             <Col lg={6}>
                                 <Form.Group >
                                     <Form.Label>
-                                        Satus
+                                        Status *
                                     </Form.Label>
                                     <Dropdown value={statusName} onChange={e => setStatusName(e.value)} options={status} optionLabel='status' placeholder='select staus ' style={{ minWidth: '100%' }} />
                                 </Form.Group>
